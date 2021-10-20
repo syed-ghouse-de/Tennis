@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Source/Hexagon.Game.Framework/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/Source/Hexagon.Game.Framework/obj/Debug
+/Source/Hexagon.Game.Framework/obj/Release
+/Source/Hexagon.Game.Tennis/obj
+/Source/Hexagon.Game.Tennis.Domain/obj
+/Source/Hexagon.Game.Tennis.Entity/obj
+/Source/Hexagon.Game.Tennis.Persistence/obj
+/Source/Hexagon.Game.Tennis.Test/bin/Debug
+/Source/Hexagon.Game.Tennis.Test/obj
+/Source/Bin/Debug
+/Source/.vs/Hexagon.Game/v15

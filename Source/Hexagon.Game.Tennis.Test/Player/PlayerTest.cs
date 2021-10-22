@@ -29,14 +29,14 @@ namespace Hexagon.Game.Tennis.Test
         {
             Players players = new Players();
 
-            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe" };
+            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
             players.Add(first);
-            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex"};
+            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
             Assert.True(players.Count.Equals(2));
-            Assert.Equal(players.FirstPlayer, first);
-            Assert.Equal(players.SecondPlayer, second);
+            Assert.True(players.FirstPlayer.Unique(first));
+            Assert.True(players.SecondPlayer.Unique(second));
         }
         
         /// <summary>
@@ -71,6 +71,6 @@ namespace Hexagon.Game.Tennis.Test
 
             Exception exception = Assert.Throws<DuplicateException>(() => players.Add(first));
             Assert.NotNull(exception);
-        }
+        }        
     }
 }

@@ -49,5 +49,22 @@ namespace Hexagon.Game.Tennis.Entity
             DateOfBirth = entity.DateOfBirth;
             Club = entity.Club;
         }
+
+        public bool Unique(PlayerEntity other)
+        {
+            bool unique = false;
+
+            // Check the unique object on 
+            // FirstName, SurName and DateOf Birth
+            if (other != null)
+            {
+                unique = FirstName.Equals(other.FirstName) &&
+                    SurName.Equals(other.SurName) &&
+                    DateOfBirth.Equals(other.DateOfBirth);
+            }
+
+            // Return unique result
+            return unique;
+        }
     }
 }

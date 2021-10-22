@@ -15,4 +15,18 @@ namespace Hexagon.Game.Tennis.Entity
         InProgress,
         Completed
     }
+
+    /// <summary>
+    /// Differnet point of the game
+    /// </summary>
+    public enum PlayerPoint
+    {
+        Love = 0,
+        Fifteen = 1,
+        Thirty = 2,
+        Forty = 3,
+        Advantage = 4,
+        Deuce = 5,
+        GamePoint = 6
+    }
 }

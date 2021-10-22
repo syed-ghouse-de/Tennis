@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Tennis;
 using Xunit;
 
 namespace Hexagon.Game.Tennis.Test
 {
-
     /// <summary>
     /// Player unit test class
     /// </summary>

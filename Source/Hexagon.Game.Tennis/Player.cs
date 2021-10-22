@@ -4,18 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Hexagon.Game.Tennis.Entity;
 using Hexagon.Game.Framework.Entity;
 using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Tennis.Entity;
+using Hexagon.Game.Tennis.Score;
 
 namespace Hexagon.Game.Tennis
 {
     /// <summary>
     /// Player class to export player functionalities
     /// </summary>
-    public class Player : PlayerEntity
+    public class Player : PlayerEntity, IPlayer
     {
-        public PlayerEntity Identity { get { return (PlayerEntity)this; } }
+        private IPoint _point;                                              // to maintain the player point
+        
+        public PlayerEntity Identity { get { return (PlayerEntity)this; } } // To maintain the identity of player  
+        public IPoint Point { get { return _point; } }                      // To maintain player current point
 
         /// <summary>
         /// Default constructor
@@ -28,7 +32,27 @@ namespace Hexagon.Game.Tennis
         /// <param name="entity">Player entity</param>
         public Player(PlayerEntity entity) : base(entity) { }
 
-        public Player(Player player) : base(player.Identity) { }     
+        /// <summary>
+        /// Player parametarized constructor
+        /// </summary>
+        /// <param name="player"></param>
+        public Player(Player player) : base(player.Identity) { }
+
+        /// <summary>
+        /// Method for player win point
+        /// </summary>
+        public void Win()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Method for player loose point
+        /// </summary>
+        public void Loose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Players : EntityList<Player>

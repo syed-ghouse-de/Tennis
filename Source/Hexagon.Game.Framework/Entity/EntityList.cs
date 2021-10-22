@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Game.Framework
+namespace Hexagon.Game.Framework.Entity
 {
-    public class Class1
+    public class EntityList<T> : List<T> where T : IEntity
     {
+        
     }
 }

@@ -41,8 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Enumeration.cs" />
+    <Compile Include="PlayerEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hexagon.Game.Framework\Hexagon.Game.Framework.csproj">
+      <Project>{3049aa40-c9a4-4282-86df-145391a99e2b}</Project>
+      <Name>Hexagon.Game.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Hexagon.Game.Tennis.Entity
 {
-    public class Class1
+    /// <summary>
+    /// Status of the Mmatch, Set & Game
+    /// </summary>
+    public enum Status
     {
+        NoStarted,
+        InProgress,
+        Completed
     }
 }

@@ -27,10 +27,12 @@ namespace Hexagon.Game.Tennis
 
     public class Players : EntityList<PlayerEntity>
     {
+        public Players() { }
+
         /// <summary>
         /// To get the first player of the match
         /// </summary>
-        public Player FistPlayer { get; set; }
+        public Player FirstPlayer { get; set; }
 
         /// <summary>
         /// To get the Second player of the match

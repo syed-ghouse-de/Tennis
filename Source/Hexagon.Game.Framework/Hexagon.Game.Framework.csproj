@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Entity\EntityList.cs" />
     <Compile Include="Entity\IEntity.cs" />
+    <Compile Include="Exceptions\AlreadyWonGamePointException.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

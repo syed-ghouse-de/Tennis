@@ -1,38 +1,41 @@
-﻿using System;
+﻿using Hexagon.Game.Tennis.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Hexagon.Game.Framework.Exceptions;
-using Hexagon.Game.Tennis.Entity;
-
 namespace Hexagon.Game.Tennis.Score
 {
     /// <summary>
-    /// Class to maintain the Game point state
+    /// Class to maintain the Forty point state
     /// </summary>
-    public class GamePoint : BasePoint, IPoint
+    public class Forty : BasePoint, IPoint
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public GamePoint() : base(PlayerPoint.GamePoint) { }
+        public Forty() : base(PlayerPoint.Forty) { }
 
         /// <summary>
         /// Execute to maintain the state of player loose point
         /// </summary>
         public IPoint Loose()
         {
-            throw new AlreadyWonGamePointException();
+            // If player looses, it say's in the same point
+            return this;
         }
 
         /// <summary>
         /// Execute to maintain the state of player win point
         /// </summary>
+        /// <param name="opponent">Opponent player</param>
+        /// <returns>Returns latest state of the point</returns>
         public IPoint Win(Player opponent)
-        {
-            throw new AlreadyWonGamePointException();
+        {   
+            // Game point for the player
+            return new GamePoint();
         }
     }
 }
+

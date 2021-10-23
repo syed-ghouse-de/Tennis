@@ -14,6 +14,15 @@ namespace Hexagon.Game.Tennis.Score
     public abstract class BasePoint
     {
         /// <summary>
+        /// Parameterized constructor
+        /// </summary>
+        /// <param name="point">Point</param>
+        public BasePoint(PlayerPoint point)
+        {
+            Point = point;
+        }
+
+        /// <summary>
         /// To maintain the point
         /// </summary>
         public PlayerPoint Point { get; set; }

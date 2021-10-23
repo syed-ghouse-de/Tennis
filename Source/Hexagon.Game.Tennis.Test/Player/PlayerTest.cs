@@ -35,8 +35,8 @@ namespace Hexagon.Game.Tennis.Test
             players.Add(second);
 
             Assert.True(players.Count.Equals(2));
-            Assert.True(players.FirstPlayer.Unique(first));
-            Assert.True(players.SecondPlayer.Unique(second));
+            Assert.True(players.FirstPlayer.Identity.Unique(first));
+            Assert.True(players.SecondPlayer.Identity.Unique(second));
         }
         
         /// <summary>

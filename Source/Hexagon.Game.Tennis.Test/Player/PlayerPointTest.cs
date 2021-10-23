@@ -35,18 +35,14 @@ namespace Hexagon.Game.Tennis.Test
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Thirty);
+            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
             Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
            
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Thirty);
+            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
             Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Fifteen);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Thirty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Thirty);
-
-            players.FirstPlayer.Win();
             Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
             Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Thirty);
         }
@@ -185,7 +181,7 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
             Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Advantage);
 
-            players.SecondPlayer.Win();
+            players.SecondPlayer.Win();            
             Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
             Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.GamePoint);
         }

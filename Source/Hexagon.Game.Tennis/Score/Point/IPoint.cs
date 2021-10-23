@@ -14,7 +14,7 @@ namespace Hexagon.Game.Tennis.Score
     public interface IPoint
     {
         /// <summary>
-        /// Property to maintain the point
+        /// To maintain the point state
         /// </summary>
         PlayerPoint Point { get; set; }
 
@@ -24,8 +24,10 @@ namespace Hexagon.Game.Tennis.Score
         IPoint Loose();
 
         /// <summary>
-        /// Execute to maintain the state of player win point
+        /// Execute to maintain the state of player win point         
         /// </summary>
-        IPoint Win();
+        /// <param name="opponent">Opponent player</param>
+        /// <returns>Returns latest state of the point</returns>
+        IPoint Win(Player opponent);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Game.Tennis.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,19 +13,28 @@ namespace Hexagon.Game.Tennis.Score
     public class Advantage : BasePoint, IPoint
     {
         /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Advantage() : base(PlayerPoint.Advantage) { }
+
+        /// <summary>
         /// Execute to maintain the state of player loose point
         /// </summary>
         public IPoint Loose()
         {
-            throw new NotImplementedException();
+            // If player looses, it say's in the same point
+            return this;
         }
 
         /// <summary>
         /// Execute to maintain the state of player win point
         /// </summary>
-        public IPoint Win()
+        /// <param name="opponent">Opponent player</param>
+        /// <returns>Returns latest state of the point</returns>
+        public IPoint Win(Player opponent)
         {
-            throw new NotImplementedException();
+            // Game point for the player
+            return new GamePoint();
         }
     }
 }

@@ -50,7 +50,7 @@
     <Compile Include="Score\Point\BasePoint.cs" />
     <Compile Include="Score\Point\Deuce.cs" />
     <Compile Include="Score\Point\Fifteen.cs" />
-    <Compile Include="Score\Point\Fourty.cs" />
+    <Compile Include="Score\Point\Forty.cs" />
     <Compile Include="Score\Point\GamePoint.cs" />
     <Compile Include="Score\Point\IPoint.cs" />
     <Compile Include="Score\Point\Love.cs" />

@@ -13,10 +13,10 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IPlayer
     {
-        IPlayer Opponent { get; }                      // To get the opponent player
+        IPlayer Opponent { get; }                           // To get the opponent player
+        IPoint Point { get; }                               // To maintain player current point    
         PlayerEntity Identity { get; }                      // To maintain the identity of player  
-        IPoint Point { get; }                               // To maintain player current point        
-        
+
         /// <summary>
         /// Method for player win point
         /// </summary>       

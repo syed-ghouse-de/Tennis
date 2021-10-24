@@ -8,12 +8,11 @@ using Hexagon.Game.Framework.Entity;
 
 namespace Hexagon.Game.Tennis.Entity
 {
-    public class PlayerEntity : IEntity
+    public class PlayerEntity : BaseEntity
     {
         /// <summary>
         /// Player entity member variables
-        /// </summary>
-        public Guid Id { get; set; }
+        /// </summary>        
         public string FirstName { get; set; }
         public string SurName { get; set; }
         public string LastName { get; set; }

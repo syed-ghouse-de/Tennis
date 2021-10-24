@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\AlreadyWonGamePointException.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
     <Compile Include="Exceptions\DuplicateException.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

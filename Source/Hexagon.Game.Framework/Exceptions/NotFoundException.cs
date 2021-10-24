@@ -1,25 +1,26 @@
-﻿using System;
+﻿using Hexagon.Game.Framework.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Game.Framework.Exceptions
+namespace Hexagon.Game.Framework
 {
     /// <summary>
     /// Exception class for game point won
     /// </summary>
-    public class AlreadyWonGamePointException : BaseException
+    public class NotFoundException : BaseException
     {
         /// <summary>
         /// Default exception constructor
         /// </summary>
-        public AlreadyWonGamePointException() { }
+        public NotFoundException() { }
 
         /// <summary>
         /// Constructor which passes error message
         /// </summary>
         /// <param name="message">Exception message</param>
-        public AlreadyWonGamePointException(string message) : base(message) { }
+        public NotFoundException(string message) : base(message) { }
     }
 }

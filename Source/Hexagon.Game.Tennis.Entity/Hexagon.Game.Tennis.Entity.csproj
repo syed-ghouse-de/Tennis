@@ -41,9 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="Enumeration.cs" />
+    <Compile Include="GameEntity.cs" />
     <Compile Include="PlayerEntity.cs" />
+    <Compile Include="PlayerPointEntity.cs" />
+    <Compile Include="PointEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreEntity.cs" />
+    <Compile Include="SetEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hexagon.Game.Framework\Hexagon.Game.Framework.csproj">

@@ -16,12 +16,12 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public class Player : PlayerEntity, IPlayer
     {
-        internal IPoint _point;                                             // Internal variable to expose only ready property                                          // to maintain the player point
+        internal IPoint _point;
 
         public IPlayer Opponent { get; set; }                               // To get the opponent player
         public PlayerEntity Identity { get { return (PlayerEntity)this; } } // To maintain the identity of player  
         public IPoint Point { get { return _point; } }                      // To maintain player current point
-         
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -54,7 +54,7 @@ namespace Hexagon.Game.Tennis
         private void Init()
         {
             // Initialize default to Love point
-            _point = new Love();
+            _point = new Love();            
         }
 
         /// <summary>

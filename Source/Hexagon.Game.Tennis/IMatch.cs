@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Game.Tennis.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +12,23 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IMatch
     {
+        Players Players { get; set; }                       // Player list
+        IPlayer TossWon { get; set; }                       // Toss won by player
+        ScoreEntity Score { get; }                          // To maintain the player score
+
+        /// <summary>
+        /// Play the match by two players
+        /// </summary>
+        void Play();
+
         /// <summary>
         /// To start the match
         /// </summary>
         void Start();
 
         /// <summary>
-        /// Start playing the match
-        /// </summary>
-        void Play();
-
-        /// <summary>
         /// Stop the match
         /// </summary>
         void Stop();
-
     }
 }

@@ -14,8 +14,7 @@ namespace Hexagon.Game.Framework.Exceptions
         /// <summary>
         /// Default exception constructor
         /// </summary>
-        public DuplicateException()
-        { }
+        public DuplicateException() { }
 
         /// <summary>
         /// Constructor which passes error message

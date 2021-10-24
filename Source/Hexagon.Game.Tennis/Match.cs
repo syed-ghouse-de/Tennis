@@ -23,7 +23,9 @@ namespace Hexagon.Game.Tennis
         public Status Status { get; set; }         
         
         public Players Players { get; set; }
-
+        public IPlayer TossWon { get; set; }                // Toss won by player
+        public ScoreEntity Score { get; }                   // To maintain player current point     
+        
         /// <summary>
         /// To play the match
         /// </summary>

@@ -59,6 +59,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="Player\PlayerGameTest.cs" />
     <Compile Include="Player\PlayerPointTest.cs" />
     <Compile Include="Player\PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

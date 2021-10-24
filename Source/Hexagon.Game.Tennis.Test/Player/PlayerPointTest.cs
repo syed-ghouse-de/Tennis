@@ -26,25 +26,25 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Love);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Fifteen);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Fifteen, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
            
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Fifteen);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Fifteen, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Thirty);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Thirty, players.SecondPlayer.Point.Point);
         }
 
         /// <summary>
@@ -60,15 +60,15 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Love);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.GamePoint);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.GamePoint, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
         }
 
         /// <summary>
@@ -84,20 +84,20 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Love);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();       
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
         }
 
         /// <summary>
@@ -113,24 +113,24 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Love);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Advantage);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Advantage, players.SecondPlayer.Point.Point);
         }
 
         /// <summary>
@@ -146,44 +146,44 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Love);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Forty);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Love);
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Advantage);
-
-            players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Advantage, players.SecondPlayer.Point.Point);
 
             players.FirstPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Advantage);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Advantage, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Deuce);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Deuce, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.Advantage);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Advantage, players.SecondPlayer.Point.Point);
 
             players.SecondPlayer.Win();            
-            Assert.Equal(players.FirstPlayer.Point.Point, PlayerPoint.Deuce);
-            Assert.Equal(players.SecondPlayer.Point.Point, PlayerPoint.GamePoint);
+            Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.GamePoint, players.SecondPlayer.Point.Point);
         }
     }
 }

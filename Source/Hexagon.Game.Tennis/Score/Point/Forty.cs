@@ -32,7 +32,11 @@ namespace Hexagon.Game.Tennis.Score
         /// <param name="opponent">Opponent player</param>
         /// <returns>Returns latest state of the point</returns>
         public IPoint Win(Player opponent)
-        {   
+        {
+            // Invoke point & game point action handler
+            PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.GamePoint);            
+            GamePointWinHandler?.Invoke(opponent.Opponent.Identity);
+
             // Game point for the player
             return new GamePoint();
         }

@@ -12,12 +12,16 @@ namespace Hexagon.Game.Tennis.Entity
     public class SetEntity : BaseEntity
     {
         public List<GameEntity> Games { get; set; }
+        public PlayerEntity WonBy { get; set; }
         public Status Status { get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SetEntity() { }
+        public SetEntity()
+        {
+            Init();   
+        }
      
         /// <summary>
         /// Get the total number of Games
@@ -32,6 +36,17 @@ namespace Hexagon.Game.Tennis.Entity
         public GameEntity GetGame(int number)
         {
             return Games[number];
+        }
+
+        /// <summary>
+        /// Initialze default values 
+        /// </summary>
+        private void Init()
+        {
+            Id = Guid.NewGuid();
+
+            Games = new List<GameEntity>() { new GameEntity() };
+            Status = Status.InProgress;
         }
     }
 }

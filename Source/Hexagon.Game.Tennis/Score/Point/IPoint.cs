@@ -13,6 +13,9 @@ namespace Hexagon.Game.Tennis.Score
     /// </summary>
     public interface IPoint
     {
+        event Action<PlayerEntity, PlayerPoint> PointWin;
+        event Action<PlayerEntity> GamePointWin;
+
         /// <summary>
         /// To maintain the point state
         /// </summary>

@@ -11,7 +11,7 @@ namespace Hexagon.Game.Tennis.Score
     /// Class to maintain the Advantage point state
     /// </summary>
     public class Advantage : BasePoint, IPoint
-    {
+    { 
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -33,7 +33,11 @@ namespace Hexagon.Game.Tennis.Score
         /// <returns>Returns latest state of the point</returns>
         public IPoint Win(Player opponent)
         {
-            // Game point for the player
+            // Invoke point & game point action handler
+            PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.GamePoint);            
+            GamePointWinHandler?.Invoke(opponent.Opponent.Identity);
+
+            // Return Game point for the player
             return new GamePoint();
         }
     }

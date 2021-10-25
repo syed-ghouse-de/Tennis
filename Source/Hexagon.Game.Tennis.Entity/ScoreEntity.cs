@@ -11,9 +11,28 @@ namespace Hexagon.Game.Tennis.Entity
     /// </summary>
     public class ScoreEntity : BaseEntity
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ScoreEntity()
+        {
+            Init();
+        }
+
         public List<SetEntity> Sets { get; set; }
-        public SetEntity CurrentSet { get; }                       // Current Set Score
-        public GameEntity CurrentGame { get; }                     // Current Game Score   
+
+        /// <summary>
+        /// Property to get the current Set
+        /// </summary>
+        public SetEntity CurrentSet { get { return Sets[TotalSets - 1]; } }    
+        
+        /// <summary>
+        /// Property to get the Current Game
+        /// </summary>
+        public GameEntity CurrentGame
+        {
+            get { return CurrentSet.Games[CurrentSet.TotalGames - 1]; }
+        }                    
 
         /// <summary>
         /// Get the total number of Sets
@@ -25,9 +44,14 @@ namespace Hexagon.Game.Tennis.Entity
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        public SetEntity GetSet(int number)
+        public SetEntity GetSet(int number) { return Sets[number]; }
+
+        /// <summary>
+        /// Initialze default values 
+        /// </summary>
+        private void Init()
         {
-            return Sets[number];
+            Sets = new List<SetEntity>() { new SetEntity() };            
         }
     }
 }

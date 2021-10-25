@@ -44,6 +44,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="GameEntity.cs" />
+    <Compile Include="MatchEntity.cs" />
     <Compile Include="PlayerEntity.cs" />
     <Compile Include="PlayerPointEntity.cs" />
     <Compile Include="PointEntity.cs" />

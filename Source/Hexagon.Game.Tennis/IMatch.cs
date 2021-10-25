@@ -12,10 +12,10 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IMatch
     {
-        Players Players { get; set; }                       // Player list
-        IPlayer TossWon { get; set; }                       // Toss won by player
+        Players Players { get; set; }                       // Player list        
         ScoreEntity Score { get; }                          // To maintain the player score
-
+        MatchEntity Info { get; set; }
+        
         /// <summary>
         /// Play the match by two players
         /// </summary>

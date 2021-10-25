@@ -42,6 +42,9 @@ namespace Hexagon.Game.Tennis.Score
                 opponent._point = new Deuce(); 
             }
 
+            // Invoke point action handler
+            PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Forty);
+
             // Return point
             return point;
         }

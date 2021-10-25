@@ -19,7 +19,10 @@ namespace Hexagon.Game.Tennis.Entity
         /// <summary>
         /// Default constructor
         /// </summary>
-        public GameEntity() { }
+        public GameEntity()
+        {
+            Init();
+        }
 
         /// <summary>
         /// Get the Point details for the specicific set number
@@ -29,6 +32,17 @@ namespace Hexagon.Game.Tennis.Entity
         public PlayerPointEntity GetPlayerPoint(int number)
         {
             return PlayerPoints[number];
+        }
+
+        /// <summary>
+        /// Initialze default values 
+        /// </summary>
+        private void Init()
+        {
+            Id = Guid.NewGuid();
+
+            PlayerPoints = new List<PlayerPointEntity>();
+            Status = Status.InProgress;
         }
     }
 }

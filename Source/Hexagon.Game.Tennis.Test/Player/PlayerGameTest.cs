@@ -22,34 +22,53 @@ namespace Hexagon.Game.Tennis.Test
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
-            match.TossWon = firstPlayer;
+            match.Players.Server = firstPlayer;
+            match.Start();
 
             firstPlayer.Win();
             firstPlayer.Win();
             firstPlayer.Win();
+
+            Assert.Equal(1, match.Score.TotalSets);
+            Assert.Equal(Status.InProgress, match.Score.GetSet(0).Status);
+
+            Assert.Equal(1, match.Score.GetSet(0).TotalGames);
+            Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(0).Status);
+
+            Assert.Equal(match.Players.Server.Identity.FirstName,
+                match.Score.GetSet(0).GetGame(0).Server.FirstName);
+            Assert.Equal(match.Players.FirstPlayer.Identity.FirstName,
+                match.Score.GetSet(0).GetGame(0).Server.FirstName);
+
             firstPlayer.Win();
-       
+
             Assert.Equal(firstPlayer.Point.Point, PlayerPoint.GamePoint);
             Assert.Equal(secondPlayer.Point.Point, PlayerPoint.Love);
 
             Assert.Equal(1, match.Score.TotalSets);
             Assert.Equal(Status.InProgress, match.Score.GetSet(0).Status);
 
-            Assert.Equal(1, match.Score.GetSet(0).TotalGames);
-            Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(0).Status); 
-            
+            Assert.Equal(2, match.Score.GetSet(0).TotalGames);
+            Assert.Equal(Status.Completed, match.Score.GetSet(0).GetGame(0).Status); 
+
             Assert.Equal(Status.InProgress, match.Score.CurrentSet.Status);
             Assert.Equal(Status.InProgress, match.Score.CurrentGame.Status);
 
-            Assert.Equal(match.TossWon.Identity.FirstName, 
-                match.Score.GetSet(0).GetGame(0).Server.FirstName);
+            Assert.Equal(match.Players.Server.Identity.FirstName,
+                match.Score.GetSet(0).GetGame(1).Server.FirstName);
+            Assert.Equal(match.Players.SecondPlayer.Identity.FirstName,
+                match.Score.GetSet(0).GetGame(1).Server.FirstName);
+
+            var points = string.Join("-",
+                 match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
+                    p => p.Player.Id.Equals(firstPlayer.Identity.Id)).Select(s => s.Point.ToString()));
 
             Assert.Equal("Fifteen-Thirty-Forty-GamePoint", string.Join("-",
-                match.Score.CurrentGame.PlayerPoints.Where(
-                    p => p.Server.Id.Equals(firstPlayer.Identity.Id)).Select(s => s.Server.Point)));
+                 match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
+                    p => p.Player.Id.Equals(firstPlayer.Identity.Id)).Select(s => s.Point.ToString())));
             Assert.Equal("Love-Love-Love-Love", string.Join("-",
-                match.Score.CurrentGame.PlayerPoints.Where(
-                    p => p.Receiver.Id.Equals(firstPlayer.Opponent.Identity.Id)).Select(s => s.Receiver.Point)));
+                 match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
+                    p => p.Player.Id.Equals(firstPlayer.Opponent.Identity.Id)).Select(s => s.Point.ToString())));
         }
     }
 }

@@ -9,7 +9,7 @@ using Hexagon.Game.Framework.Entity;
 namespace Hexagon.Game.Tennis.Entity
 {
     public class PlayerEntity : BaseEntity
-    {
+    {       
         /// <summary>
         /// Player entity member variables
         /// </summary>        

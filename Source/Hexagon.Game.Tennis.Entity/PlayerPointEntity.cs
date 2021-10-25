@@ -10,9 +10,9 @@ namespace Hexagon.Game.Tennis.Entity
     /// Class to manage server & receiver players points
     /// </summary>
     public class PlayerPointEntity : BaseEntity
-    {
-        public PointEntity Server { get; set; }
-        public PointEntity Receiver { get; set; }
+    {         
+        public PlayerEntity Player { get; set; }
+        public PlayerPoint Point { get; set; }        
         public DateTime UpdatedOn { get; set; }
 
         /// <summary>

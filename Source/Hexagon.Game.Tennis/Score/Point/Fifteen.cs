@@ -33,6 +33,9 @@ namespace Hexagon.Game.Tennis.Score
         /// <returns>Returns latest state of the point</returns>
         public IPoint Win(Player opponent)
         {
+            // Invoke point action handler
+            PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Thirty);
+
             // Return Thirty point if palyer wins.
             return new Thirty();
         }

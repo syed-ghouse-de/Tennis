@@ -38,9 +38,12 @@ namespace Hexagon.Game.Tennis.Score
             // If both player are in Advantage, return Deuce
             if (point.Point.Equals(opponent.Point.Point))
             {
-                point = new Deuce();
-                opponent._point = new Deuce();
-            }
+                // If the new state is Deuce then publish as Forty
+                point = new Deuce();                             
+                PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Forty);
+
+                return point;
+            } 
 
             // Invoke point action handler
             PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Advantage);

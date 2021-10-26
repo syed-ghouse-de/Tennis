@@ -168,6 +168,11 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal("Fifteen-Thirty-Forty-GamePoint", string.Join("-",
                  match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
                     p => p.Player.Id.Equals(firstPlayer.Opponent.Identity.Id)).Select(s => s.Point.ToString())));
+
+            Assert.Equal(1, match.Score.TotalSets);
+            Assert.Equal(2, match.Score.GetSet(0).TotalGames);
+            Assert.Equal(Status.Completed, match.Score.GetSet(0).GetGame(0).Status);
+            Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(1).Status);
         }
 
         [Fact]
@@ -269,7 +274,7 @@ namespace Hexagon.Game.Tennis.Test
             secondPlayer.Win();         // 40           40      Deuce            
             firstPlayer.Win();          // Advantage    40
             secondPlayer.Win();         // 40           40      Deuce
-            secondPlayer.Win();         // 40           40
+            secondPlayer.Win();         // 40           Advantage
             firstPlayer.Win();          // 40           40      Deuce
             firstPlayer.Win();          // Advantage    40
             secondPlayer.Win();         // 40           40
@@ -314,6 +319,11 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal("Love-Fifteen-Fifteen-Fifteen-Thirty-Forty-Forty-Forty-Advantage-Forty-Forty-Forty-Forty-Forty", string.Join("-",
                  match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
                     p => p.Player.Id.Equals(firstPlayer.Opponent.Identity.Id)).Select(s => s.Point.ToString())));
+
+            Assert.Equal(1, match.Score.TotalSets);
+            Assert.Equal(2, match.Score.GetSet(0).TotalGames);
+            Assert.Equal(Status.Completed, match.Score.GetSet(0).GetGame(0).Status);
+            Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(1).Status);
         }
 
         [Fact]
@@ -348,6 +358,11 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal("Love-Fifteen-Fifteen-Fifteen-Thirty-Forty-Forty-Forty-Advantage-Forty-Forty-Forty-Advantage-GamePoint", string.Join("-",
                  match.Score.GetSet(0).GetGame(0).PlayerPoints.Where(
                     p => p.Player.Id.Equals(firstPlayer.Opponent.Identity.Id)).Select(s => s.Point.ToString())));
+
+            Assert.Equal(1, match.Score.TotalSets);
+            Assert.Equal(2, match.Score.GetSet(0).TotalGames);
+            Assert.Equal(Status.Completed, match.Score.GetSet(0).GetGame(0).Status);
+            Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(1).Status);
         }
     }
 }

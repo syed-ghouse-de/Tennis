@@ -15,6 +15,7 @@ namespace Hexagon.Game.Tennis
     {
         event Action<PlayerEntity, PlayerPoint> PointWin;   // Delegate for player point win
         event Action<PlayerEntity> GamePointWin;            // Delegat for player game point win
+        event Action<PlayerEntity> Deuce;                   // Delegate for Deuce point
 
         IPlayer Opponent { get; }                           // To get the opponent player
         IPoint Point { get; }                               // To maintain player current point    
@@ -29,5 +30,10 @@ namespace Hexagon.Game.Tennis
         /// Method for player loose point
         /// </summary>
         void Loose();
+
+        /// <summary>
+        /// Method to set the Deuce for the player
+        /// </summary>
+        void SetDeuce();
     }
 }

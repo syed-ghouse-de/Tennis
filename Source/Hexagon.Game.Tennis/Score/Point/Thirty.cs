@@ -36,11 +36,8 @@ namespace Hexagon.Game.Tennis.Score
             IPoint point = new Forty();
 
             // If both player are in Forty, return Deuce
-            if (point.Point.Equals(opponent.Point.Point))
-            {
-                point = new Deuce();
-                opponent._point = new Deuce(); 
-            }
+            if (point.Point.Equals(opponent.Point.Point)) 
+                point = new Deuce();  
 
             // Invoke point action handler
             PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Forty);

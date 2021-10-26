@@ -20,6 +20,7 @@ namespace Hexagon.Game.Tennis
 
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for poin win
         public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win
+        public event Action<PlayerEntity> Deuce;                            // Delegate for Deuce point 
 
         public IPlayer Opponent { get; set; }                               // To get the opponent player
         public PlayerEntity Identity { get { return (PlayerEntity)this; } } // To maintain the identity of player  
@@ -58,8 +59,13 @@ namespace Hexagon.Game.Tennis
         {
             _point = Point.Win((Player)Opponent);
 
+            // Subscribe event handlers
             _point.PointWin += OnPointWin;
             _point.GamePointWin += OnGamePointWin;
+
+            // Invoke Deuce action handler if the current point is Deuce             
+            if (_point is Deuce)
+                Deuce?.Invoke(Identity);      
         }
 
         /// <summary>
@@ -78,6 +84,17 @@ namespace Hexagon.Game.Tennis
             // Initialize default to Love point
             _point = new Love();
             _point.PointWin += OnPointWin;
+        }
+
+        /// <summary>
+        /// Method to set the Deuce for the player
+        /// </summary>
+        public void SetDeuce()
+        {
+            _point = new Deuce();
+
+            _point.PointWin += OnPointWin;
+            _point.GamePointWin += OnGamePointWin;
         }
 
         /// <summary>
@@ -111,7 +128,7 @@ namespace Hexagon.Game.Tennis
         private readonly byte SECOND_PLAYER = 1;                             // Constant to maintain the index of second player
 
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for point win
-        public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win
+        public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win 
 
         /// <summary>
         /// Default constructor
@@ -182,9 +199,10 @@ namespace Hexagon.Game.Tennis
 
             player.PointWin += OnPointWin;
             player.GamePointWin += OnGamePointWin;
+            player.Deuce += OnDeuce;
 
             base.Add((Player) player);
-        }
+        } 
 
         /// <summary>
         /// Player point win
@@ -203,6 +221,13 @@ namespace Hexagon.Game.Tennis
         private void OnGamePointWin(PlayerEntity player)
         {
             GamePointWin?.Invoke(player);
+        }
+
+        private void OnDeuce(PlayerEntity winner)
+        {
+            // Set the Deuce point for both the players
+            FirstPlayer.SetDeuce();
+            SecondPlayer.SetDeuce();
         }
     }
 }

@@ -108,7 +108,11 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
 
                 // Get the point of the looser
                 if (looserPoints.Any())
+                {
                     looserPoint = looserPoints.Last().Point;
+                    if (looserPoint.Equals(PlayerPoint.Advantage))
+                        looserPoint = PlayerPoint.Forty;
+                }
 
                 // Prepare looser point details 
                 var looserEntity = new PlayerPointEntity()

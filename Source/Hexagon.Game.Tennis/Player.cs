@@ -125,10 +125,10 @@ namespace Hexagon.Game.Tennis
     public class Players : EntityList<Player>
     {
         private readonly byte FIRST_PLAYER = 0;                              // Constant to maintain the index of first player
-        private readonly byte SECOND_PLAYER = 1;                             // Constant to maintain the index of second player
+        private readonly byte SECOND_PLAYER = 1;                             // Constant to maintain the index of second player        
 
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for point win
-        public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win 
+        public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win         
 
         /// <summary>
         /// Default constructor

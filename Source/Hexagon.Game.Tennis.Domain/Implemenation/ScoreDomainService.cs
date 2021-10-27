@@ -79,20 +79,28 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
             return score;
         }
 
-
         /// <summary>
         /// Service method to calculate and update player point win
         /// </summary>
         /// <param name="score">Match score</param>
+        /// <param name="server">Server of the game</param>
         /// <param name="winner">Point winner</param>
         /// <param name="looser">Point looser</param>
         /// <param name="point">Winning point</param>
         /// <returns>Returns score details</returns>
-        public ScoreEntity PointWin(ScoreEntity score, 
+        public ScoreEntity PointWin(ScoreEntity score, PlayerEntity server,
             PlayerEntity winner, PlayerEntity looser, PlayerPoint point)
         {
             try
             {
+                // Create a in progress Set if not present
+                if (score.TotalSets.Equals(0))
+                    score.Sets.Add(new SetEntity());
+
+                // Create a in progess Game is not present
+                if (score.CurrentSet.TotalGames.Equals(0))
+                    score.CurrentSet.Games.Add(new GameEntity() { Server = server });
+
                 // Prepeare winner point details
                 var winnerEntity = new PlayerPointEntity()
                 {

@@ -45,7 +45,7 @@ namespace Hexagon.Game.Tennis.Entity
         {
             Id = Guid.NewGuid();
 
-            Games = new List<GameEntity>() { new GameEntity() };
+            Games = new List<GameEntity>();
             Status = Status.InProgress;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Game.Framework.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,14 +25,31 @@ namespace Hexagon.Game.Tennis.Entity
         /// <summary>
         /// Property to get the current Set
         /// </summary>
-        public SetEntity CurrentSet { get { return Sets[TotalSets - 1]; } }    
+        public SetEntity CurrentSet
+        {
+            get
+            {
+                // Throw exception if Set is not started
+                if (!Sets.Any())
+                    throw new NotStartedException();
+
+                return Sets[TotalSets - 1];
+            }
+        }    
         
         /// <summary>
         /// Property to get the Current Game
         /// </summary>
         public GameEntity CurrentGame
         {
-            get { return CurrentSet.Games[CurrentSet.TotalGames - 1]; }
+            get
+            {
+                // Throw exception if games is not started
+                if (!CurrentSet.Games.Any())
+                    throw new NotStartedException();
+
+                return CurrentSet.Games[CurrentSet.TotalGames - 1];
+            }
         }                    
 
         /// <summary>
@@ -40,18 +58,25 @@ namespace Hexagon.Game.Tennis.Entity
         public int TotalSets { get { return Sets.Count; } }
 
         /// <summary>
-        /// Get the set details for the specicific set number
+        /// Get the set details for the specicific set number, number is start with Zero index
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
-        public SetEntity GetSet(int number) { return Sets[number]; }
+        public SetEntity GetSet(int number)
+        {
+            // Throw exception if Set is not started
+            if (!Sets.Any())
+                throw new NotStartedException();
+
+            return Sets[number];
+        }
 
         /// <summary>
         /// Initialze default values 
         /// </summary>
         private void Init()
         {
-            Sets = new List<SetEntity>() { new SetEntity() };            
+            Sets = new List<SetEntity>();            
         }
     }
 }

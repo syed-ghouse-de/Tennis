@@ -28,6 +28,7 @@ namespace Hexagon.Game.Tennis
         public Match()
         {
             _scoreDomainService = new ScoreDomainService();
+            _score = new ScoreEntity();
         }
 
         /// <summary>
@@ -69,8 +70,8 @@ namespace Hexagon.Game.Tennis
             try
             {
                 // Calculate score after every point win
-                _score = _scoreDomainService.PointWin(
-                    Score, winPlayer, Players[winPlayer.Id].Opponent.Identity, point);             
+                _score = _scoreDomainService.PointWin(Score, Players.Server.Identity, 
+                    winPlayer, Players[winPlayer.Id].Opponent.Identity, point);             
             }
             catch (DomainServiceException domainServiceException)
             {                

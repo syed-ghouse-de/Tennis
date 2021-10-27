@@ -364,6 +364,48 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal(Status.Completed, match.Score.GetSet(0).GetGame(0).Status);
             Assert.Equal(Status.InProgress, match.Score.GetSet(0).GetGame(1).Status);
         }
+
+        [Fact]
+        public void GetCurrentSetDetailsWithoutStartingOfMatch()
+        {
+            IMatch match = new Match();
+            match.Players = AddPlayers();
+
+            var firstPlayer = match.Players.FirstPlayer;
+            var secondPlayer = match.Players.SecondPlayer;
+            match.Players.Server = firstPlayer;            
+
+            Exception exception = Assert.Throws<Exception>(() => match.Score.CurrentSet);
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void GetCurrentGameDetailsWithoutStartingOfMatch()
+        {
+            IMatch match = new Match();
+            match.Players = AddPlayers();
+
+            var firstPlayer = match.Players.FirstPlayer;
+            var secondPlayer = match.Players.SecondPlayer;
+            match.Players.Server = firstPlayer;
+
+            Exception exception = Assert.Throws<Exception>(() => match.Score.CurrentGame);
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void GetSetDetailsWithoutStartingOfMatch()
+        {
+            IMatch match = new Match();
+            match.Players = AddPlayers();
+
+            var firstPlayer = match.Players.FirstPlayer;
+            var secondPlayer = match.Players.SecondPlayer;
+            match.Players.Server = firstPlayer;
+
+            Exception exception = Assert.Throws<Exception>(() => match.Score.GetSet(0));
+            Assert.NotNull(exception);
+        }
     }
 }
 

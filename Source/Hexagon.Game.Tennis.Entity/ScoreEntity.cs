@@ -1,5 +1,4 @@
-﻿using Hexagon.Game.Framework.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +30,7 @@ namespace Hexagon.Game.Tennis.Entity
             {
                 // Throw exception if Set is not started
                 if (!Sets.Any())
-                    throw new NotStartedException();
+                    throw new Exception();
 
                 return Sets[TotalSets - 1];
             }
@@ -46,7 +45,7 @@ namespace Hexagon.Game.Tennis.Entity
             {
                 // Throw exception if games is not started
                 if (!CurrentSet.Games.Any())
-                    throw new NotStartedException();
+                    throw new Exception();
 
                 return CurrentSet.Games[CurrentSet.TotalGames - 1];
             }
@@ -66,7 +65,7 @@ namespace Hexagon.Game.Tennis.Entity
         {
             // Throw exception if Set is not started
             if (!Sets.Any())
-                throw new NotStartedException();
+                throw new Exception();
 
             return Sets[number];
         }

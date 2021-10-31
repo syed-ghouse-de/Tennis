@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="EntityList.cs" />
     <Compile Include="Enumeration.cs" />
     <Compile Include="GameEntity.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="MatchEntity.cs" />
     <Compile Include="PlayerEntity.cs" />
     <Compile Include="PlayerPointEntity.cs" />
@@ -51,12 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreEntity.cs" />
     <Compile Include="SetEntity.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Hexagon.Game.Framework\Hexagon.Game.Framework.csproj">
-      <Project>{3049aa40-c9a4-4282-86df-145391a99e2b}</Project>
-      <Name>Hexagon.Game.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

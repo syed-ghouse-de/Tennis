@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Hexagon.Game.Framework.Entity;
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Tennis.Entity;
 using Hexagon.Game.Tennis.Score;
@@ -16,7 +15,7 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public class Player : PlayerEntity, IPlayer
     {        
-        internal IPoint _point;
+        private IPoint _point;
 
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for poin win
         public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win
@@ -181,7 +180,6 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public IPlayer Server { get; set; }
 
-
         /// <summary>
         /// Add a player in to the list
         /// </summary>
@@ -223,6 +221,10 @@ namespace Hexagon.Game.Tennis
             GamePointWin?.Invoke(player);
         }
 
+        /// <summary>
+        /// Set the deuce for both the players
+        /// </summary>
+        /// <param name="winner">Winner player</param>
         private void OnDeuce(PlayerEntity winner)
         {
             // Set the Deuce point for both the players

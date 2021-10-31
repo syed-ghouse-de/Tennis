@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Tennis.Entity;
 
 namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
@@ -20,29 +21,29 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
         /// <param name="match">Match information</param>
         /// <param name="score">Match score</param>
         /// <param name="receiver">Receiver player</param>
-        /// <param name="winPlayer">Winning player</param>
+        /// <param name="winner">Winning player</param>
         /// <returns>Returns score details</returns>
         public ScoreEntity GamePointWin(MatchEntity match, 
-            ScoreEntity score, PlayerEntity receiver, PlayerEntity winPlayer)
+            ScoreEntity score, PlayerEntity receiver, PlayerEntity winner)
         {
             try
             {
                 // Set the current game to complete
                 score.CurrentGame.Status = Status.Completed;
-                score.CurrentGame.WonBy = new PlayerEntity(winPlayer);      
+                score.CurrentGame.WonBy = new PlayerEntity(winner);      
 
                 // Get the total games won by each player
                 var winPlayerGames = score.CurrentSet.Games.Where(
-                    g => g.WonBy.Id.Equals(winPlayer.Id)).Count();
+                    g => g.WonBy.Id.Equals(winner.Id)).Count();
                 var opponentPlayerGames = score.CurrentSet.Games.Where(
-                    g => !g.WonBy.Id.Equals(winPlayer.Id)).Count();
+                    g => !g.WonBy.Id.Equals(winner.Id)).Count();
 
                 // If total games are greater than 6 and 
                 // the difference should be greather equal to 2
                 if (winPlayerGames >= 6 && (winPlayerGames - opponentPlayerGames) >= 2)
                 {
                     score.CurrentSet.Status = Status.Completed;
-                    score.CurrentSet.WonBy = new PlayerEntity(winPlayer);
+                    score.CurrentSet.WonBy = new PlayerEntity(winner);
 
                     // Careate an instance of new Set
                     var setEntity = new SetEntity()
@@ -99,7 +100,7 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
 
                 // Create a in progess Game is not present
                 if (score.CurrentSet.TotalGames.Equals(0))
-                    score.CurrentSet.Games.Add(new GameEntity() { Server = server });
+                    score.CurrentSet.Games.Add(new GameEntity() { Server = new PlayerEntity(server) });
 
                 // Prepeare winner point details
                 var winnerEntity = new PlayerPointEntity()

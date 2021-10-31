@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Hexagon.Game.Framework.Service.Domain;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Domain.Service;
 using Hexagon.Game.Tennis.Domain.Service.Implemenation;
 using Hexagon.Game.Tennis.Entity;
@@ -314,6 +315,6 @@ namespace Hexagon.Game.Tennis.Test
                 g => g.WonBy != null && g.WonBy.Id.Equals(firstPlayer.Id)).Count());
             Assert.Equal(0, score.CurrentSet.Games.Where(
                 g => g.WonBy != null && g.WonBy.Id.Equals(secondPlayer.Id)).Count());
-        }
+        }   
     }
 }

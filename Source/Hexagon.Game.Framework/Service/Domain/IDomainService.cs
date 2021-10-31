@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Game.Tennis.Domain.Service
+namespace Hexagon.Game.Framework.Service.Domain
 {
     /// <summary>
-    /// Business logic services
+    /// Domain service to support business logic services
     /// </summary>
-    public interface IDomainService
+    public interface IDomainService : IService
     {
     }
 }

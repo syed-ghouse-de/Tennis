@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Hexagon.Game.Framework.Entity;
-
 namespace Hexagon.Game.Tennis.Entity
 {
     public class PlayerEntity : BaseEntity

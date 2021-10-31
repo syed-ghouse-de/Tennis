@@ -376,7 +376,7 @@ namespace Hexagon.Game.Tennis.Test
             var secondPlayer = match.Players.SecondPlayer;
             match.Players.Server = firstPlayer;            
 
-            Exception exception = Assert.Throws<NotStartedException>(() => match.Score.CurrentSet);
+            Exception exception = Assert.Throws<Exception>(() => match.Score.CurrentSet);
             Assert.NotNull(exception);
         }
 
@@ -390,7 +390,7 @@ namespace Hexagon.Game.Tennis.Test
             var secondPlayer = match.Players.SecondPlayer;
             match.Players.Server = firstPlayer;
 
-            Exception exception = Assert.Throws<NotStartedException>(() => match.Score.CurrentGame);
+            Exception exception = Assert.Throws<Exception>(() => match.Score.CurrentGame);
             Assert.NotNull(exception);
         }
 
@@ -404,7 +404,7 @@ namespace Hexagon.Game.Tennis.Test
             var secondPlayer = match.Players.SecondPlayer;
             match.Players.Server = firstPlayer;
 
-            Exception exception = Assert.Throws<NotStartedException>(() => match.Score.GetSet(0));
+            Exception exception = Assert.Throws<Exception>(() => match.Score.GetSet(0));
             Assert.NotNull(exception);
         }
     }

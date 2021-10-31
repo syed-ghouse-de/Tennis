@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Tennis.Domain.Service;
 using Hexagon.Game.Tennis.Domain.Service.Implemenation;
 using Hexagon.Game.Tennis.Entity;

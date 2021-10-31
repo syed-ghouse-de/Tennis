@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,8 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\EntityList.cs" />
-    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Exceptions\AlreadyWonGamePointException.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
     <Compile Include="Exceptions\DomainServiceException.cs" />
@@ -50,6 +49,19 @@
     <Compile Include="Exceptions\NotStartedException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Domain\IDomainService.cs" />
+    <Compile Include="Service\Domain\IScoreDomainService.cs" />
+    <Compile Include="Service\IService.cs" />
+    <Compile Include="Service\Persistence\IMatchPersistenceService.cs" />
+    <Compile Include="Service\Persistence\MatchPersistenceService.cs" />
+    <Compile Include="Service\Persistence\IPersistenceService.cs" />
+    <Compile Include="Service\Persistence\PersistenceService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hexagon.Game.Tennis.Entity\Hexagon.Game.Tennis.Entity.csproj">
+      <Project>{d6acee5f-64b5-46c2-91aa-cfc5552e9ca0}</Project>
+      <Name>Hexagon.Game.Tennis.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

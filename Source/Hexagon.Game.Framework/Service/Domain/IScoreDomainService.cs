@@ -1,11 +1,12 @@
-﻿using Hexagon.Game.Tennis.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Game.Tennis.Domain.Service
+using Hexagon.Game.Tennis.Entity;
+
+namespace Hexagon.Game.Framework.Service.Domain
 {
     /// <summary>
     /// Interface to manage Score service 

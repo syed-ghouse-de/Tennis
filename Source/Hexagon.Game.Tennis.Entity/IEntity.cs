@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hexagon.Game.Framework.Entity
+namespace Hexagon.Game.Tennis.Entity
 {
     /// <summary>
     /// Entity interface for data transfer objects

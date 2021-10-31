@@ -17,11 +17,11 @@ namespace Hexagon.Game.Framework.Service.Persistence
         /// </summary>
         /// <typeparam name="T">Type of a service to create an instance</typeparam>
         /// <returns>Returns an insance of a provided type</returns>
-        public static IPersistenceService Instance<T>() where T : IPersistenceService,  new()
+        public static T Instance<T>() where T : IPersistenceService,  new()
         {
             // Create an instance of a provided type
             T instance = new T();
-            return (IPersistenceService)instance.Instance();
+            return instance;
         }
     }
 }

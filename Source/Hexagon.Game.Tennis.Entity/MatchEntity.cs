@@ -12,11 +12,11 @@ namespace Hexagon.Game.Tennis.Entity
     public class MatchEntity : BaseEntity
     {
         public string Name { get; set; }
-        public string Court { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime StartedAt { get; set; }
-        public DateTime CompletedAt { get; set; }
-        public Status Status { get; set; }
+        public System.DateTime StartedOn { get; set; }
+        public Nullable<System.DateTime> CompletedOn { get; set; }
+        public int Status { get; set; }
+
+        public virtual StatusEntity StatusNavigation { get; set; }
 
         /// <summary>
         /// Default constructor

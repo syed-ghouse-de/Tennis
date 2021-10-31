@@ -53,7 +53,6 @@
     <Compile Include="Service\Domain\IScoreDomainService.cs" />
     <Compile Include="Service\IService.cs" />
     <Compile Include="Service\Persistence\IMatchPersistenceService.cs" />
-    <Compile Include="Service\Persistence\MatchPersistenceService.cs" />
     <Compile Include="Service\Persistence\IPersistenceService.cs" />
     <Compile Include="Service\Persistence\PersistenceService.cs" />
   </ItemGroup>

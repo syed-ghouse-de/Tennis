@@ -11,7 +11,7 @@ namespace Hexagon.Game.Tennis.Entity
     /// </summary>
     public enum Status
     {
-        NoStarted,
+        NoStarted = 1,
         InProgress,
         Completed
     }

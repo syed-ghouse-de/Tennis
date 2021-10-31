@@ -12,6 +12,17 @@ namespace Hexagon.Game.Framework.Service.Persistence
     /// </summary>
     public interface IMatchPersistenceService : IPersistenceService
     {
-        MatchEntity GetMatch(Guid id);
+        /// <summary>
+        /// Insert match details into database
+        /// </summary>
+        /// <param name="match">Match information to insert into database</param>
+        void AddMatch(MatchEntity match);
+
+        /// <summary>
+        /// Get the match infomation
+        /// </summary>
+        /// <param name="id">Math id to get the match details</param>
+        /// <returns></returns>
+        IEnumerable<MatchEntity> GetMatch(Guid id);
     }
 }

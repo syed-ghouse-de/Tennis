@@ -48,12 +48,15 @@
     <Compile Include="Exceptions\DuplicateException.cs" />
     <Compile Include="Exceptions\NotStartedException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Exceptions\PersistenceServiceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Domain\IDomainService.cs" />
     <Compile Include="Service\Domain\IScoreDomainService.cs" />
     <Compile Include="Service\IService.cs" />
     <Compile Include="Service\Persistence\IMatchPersistenceService.cs" />
+    <Compile Include="Service\Persistence\IModel.cs" />
     <Compile Include="Service\Persistence\IPersistenceService.cs" />
+    <Compile Include="Service\Persistence\IScorePersistenceService.cs" />
     <Compile Include="Service\Persistence\PersistenceService.cs" />
   </ItemGroup>
   <ItemGroup>

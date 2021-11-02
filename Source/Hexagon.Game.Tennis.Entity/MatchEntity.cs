@@ -14,10 +14,10 @@ namespace Hexagon.Game.Tennis.Entity
         public string Name { get; set; }
         public System.DateTime StartedOn { get; set; }
         public Nullable<System.DateTime> CompletedOn { get; set; }
-        public int Status { get; set; }
-
-        public virtual StatusEntity StatusNavigation { get; set; }
-
+        public Status Status { get; set; }
+        public List<PlayerEntity> Players { get; set; }
+        public List<SetEntity> Sets { get; set; }
+        
         /// <summary>
         /// Default constructor
         /// </summary>

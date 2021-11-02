@@ -41,7 +41,8 @@ namespace Hexagon.Game.Tennis.Persistence.Context
         /// <param name="entity">Entity to update in database</param>
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            Entities.Update(entity);
+            DbContext.SaveChanges();
         }
 
         /// <summary>
@@ -50,7 +51,8 @@ namespace Hexagon.Game.Tennis.Persistence.Context
         /// <param name="entity">Entity to remove from database</param>
         public void Remove(T entity)
         {
-            throw new NotImplementedException();
+            Entities.Remove(entity);
+            DbContext.SaveChanges();
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Hexagon.Game.Tennis.Persistence.Context
         /// <returns>Returns a record</returns>
         public T Find(params object[] keys)
         {
-            throw new NotImplementedException();
+            return Entities.Find(keys);
         }
 
         /// <summary>
@@ -69,7 +71,7 @@ namespace Hexagon.Game.Tennis.Persistence.Context
         /// <returns>Retursn list of records</returns>
         public IList<T> GetAll()
         {
-            throw new NotImplementedException();
+           return Entities.Select(s => s).ToList();
         }
     }
 }

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagon.Game.Tennis.Entity"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagon.Game.Tennis.Test", "Hexagon.Game.Tennis.Test\Hexagon.Game.Tennis.Test.csproj", "{8CFEECB8-27C9-4FFE-A0CF-A918AAC6F2A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hexagon.Game.Tennis.Persistence.Test", "Hexagon.Game.Tennis.Persistence.Test\Hexagon.Game.Tennis.Persistence.Test.csproj", "{602638E4-72D3-4506-A3B0-42751AD11BF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8CFEECB8-27C9-4FFE-A0CF-A918AAC6F2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CFEECB8-27C9-4FFE-A0CF-A918AAC6F2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CFEECB8-27C9-4FFE-A0CF-A918AAC6F2A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602638E4-72D3-4506-A3B0-42751AD11BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602638E4-72D3-4506-A3B0-42751AD11BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602638E4-72D3-4506-A3B0-42751AD11BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602638E4-72D3-4506-A3B0-42751AD11BF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

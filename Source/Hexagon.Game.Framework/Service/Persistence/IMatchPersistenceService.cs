@@ -23,6 +23,6 @@ namespace Hexagon.Game.Framework.Service.Persistence
         /// </summary>
         /// <param name="id">Math id to get the match details</param>
         /// <returns></returns>
-        IEnumerable<MatchEntity> GetMatch(Guid id);
+        MatchEntity GetMatch(Guid id);
     }
 }

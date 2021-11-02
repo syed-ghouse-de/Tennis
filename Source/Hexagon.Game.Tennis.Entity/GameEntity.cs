@@ -13,6 +13,8 @@ namespace Hexagon.Game.Tennis.Entity
     {
         public PlayerEntity Server { get; set; }
         public PlayerEntity WonBy { get; set; }
+        public DateTime StartedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
         public Status Status { get; set; }
         public List<PlayerPointEntity> PlayerPoints { get; set; }
 

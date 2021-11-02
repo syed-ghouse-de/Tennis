@@ -133,8 +133,18 @@
     <Compile Include="Context\PersistenceContext.cs" />
     <Compile Include="Context\Repository.cs" />
     <Compile Include="Context\UnitOfWork.cs" />
+    <Compile Include="Model\GameScoreModel.cs" />
+    <Compile Include="Model\MatchModel.cs" />
+    <Compile Include="Model\MatchPlayerModel.cs" />
+    <Compile Include="Model\PlayerModel.cs" />
+    <Compile Include="Model\PointLookupModel.cs" />
+    <Compile Include="Model\PointScoreModel.cs" />
+    <Compile Include="Model\SetScoreModel.cs" />
+    <Compile Include="Model\StatusLookupModel.cs" />
+    <Compile Include="Service\BasePersistenceService.cs" />
     <Compile Include="Service\MatchPersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ScorePersistenceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hexagon.Game.Framework\Hexagon.Game.Framework.csproj">
@@ -153,6 +163,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

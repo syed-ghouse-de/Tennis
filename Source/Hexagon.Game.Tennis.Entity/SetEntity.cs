@@ -11,9 +11,11 @@ namespace Hexagon.Game.Tennis.Entity
     /// </summary>
     public class SetEntity : BaseEntity
     {
-        public List<GameEntity> Games { get; set; }
         public PlayerEntity WonBy { get; set; }
         public Status Status { get; set; }
+        public DateTime StartedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }     
+        public List<GameEntity> Games { get; set; }
 
         /// <summary>
         /// Default constructor

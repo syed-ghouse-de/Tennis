@@ -67,6 +67,7 @@
     <Compile Include="Domain\ScoreDomainServiceTest.cs" />
     <Compile Include="Player\PlayerGameTest.cs" />
     <Compile Include="Player\PlayerPointTest.cs" />
+    <Compile Include="Player\PlayerSetAndMatchPointTest.cs" />
     <Compile Include="Player\PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

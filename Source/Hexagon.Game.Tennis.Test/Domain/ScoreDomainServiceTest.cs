@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Domain.Service;
-using Hexagon.Game.Tennis.Domain.Service.Implemenation;
+using Hexagon.Game.Tennis.Domain.Service.Implementation;
 using Hexagon.Game.Tennis.Entity;
 
 using Xunit;

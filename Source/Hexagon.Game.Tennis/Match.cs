@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Tennis.Domain.Service;
-using Hexagon.Game.Tennis.Domain.Service.Implemenation;
+using Hexagon.Game.Tennis.Domain.Service.Implementation;
 using Hexagon.Game.Tennis.Entity;
 
 namespace Hexagon.Game.Tennis
@@ -15,13 +15,71 @@ namespace Hexagon.Game.Tennis
     /// Match class to contains match associated attributes
     /// </summary>
     public class Match : IMatch
-    {
-        private ScoreEntity _score;
-        private IScoreDomainService _scoreDomainService;                    // Score business logic service     
+    {   
+        // Privte memeber variables
+        private IScoreDomainService _scoreDomainService;                // Score business logic service     
+        private MatchEntity _match;                                     // Match information
+        
+        public Players Players { get; set; }                            // List of match players
+        public ScoreEntity Score { get { return _match.Score; } }       // To maintain player current point     
+        
+        /// <summary>
+        /// Id of a match
+        /// </summary>
+        public Guid Id
+        {
+            get { return _match.Id; }            
+        }
 
-        public Players Players { get; set; }                                // List of match players
-        public ScoreEntity Score { get { return _score; } }                 // To maintain player current point     
-        public MatchEntity Info { get; set; }                               // Match information
+        /// <summary>
+        /// Name of the match
+        /// </summary>
+        public string Name
+        {
+            get { return _match.Name; }
+            set { _match.Name = value; }
+        }
+
+        /// <summary>
+        /// Date and time of match when it started
+        /// </summary>
+        public DateTime StartedOn
+        {
+            get { return _match.StartedOn; }            
+        }
+
+        /// <summary>
+        /// Date and time of match when it completed
+        /// </summary>
+        public Nullable<System.DateTime> CompletedOn
+        {
+            get { return _match.CompletedOn; }           
+        }
+
+        /// <summary>
+        /// Status of the match
+        /// </summary>
+        public Status Status
+        {
+            get { return _match.Status; }            
+        }
+
+        /// <summary>
+        /// Match best of sets
+        /// </summary>
+        public int BestOfSets
+        {
+            get { return _match.BestOfSets; }
+            set { _match.BestOfSets = value; }
+        }
+
+        /// <summary>
+        /// Winner of the match
+        /// </summary>
+        public PlayerEntity WonBy
+        {
+            get { return _match.WonBy; }            
+        }
 
         /// <summary>
         /// Default constructor
@@ -29,7 +87,7 @@ namespace Hexagon.Game.Tennis
         public Match()
         {
             _scoreDomainService = new ScoreDomainService();
-            _score = new ScoreEntity();
+            _match = new MatchEntity();                        
         }
 
         /// <summary>
@@ -46,9 +104,10 @@ namespace Hexagon.Game.Tennis
         public void Start()
         {
             // Get the current score of the match
-            _score = _scoreDomainService.GetMatchScore(Info, Players.Server.Identity);
+            _match.Score = _scoreDomainService
+                .GetMatchScore(_match, Players.Server.Identity);
 
-            // 
+            // Delegate subscribtion
             this.Players.PointWin += OnPointWin;
             this.Players.GamePointWin += OnGamePointWin;
         }
@@ -71,7 +130,7 @@ namespace Hexagon.Game.Tennis
             try
             {
                 // Calculate score after every point win
-                _score = _scoreDomainService.PointWin(Score, Players.Server.Identity, 
+                _match.Score = _scoreDomainService.PointWin(Score, Players.Server.Identity, 
                     winPlayer, Players[winPlayer.Id].Opponent.Identity, point);             
             }
             catch (DomainServiceException domainServiceException)
@@ -93,14 +152,18 @@ namespace Hexagon.Game.Tennis
             try
             {
                 // Calculate game point 
-                _score = _scoreDomainService.GamePointWin(
-                    Info, Score, Players.Server.Opponent.Identity, winPlayer);
+                _match.Score = _scoreDomainService.GamePointWin(
+                    _match, Score, Players.Server.Opponent.Identity, winPlayer);
 
-                // Swap the Server afer every game point win
-                Players.Server = Players.Server.Opponent;               
+                // Swap the Server afer every game point win                
+                Players.Server = Players.Server.Opponent;
+
+                // Set Love point for both the players
+                Players.FirstPlayer.SetLove();
+                Players.SecondPlayer.SetLove();
             }
             catch (DomainServiceException domainServiceException)
-            {
+            {                
                 throw domainServiceException;
             }
             catch (Exception exception)

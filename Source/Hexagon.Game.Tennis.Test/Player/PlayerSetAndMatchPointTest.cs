@@ -17,9 +17,8 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfThreeSetsWinScenarioOne()
         {
             IMatch match = new Match();
-            match.Players = AddPlayers();
-            match.Info = new MatchEntity();
-            match.Info.BestOfSets = 3;
+            match.Players = AddPlayers();    
+            match.BestOfSets = 3;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -45,7 +44,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -75,7 +74,7 @@ namespace Hexagon.Game.Tennis.Test
                 secondPlayer.Win();        // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -105,8 +104,8 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.NotNull(match.Info.WonBy);
-            Assert.Equal(firstPlayer.Identity.Id, match.Info.WonBy.Id);
+            Assert.NotNull(match.WonBy);
+            Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -122,9 +121,8 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfThreeSetsWinScenarioTwo()
         {
             IMatch match = new Match();
-            match.Players = AddPlayers();
-            match.Info = new MatchEntity();
-            match.Info.BestOfSets = 3;
+            match.Players = AddPlayers();            ;
+            match.BestOfSets = 3;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -150,7 +148,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -181,8 +179,8 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.NotNull(match.Info.WonBy);
-            Assert.Equal(firstPlayer.Identity.Id, match.Info.WonBy.Id);
+            Assert.NotNull(match.WonBy);
+            Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -198,9 +196,8 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfFiveSetsWinScenarioOne()
         {
             IMatch match = new Match();
-            match.Players = AddPlayers();
-            match.Info = new MatchEntity();
-            match.Info.BestOfSets = 5;
+            match.Players = AddPlayers();            
+            match.BestOfSets = 5;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -226,7 +223,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -256,7 +253,7 @@ namespace Hexagon.Game.Tennis.Test
                 secondPlayer.Win();        // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -286,7 +283,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -316,8 +313,8 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.NotNull(match.Info.WonBy);
-            Assert.Equal(firstPlayer.Identity.Id, match.Info.WonBy.Id);
+            Assert.NotNull(match.WonBy);
+            Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(4, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -333,9 +330,8 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfFiveSetsWinScenarioTwo()
         {
             IMatch match = new Match();
-            match.Players = AddPlayers();
-            match.Info = new MatchEntity();
-            match.Info.BestOfSets = 5;
+            match.Players = AddPlayers();          
+            match.BestOfSets = 5;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -361,7 +357,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -391,7 +387,7 @@ namespace Hexagon.Game.Tennis.Test
                 secondPlayer.Win();        // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -421,7 +417,7 @@ namespace Hexagon.Game.Tennis.Test
                 firstPlayer.Win();          // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -451,7 +447,7 @@ namespace Hexagon.Game.Tennis.Test
                 secondPlayer.Win();        // GamePoint    40
             }
 
-            Assert.Null(match.Info.WonBy);
+            Assert.Null(match.WonBy);
             Assert.Equal(5, match.Score.TotalSets);
             Assert.Equal(4, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -481,8 +477,8 @@ namespace Hexagon.Game.Tennis.Test
                 secondPlayer.Win();        // GamePoint    40
             }
 
-            Assert.NotNull(match.Info.WonBy);
-            Assert.Equal(secondPlayer.Identity.Id, match.Info.WonBy.Id);
+            Assert.NotNull(match.WonBy);
+            Assert.Equal(secondPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(5, match.Score.TotalSets);
             Assert.Equal(5, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());

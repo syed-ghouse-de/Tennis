@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Service.Domain;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
+using Hexagon.Game.Tennis.Persistence.Service;
 
-namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
+namespace Hexagon.Game.Tennis.Domain.Service.Implementation
 {
     /// <summary>
     /// Business logic class for Score
@@ -30,7 +32,8 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
             {
                 // Set the current game to complete
                 score.CurrentGame.Status = Status.Completed;
-                score.CurrentGame.WonBy = new PlayerEntity(winner);      
+                score.CurrentGame.WonBy = new PlayerEntity(winner);
+                score.CurrentGame.CompletedOn = DateTime.UtcNow;                                              
 
                 // Get the total games won by each player
                 var winPlayerGames = score.CurrentSet.Games.Where(
@@ -42,18 +45,37 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
                 // the difference should be greather equal to 2
                 if (winPlayerGames >= 6 && (winPlayerGames - opponentPlayerGames) >= 2)
                 {
+                    // Set the current Set to complete
                     score.CurrentSet.Status = Status.Completed;
                     score.CurrentSet.WonBy = new PlayerEntity(winner);
+                    score.CurrentSet.CompletedOn = DateTime.UtcNow; 
+
+                    // If best of 3 sets then match is completed
+                    // and do not continue further
+                    var winPlayerSets = score.Sets.Where(
+                        s => s.WonBy.Id.Equals(winner.Id)).Count();
+                    var bestOfSets = Math.Ceiling((double)match.BestOfSets / 2) +
+                        ((match.BestOfSets % 2) == 0 ? 1 : 0);
+
+                    if (winPlayerSets >= bestOfSets)
+                    {
+                        match.WonBy = winner;
+                        match.CompletedOn = DateTime.UtcNow;
+                        match.Status = Status.Completed;
+                        // TODO: Update Match in the database                           
+
+                        return score;
+                    }
 
                     // Careate an instance of new Set
                     var setEntity = new SetEntity()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),                        
                         Games = new List<GameEntity>(),
                         Status = Status.InProgress
                     };
-
-                    score.Sets.Add(setEntity);
+                    
+                    score.Sets.Add(setEntity);                  
                 }
 
                 // Create a an instance for new game and
@@ -61,7 +83,7 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implemenation
                 var newGameEntity = new GameEntity()
                 {
                     Id = Guid.NewGuid(), 
-                    Server = new PlayerEntity(receiver),                 // Set the Game server as reciver
+                    Server = new PlayerEntity(receiver),                // Set the Game server as reciver
                     Status = Status.InProgress                          // Set the Game status a in progress
                 };
 

@@ -19,10 +19,19 @@ namespace Hexagon.Game.Tennis.Entity
         public PlayerEntity WonBy { get; set; }
         public List<PlayerEntity> Players { get; set; }
         public List<SetEntity> Sets { get; set; }
-        
+        public ScoreEntity Score { get; set;}
+
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MatchEntity() { }
+        public MatchEntity()
+        {
+            BestOfSets = 5;
+            WonBy = null;
+            Status = Status.NoStarted;
+
+            Score = new ScoreEntity();
+            Players = new List<PlayerEntity>();
+        }
     }
 }

@@ -81,8 +81,18 @@ namespace Hexagon.Game.Tennis
         private void Init()
         {
             // Initialize default to Love point
+            SetLove();
+        }
+
+        /// <summary>
+        /// Method to set the Love point for the player
+        /// </summary>
+        public void SetLove()
+        {
             _point = new Love();
+
             _point.PointWin += OnPointWin;
+            _point.GamePointWin += OnGamePointWin;
         }
 
         /// <summary>
@@ -114,7 +124,7 @@ namespace Hexagon.Game.Tennis
         private void OnGamePointWin(PlayerEntity player)
         {
             // Invoke event action
-            GamePointWin?.Invoke(player);
+            GamePointWin?.Invoke(player);            
         }
     }
 

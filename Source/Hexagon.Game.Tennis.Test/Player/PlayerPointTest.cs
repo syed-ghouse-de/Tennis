@@ -183,7 +183,7 @@ namespace Hexagon.Game.Tennis.Test
 
             players.SecondPlayer.Win();            
             Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
-            Assert.Equal(PlayerPoint.GamePoint, players.SecondPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
         }
     }
 }

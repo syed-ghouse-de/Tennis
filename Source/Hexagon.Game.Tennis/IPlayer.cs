@@ -32,6 +32,11 @@ namespace Hexagon.Game.Tennis
         void Loose();
 
         /// <summary>
+        /// Method to set the Love point for the player
+        /// </summary>
+        void SetLove();
+
+        /// <summary>
         /// Method to set the Deuce for the player
         /// </summary>
         void SetDeuce();

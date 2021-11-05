@@ -37,8 +37,8 @@ namespace Hexagon.Game.Tennis.Score
             PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.GamePoint);            
             GamePointWinHandler?.Invoke(opponent.Opponent.Identity);
 
-            // Return Game point for the player
-            return new GamePoint();
+            // Return Love point for the player
+            return new Love();
         }
     }
 }

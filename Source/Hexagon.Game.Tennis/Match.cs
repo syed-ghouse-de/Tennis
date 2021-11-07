@@ -15,7 +15,10 @@ namespace Hexagon.Game.Tennis
     /// Match class to contains match associated attributes
     /// </summary>
     public class Match : IMatch
-    {   
+    {
+        public event Action<PlayerEntity, ScoreEntity> ScoreUpdate;     // Delegate for player point win       
+        public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegat for player game point win
+
         // Privte memeber variables
         private IScoreDomainService _scoreDomainService;                // Score business logic service     
         private MatchEntity _match;                                     // Match information
@@ -131,7 +134,10 @@ namespace Hexagon.Game.Tennis
             {
                 // Calculate score after every point win
                 _match.Score = _scoreDomainService.PointWin(Score, Players.Server.Identity, 
-                    winPlayer, Players[winPlayer.Id].Opponent.Identity, point);             
+                    winPlayer, Players[winPlayer.Id].Opponent.Identity, point);
+
+                // Invoke score update event
+                ScoreUpdate?.Invoke(winPlayer, _match.Score);
             }
             catch (DomainServiceException domainServiceException)
             {                
@@ -161,6 +167,13 @@ namespace Hexagon.Game.Tennis
                 // Set Love point for both the players
                 Players.FirstPlayer.SetLove();
                 Players.SecondPlayer.SetLove();
+
+                // Invoke score update event
+                ScoreUpdate?.Invoke(winPlayer, _match.Score);
+
+                // Invoke match win event
+                if (_match.Status.Equals(Status.Completed) && _match.WonBy != null)
+                    MatchWin?.Invoke(winPlayer, _match.Score);
             }
             catch (DomainServiceException domainServiceException)
             {                

@@ -12,6 +12,9 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IMatch
     {
+        event Action<PlayerEntity, ScoreEntity> ScoreUpdate;        // Delegate for player point win       
+        event Action<PlayerEntity, ScoreEntity> MatchWin;           // Delegat for player game point win
+
         /// <summary>
         /// Id of a match
         /// </summary>

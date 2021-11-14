@@ -31,6 +31,12 @@ namespace Hexagon.Game.Tennis.Score
         /// </summary>
         /// <param name="opponent">Opponent player</param>
         /// <returns>Returns latest state of the point</returns>
-        IPoint Win(Player opponent);
+        IPoint Win(IPlayer opponent);
+
+        /// <summary>
+        /// Update points of the player
+        /// </summary>
+        /// <param name="player">Player to which point to be updated</param>
+        void Update(IPlayer player);
     }
 }

@@ -30,9 +30,20 @@ namespace Hexagon.Game.Tennis.Score
         /// <summary>
         /// Execute to maintain the state of player win point
         /// </summary>
-        public IPoint Win(Player opponent)
+        public IPoint Win(IPlayer opponent)
         {
-            throw new AlreadyWonGamePointException();
+            throw new AlreadyWonGamePointException();            
+        }
+
+        /// <summary>
+        /// Update points of the player
+        /// </summary>
+        /// <param name="player">Player to which point to be updated</param>
+        public void Update(IPlayer player)
+        {
+            // Invoke game nd point win hanlder to update the player point
+            PointWinHandler?.Invoke(player.Identity, PlayerPoint.GamePoint);
+            GamePointWinHandler?.Invoke(player.Identity);
         }
     }
 }

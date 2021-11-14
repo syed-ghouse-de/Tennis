@@ -56,6 +56,14 @@ namespace Hexagon.Game.Tennis
         /// </summary>        
         public void Win()
         {
+            // Reset both he players to Love if any of the player has won the game
+            if (_point.Point.Equals(PlayerPoint.GamePoint) ||
+                Opponent.Point.Point.Equals(PlayerPoint.GamePoint))
+            {
+                SetLove();
+                Opponent.SetLove();
+            }
+
             _point = Point.Win((Player)Opponent);
 
             // Subscribe event handlers
@@ -64,7 +72,10 @@ namespace Hexagon.Game.Tennis
 
             // Invoke Deuce action handler if the current point is Deuce             
             if (_point is Deuce)
-                Deuce?.Invoke(Identity);      
+                Deuce?.Invoke(Identity);
+
+            // Trigger to update the point of the player
+            _point.Update(this);
         }
 
         /// <summary>
@@ -123,6 +134,7 @@ namespace Hexagon.Game.Tennis
         /// <param name="player">Information of the game point player</param>
         private void OnGamePointWin(PlayerEntity player)
         {
+            _point = new GamePoint();
             // Invoke event action
             GamePointWin?.Invoke(player);            
         }

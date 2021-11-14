@@ -37,9 +37,9 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implementation
 
                 // Get the total games won by each player
                 var winPlayerGames = score.CurrentSet.Games.Where(
-                    g => g.WonBy.Id.Equals(winner.Id)).Count();
+                    g => g.WonBy != null && g.WonBy.Id.Equals(winner.Id)).Count();
                 var opponentPlayerGames = score.CurrentSet.Games.Where(
-                    g => !g.WonBy.Id.Equals(winner.Id)).Count();
+                    g => g.WonBy != null && !g.WonBy.Id.Equals(winner.Id)).Count();
 
                 // If total games are greater than 6 and 
                 // the difference should be greather equal to 2
@@ -53,7 +53,7 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implementation
                     // If best of 3 sets then match is completed
                     // and do not continue further
                     var winPlayerSets = score.Sets.Where(
-                        s => s.WonBy.Id.Equals(winner.Id)).Count();
+                        s => s.WonBy != null && s.WonBy.Id.Equals(winner.Id)).Count();
                     var bestOfSets = Math.Ceiling((double)match.BestOfSets / 2) +
                         ((match.BestOfSets % 2) == 0 ? 1 : 0);
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hexagon.Game.Tennis.Score
@@ -31,25 +32,26 @@ namespace Hexagon.Game.Tennis.Score
         /// </summary>  
         /// <param name="opponent">Opponent player</param>
         /// <returns>Returns latest state of the point</returns>
-        public IPoint Win(Player opponent)
+        public IPoint Win(IPlayer opponent)
         {
             IPoint point = new Advantage();
 
             // If both player are in Advantage, return Deuce
-            if (point.Point.Equals(opponent.Point.Point))
-            {
-                // If the new state is Deuce then publish as Forty
-                point = new Deuce();                             
-                PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Forty);
-
-                return point;
-            } 
-
-            // Invoke point action handler
-            PointWinHandler?.Invoke(opponent.Opponent.Identity, PlayerPoint.Advantage);
+            if (point.Point.Equals(opponent.Point.Point)) 
+                point = new Deuce();   
 
             // Return point
             return point;
+        }
+
+        /// <summary>
+        /// Update points of the player
+        /// </summary>
+        /// <param name="player">Player to which point to be updated</param>
+        public void Update(IPlayer player)
+        {
+            // Invoke point win halder to update the player point
+            PointWinHandler?.Invoke(player.Identity, PlayerPoint.Forty);           
         }
     }
 }

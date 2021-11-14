@@ -164,10 +164,6 @@ namespace Hexagon.Game.Tennis
                 // Swap the Server afer every game point win                
                 Players.Server = Players.Server.Opponent;
 
-                // Set Love point for both the players
-                Players.FirstPlayer.SetLove();
-                Players.SecondPlayer.SetLove();
-
                 // Invoke score update event
                 ScoreUpdate?.Invoke(winPlayer, _match.Score);
 

@@ -24,8 +24,8 @@ namespace Hexagon.Game.Tennis.Desktop
         public MainWindow()
         {
             InitializeComponent();
-            ScoreViewModel context = new ScoreViewModel();            
-            this.DataContext = context;
+            //ScoreViewModel context = new ScoreViewModel();            
+            //this.DataContext = context;
         }
     }
 }

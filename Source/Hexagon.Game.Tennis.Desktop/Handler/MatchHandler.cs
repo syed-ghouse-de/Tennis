@@ -6,7 +6,9 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Entity;
 
 namespace Hexagon.Game.Tennis.Desktop.Handler
@@ -15,14 +17,14 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
     /// Match handler for observable
     /// </summary>
     public class MatchHandler : IMatchHandler
-    {  
+    {
         // Observable & Subject objects 
         private readonly CompositeDisposable _disposable;
-        private readonly IConnectableObservable<ScoreEntity> _scoreObservable;
-        private Subject<ScoreEntity> _scoreSubject = new Subject<ScoreEntity>();
+        private readonly IConnectableObservable<ScoreModel> _scoreObservable;
+        private Subject<ScoreModel> _scoreSubject = new Subject<ScoreModel>();
 
         private readonly object _lock;
-        private bool _scoreConnected;     
+        private bool _scoreConnected;
 
         // Handler & Match member variables
         private static IMatchHandler _instance;
@@ -58,9 +60,14 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public IMatch Match { get { return _match; } }
+
+        /// <summary>
         /// Observable for Score
         /// </summary>
-        public IObservable<ScoreEntity> Score
+        public IObservable<ScoreModel> Score
         {
             get
             {
@@ -109,8 +116,26 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             var f = _match.Players.FirstPlayer;
             var s = _match.Players.SecondPlayer;
 
-            _match.Start();
-            _match.Players.FirstPlayer.Win();
+            Task.Run(() =>
+                {
+                    _match.Start();
+
+                    Random rnd = new Random();
+
+                    while (true)
+                    {
+                        int winner = rnd.Next() % 2;
+                        int looser = (winner + 1) % 2;
+
+                        if (winner == 1)
+                            _match.Players.FirstPlayer.Win();
+                        else
+                            _match.Players.SecondPlayer.Win();
+
+                        Thread.Sleep(2000);
+                    }
+                }
+            );
         }
 
         /// <summary>
@@ -120,10 +145,84 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <param name="score">Score of a player</param>
         private void OnMatchWin(PlayerEntity winner, ScoreEntity score)
         {
-            // Notify for all the subscribers
-            _scoreSubject.OnNext(_match.Score);
+            try
+            {
+                // Prepare Score model
+                ScoreModel model = PreparePlayerScore(score);
+
+                // Notify for all the subscribers            
+                _scoreSubject.OnNext(model);
+            }
+            catch(Exception) { }
         }
-        
+
+        private ScoreModel PreparePlayerScore(ScoreEntity score)
+        {
+            ScoreModel model = new ScoreModel();
+
+            model.Match = new MatchModel()
+            {
+                Name = _match.Name,
+                Date = _match.StartedOn          
+            };
+
+            PlayerModel firstPlayer = new PlayerModel()
+            {
+                Id = _match.Players.FirstPlayer.Identity.Id,
+                FirstName = _match.Players.FirstPlayer.Identity.FirstName,
+                SurName = _match.Players.FirstPlayer.Identity.SurName,
+                LastName = _match.Players.FirstPlayer.Identity.LastName,             
+                Sets = new List<string>(),
+                Point = _match.Players.FirstPlayer.Point.Point.ToString()
+            };
+            firstPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
+                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count());
+            firstPlayer.Sets = score.Sets.Select(k => k.Games.Where(
+                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();          
+
+            PlayerModel secondPlayer = new PlayerModel()
+            {
+                Id = _match.Players.SecondPlayer.Identity.Id,
+                FirstName = _match.Players.SecondPlayer.Identity.FirstName,
+                SurName = _match.Players.SecondPlayer.Identity.SurName,
+                LastName = _match.Players.SecondPlayer.Identity.LastName,
+                Sets = new List<string>(),
+                Point = _match.Players.SecondPlayer.Point.Point.ToString()
+            };
+            secondPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
+                s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count());
+            secondPlayer.Sets = score.Sets.Select(k => k.Games.Where(
+                s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count().ToString()).ToList();
+
+            for(int count = 0; count < _match.BestOfSets - firstPlayer.Sets.Count; count ++)
+            {
+                firstPlayer.Sets.Add("");
+                secondPlayer.Sets.Add("");
+            }
+
+            model.Players.Add(firstPlayer);
+            model.Players.Add(secondPlayer);
+
+            model.Games = score.Sets.ToDictionary(k => k.Id, v => v.Games.Select(g => new GameModel()
+            {
+                Server = new PlayerModel()
+                {
+                    Id = g.Server.Id,
+                    FirstName = g.Server.FirstName,
+                    SurName = g.Server.SurName,
+                    Point = String.Format("{0}: {1}", "S", string.Join(" ", 
+                        g.PlayerPoints.Where(p => p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point)))
+                },
+                Receiver = new PlayerModel()
+                {
+                    Point = String.Format("{0}: {1}", "R", string.Join(" ", 
+                        g.PlayerPoints.Where(p => !p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point)))
+                }
+            }).ToList());
+
+            return model;
+        }
+
         /// <summary>
         /// Action even for score update
         /// </summary>
@@ -131,8 +230,15 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <param name="score">Score of the player</param>
         private void OnScoreUpdate(PlayerEntity winner, ScoreEntity score)
         {
-            // Nofity for all the subscribers
-            _scoreSubject.OnNext(_match.Score);
+            try
+            {
+                // Prepare Score model
+                ScoreModel model = PreparePlayerScore(score);
+             
+                // Notify for all the subscribers            
+                _scoreSubject.OnNext(model);
+            }
+            catch (Exception) { }
         }
     }
 }

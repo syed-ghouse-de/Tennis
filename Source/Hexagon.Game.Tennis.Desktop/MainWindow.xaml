@@ -3,26 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hexagon.Game.Tennis.Desktop"
+        xmlns:this="clr-namespace:Hexagon.Game.Tennis.Desktop.Views"
         xmlns:ViewModels="clr-namespace:Hexagon.Game.Tennis.Desktop.ViewModels" x:Class="Hexagon.Game.Tennis.Desktop.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <ViewModels:ScoreViewModel/>
-    </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="37*"/>
-            <ColumnDefinition Width="728*"/>
-        </Grid.ColumnDefinitions>
-        <ContentPresenter  Grid.Column="0"
-                           Grid.Row="1"
-                           Content="{Binding Path=Score.Sets, Mode=OneWay}" />
-        <Label Content="Label" Grid.Column="3" HorizontalAlignment="Left" Height="44" Margin="38.2,95,0,0" VerticalAlignment="Top" Width="205">
 
-        </Label>
-        <Button Content="Button" Grid.Column="3" HorizontalAlignment="Left" Margin="82.2,225,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Click_Command}" />
+    <Grid>
+        <this:ScoreUserControl />
     </Grid>
 </Window>

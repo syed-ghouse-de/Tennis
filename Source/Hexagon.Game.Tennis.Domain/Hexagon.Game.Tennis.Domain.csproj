@@ -55,6 +55,10 @@
       <Project>{d6acee5f-64b5-46c2-91aa-cfc5552e9ca0}</Project>
       <Name>Hexagon.Game.Tennis.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hexagon.Game.Tennis.Persistence\Hexagon.Game.Tennis.Persistence.csproj">
+      <Project>{dc4afd08-b43b-48c7-ba57-c1e5c2827d64}</Project>
+      <Name>Hexagon.Game.Tennis.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

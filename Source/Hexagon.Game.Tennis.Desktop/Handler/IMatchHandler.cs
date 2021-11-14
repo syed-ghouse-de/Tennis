@@ -1,4 +1,5 @@
-﻿using Hexagon.Game.Tennis.Entity;
+﻿using Hexagon.Game.Tennis.Desktop.Model;
+using Hexagon.Game.Tennis.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,14 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
     public interface IMatchHandler
     {
         /// <summary>
+        /// 
+        /// </summary>
+        IMatch Match { get; }
+
+        /// <summary>
         /// Score observable
         /// </summary>
-        IObservable<ScoreEntity> Score { get; }
+        IObservable<ScoreModel> Score { get; }
 
         /// <summary>
         /// Start a match

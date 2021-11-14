@@ -185,5 +185,76 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal(PlayerPoint.Deuce, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
         }
+
+        /// <summary>
+        /// Test case for game point of the player
+        /// </summary>
+        [Fact]
+        public void PlayerCurrentPointForFirstPlayerWinScenario1()
+        {
+            Players players = new Players();
+
+            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
+            players.Add(first);
+            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
+            players.Add(second);
+
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Fifteen, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Thirty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.GamePoint, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.SecondPlayer.Win();
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Fifteen, players.SecondPlayer.Point.Point);
+        }
+
+        [Fact]
+        public void PlayerCurrentPointForFirstPlayerWinScenario2()
+        {
+            Players players = new Players();
+
+            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
+            players.Add(first);
+            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
+            players.Add(second);
+
+            Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Fifteen, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Thirty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Forty, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.GamePoint, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+
+            players.FirstPlayer.Win();
+            Assert.Equal(PlayerPoint.Fifteen, players.FirstPlayer.Point.Point);
+            Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
+        }
     }
 }

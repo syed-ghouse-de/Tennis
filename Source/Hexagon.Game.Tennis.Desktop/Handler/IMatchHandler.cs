@@ -27,5 +27,11 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// Start a match
         /// </summary>
         void Start();
+
+        /// <summary>
+        /// Configure math details before starting the match
+        /// </summary>
+        /// <param name="match">Match to start</param>
+        void Initialize(MatchEntity match);            
     }
 }

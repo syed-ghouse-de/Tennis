@@ -8,6 +8,7 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hexagon.Game.Framework;
 using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Entity;
 
@@ -49,11 +50,6 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// </summary>
         private MatchHandler()
         {
-            _match = new Match();
-
-            _match.ScoreUpdate += OnScoreUpdate;
-            _match.MatchWin += OnMatchWin;
-
             _lock = new object();
             _disposable = new CompositeDisposable();
             _scoreObservable = _scoreSubject.ObserveOn(Scheduler.Default).Publish();
@@ -62,7 +58,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <summary>
         /// 
         /// </summary>
-        public IMatch Match { get { return _match; } }
+        public IMatch Match { get { return _match; } set { _match = value; } }
 
         /// <summary>
         /// Observable for Score
@@ -103,39 +99,55 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// Start a match
         /// </summary>
         public void Start()
-        {           
-            Players players = new Players();
-
-            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
-            players.Add(first);
-            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
-            players.Add(second);
-
-            _match.Players = players;
-            _match.Players.Server = first;
-            var f = _match.Players.FirstPlayer;
-            var s = _match.Players.SecondPlayer;
-
-            Task.Run(() =>
-                {
-                    _match.Start();
-
-                    Random rnd = new Random();
-
-                    while (true)
+        {
+            try
+            {               
+                Task.Run(() =>
                     {
-                        int winner = rnd.Next() % 2;
-                        int looser = (winner + 1) % 2;
+                        _match.Start();
 
-                        if (winner == 1)
-                            _match.Players.FirstPlayer.Win();
-                        else
-                            _match.Players.SecondPlayer.Win();
+                        Random rnd = new Random();
 
-                        Thread.Sleep(2000);
+                        while (true)
+                        {
+                            int winner = rnd.Next() % 2;
+                            int looser = (winner + 1) % 2;
+
+                            if (winner == 1)
+                                _match.Players.FirstPlayer.Win();
+                            else
+                                _match.Players.SecondPlayer.Win();
+
+                            Thread.Sleep(2000);
+                        }
                     }
-                }
-            );
+                );
+            }
+            catch(Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        /// <summary>
+        /// Configure math details before starting the match
+        /// </summary>
+        /// <param name="match">Match to start</param>
+        public void Initialize(MatchEntity match)
+        {
+            _match = new Match();
+
+            if (!match.Players.Any())
+                throw new InvalidOperationException("Playres needs to be initialized before starting the match");
+
+            _match.Players.Add(new Player(match.Players[0]));
+            _match.Players.Add(new Player(match.Players[1]));
+
+            _match.ScoreUpdate += OnScoreUpdate;
+            _match.MatchWin += OnMatchWin;
+
+            var firstPlayer = _match.Players.FirstPlayer;
+            var secondPlayer = _match.Players.SecondPlayer;
         }
 
         /// <summary>
@@ -148,7 +160,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             try
             {
                 // Prepare Score model
-                ScoreModel model = PreparePlayerScore(score);
+                ScoreModel model = GetScore(score);
 
                 // Notify for all the subscribers            
                 _scoreSubject.OnNext(model);
@@ -156,7 +168,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             catch(Exception) { }
         }
 
-        private ScoreModel PreparePlayerScore(ScoreEntity score)
+        public ScoreModel GetScore(ScoreEntity score)
         {
             ScoreModel model = new ScoreModel();
 
@@ -233,7 +245,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             try
             {
                 // Prepare Score model
-                ScoreModel model = PreparePlayerScore(score);
+                ScoreModel model = GetScore(score);
              
                 // Notify for all the subscribers            
                 _scoreSubject.OnNext(model);

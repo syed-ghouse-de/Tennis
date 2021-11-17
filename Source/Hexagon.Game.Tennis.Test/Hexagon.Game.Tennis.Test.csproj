@@ -43,9 +43,6 @@
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
     </PackageReference>
-    <PackageReference Include="Moq">
-      <Version>4.16.1</Version>
-    </PackageReference>
     <PackageReference Include="xunit">
       <Version>2.0.0</Version>
     </PackageReference>
@@ -67,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
-    <Compile Include="Desktop\MatchHandlerTest.cs" />
     <Compile Include="Domain\ScoreDomainServiceTest.cs" />
     <Compile Include="Player\PlayerGameTest.cs" />
     <Compile Include="Player\PlayerPointTest.cs" />
@@ -79,10 +75,6 @@
     <ProjectReference Include="..\Hexagon.Game.Framework\Hexagon.Game.Framework.csproj">
       <Project>{3049aa40-c9a4-4282-86df-145391a99e2b}</Project>
       <Name>Hexagon.Game.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hexagon.Game.Tennis.Desktop\Hexagon.Game.Tennis.Desktop.csproj">
-      <Project>{5fc71488-feca-4cc8-8ba6-b8be13d046a8}</Project>
-      <Name>Hexagon.Game.Tennis.Desktop</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hexagon.Game.Tennis.Domain\Hexagon.Game.Tennis.Domain.csproj">
       <Project>{6fd254f1-b1ae-427f-8158-89413251b4a2}</Project>
@@ -97,6 +89,5 @@
       <Name>Hexagon.Game.Tennis</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

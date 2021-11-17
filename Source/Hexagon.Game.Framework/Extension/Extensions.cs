@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Game.Tennis.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,20 @@ namespace Hexagon.Game.Framework.Extension
 
             return collection;
         }
+
+        /// <summary>
+        /// Convert player points enum to digits
+        /// </summary>
+        /// <param name="point">Point to be converted to digit</param>
+        /// <returns>Return digit in string type</returns>
+        public static string ToDigit(this PlayerPoint point)
+        {
+            List<string> points = new List<string>()
+                { "0", "15", "30", "40", "A", "40", "G" };
+
+            // Return point in digit
+            return points[(int)point];
+        }
+
     }
 }

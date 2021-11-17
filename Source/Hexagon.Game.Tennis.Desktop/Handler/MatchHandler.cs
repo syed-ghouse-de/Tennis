@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hexagon.Game.Framework;
+using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Extension;
 using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Entity;
 
@@ -183,14 +185,14 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 Id = _match.Players.FirstPlayer.Identity.Id,
                 FirstName = _match.Players.FirstPlayer.Identity.FirstName,
                 SurName = _match.Players.FirstPlayer.Identity.SurName,
-                LastName = _match.Players.FirstPlayer.Identity.LastName,             
+                LastName = _match.Players.FirstPlayer.Identity.LastName,
                 Sets = new List<string>(),
-                Point = _match.Players.FirstPlayer.Point.Point.ToString()
+                Point = _match.Players.FirstPlayer.Point.Point.ToDigit()
             };
             firstPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
                 s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count());
             firstPlayer.Sets = score.Sets.Select(k => k.Games.Where(
-                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();          
+                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();
 
             PlayerModel secondPlayer = new PlayerModel()
             {
@@ -199,7 +201,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 SurName = _match.Players.SecondPlayer.Identity.SurName,
                 LastName = _match.Players.SecondPlayer.Identity.LastName,
                 Sets = new List<string>(),
-                Point = _match.Players.SecondPlayer.Point.Point.ToString()
+                Point = _match.Players.SecondPlayer.Point.Point.ToDigit()
             };
             secondPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
                 s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count());
@@ -223,12 +225,12 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                     FirstName = g.Server.FirstName,
                     SurName = g.Server.SurName,
                     Point = String.Format("{0}: {1}", "S", string.Join(" ", 
-                        g.PlayerPoints.Where(p => p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point)))
+                        g.PlayerPoints.Where(p => p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
                 },
                 Receiver = new PlayerModel()
                 {
                     Point = String.Format("{0}: {1}", "R", string.Join(" ", 
-                        g.PlayerPoints.Where(p => !p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point)))
+                        g.PlayerPoints.Where(p => !p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
                 }
             }).ToList());
 

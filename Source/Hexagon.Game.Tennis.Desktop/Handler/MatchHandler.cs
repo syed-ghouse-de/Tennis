@@ -70,7 +70,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             get
             {
                 // Connect score observable
-                ConnectScoreObservable();                   
+                ConnectScoreObservable();
                 return _scoreSubject.DistinctUntilChanged();
             }
         }
@@ -84,7 +84,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 return;
 
             // Lock for to connect score observable for multiple request
-            lock(_lock)
+            lock (_lock)
             {
                 if (_scoreConnected)
                     return;
@@ -103,7 +103,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         public void Start()
         {
             try
-            {               
+            {
                 Task.Run(() =>
                     {
                         _match.Start();
@@ -125,7 +125,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                     }
                 );
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 throw exception;
             }
@@ -139,12 +139,15 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         {
             _match = new Match();
 
+            // Throw exception when no palyers are added
             if (!match.Players.Any())
                 throw new InvalidOperationException("Playres needs to be initialized before starting the match");
 
+            // Initialize players details
             _match.Players.Add(new Player(match.Players[0]));
             _match.Players.Add(new Player(match.Players[1]));
 
+            // Subscribe delegates for both score update and match win
             _match.ScoreUpdate += OnScoreUpdate;
             _match.MatchWin += OnMatchWin;
 
@@ -170,71 +173,101 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             catch(Exception) { }
         }
 
+        /// <summary>
+        /// Prepare the score mobel for score board
+        /// </summary>
+        /// <param name="score">Score of the match</param>
+        /// <returns>Return match score</returns>
         public ScoreModel GetScore(ScoreEntity score)
         {
-            ScoreModel model = new ScoreModel();
-
-            model.Match = new MatchModel()
+            // Lock an object for sync before preparing the score 
+            lock (_lock)
             {
-                Name = _match.Name,
-                Date = _match.StartedOn          
-            };
+                ScoreModel model = new ScoreModel();
 
-            PlayerModel firstPlayer = new PlayerModel()
-            {
-                Id = _match.Players.FirstPlayer.Identity.Id,
-                FirstName = _match.Players.FirstPlayer.Identity.FirstName,
-                SurName = _match.Players.FirstPlayer.Identity.SurName,
-                LastName = _match.Players.FirstPlayer.Identity.LastName,
-                Sets = new List<string>(),
-                Point = _match.Players.FirstPlayer.Point.Point.ToDigit()
-            };
-            firstPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
-                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count());
-            firstPlayer.Sets = score.Sets.Select(k => k.Games.Where(
-                s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();
-
-            PlayerModel secondPlayer = new PlayerModel()
-            {
-                Id = _match.Players.SecondPlayer.Identity.Id,
-                FirstName = _match.Players.SecondPlayer.Identity.FirstName,
-                SurName = _match.Players.SecondPlayer.Identity.SurName,
-                LastName = _match.Players.SecondPlayer.Identity.LastName,
-                Sets = new List<string>(),
-                Point = _match.Players.SecondPlayer.Point.Point.ToDigit()
-            };
-            secondPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
-                s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count());
-            secondPlayer.Sets = score.Sets.Select(k => k.Games.Where(
-                s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count().ToString()).ToList();
-
-            for(int count = 0; count < _match.BestOfSets - firstPlayer.Sets.Count; count ++)
-            {
-                firstPlayer.Sets.Add("");
-                secondPlayer.Sets.Add("");
-            }
-
-            model.Players.Add(firstPlayer);
-            model.Players.Add(secondPlayer);
-
-            model.Games = score.Sets.ToDictionary(k => k.Id, v => v.Games.Select(g => new GameModel()
-            {
-                Server = new PlayerModel()
+                // Prepare match model
+                model.Match = new MatchModel()
                 {
-                    Id = g.Server.Id,
-                    FirstName = g.Server.FirstName,
-                    SurName = g.Server.SurName,
-                    Point = String.Format("{0}: {1}", "S", string.Join(" ", 
-                        g.PlayerPoints.Where(p => p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
-                },
-                Receiver = new PlayerModel()
+                    Name = _match.Name,
+                    StartedOn = _match.StartedOn,
+                    BestOfSets = _match.BestOfSets,
+                    Status = _match.Status
+                };
+
+                // Initialize match won player details if match is completed
+                if (Match.WonBy != null && Match.Status.Equals(Status.Completed))
                 {
-                    Point = String.Format("{0}: {1}", "R", string.Join(" ", 
-                        g.PlayerPoints.Where(p => !p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
+                    // When the match is completed and by whom
+                    model.Match.CompletedOn = _match.CompletedOn;
+                    model.Match.WonBy = new PlayerModel()
+                    {
+                        Id = Match.WonBy.Id,
+                        FirstName = Match.WonBy.FirstName,
+                        SurName = Match.WonBy.SurName,
+                        LastName = Match.WonBy.LastName
+                    };
                 }
-            }).ToList());
 
-            return model;
+                // Prepare first player model
+                PlayerModel firstPlayer = new PlayerModel()
+                {
+                    Id = _match.Players.FirstPlayer.Identity.Id,
+                    FirstName = _match.Players.FirstPlayer.Identity.FirstName,
+                    SurName = _match.Players.FirstPlayer.Identity.SurName,
+                    LastName = _match.Players.FirstPlayer.Identity.LastName,
+                    Sets = new List<string>(),
+                    Point = _match.Players.FirstPlayer.Point.Point.ToDigit()
+                };
+                firstPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
+                    s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count());
+                firstPlayer.Sets = score.Sets.Select(k => k.Games.Where(
+                    s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();
+
+                // Prepare Second player model
+                PlayerModel secondPlayer = new PlayerModel()
+                {
+                    Id = _match.Players.SecondPlayer.Identity.Id,
+                    FirstName = _match.Players.SecondPlayer.Identity.FirstName,
+                    SurName = _match.Players.SecondPlayer.Identity.SurName,
+                    LastName = _match.Players.SecondPlayer.Identity.LastName,
+                    Sets = new List<string>(),
+                    Point = _match.Players.SecondPlayer.Point.Point.ToDigit()
+                };
+                secondPlayer.GamesWon = score.Sets.ToDictionary(k => k.Id, k => k.Games.Where(
+                    s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count());
+                secondPlayer.Sets = score.Sets.Select(k => k.Games.Where(
+                    s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count().ToString()).ToList();
+
+                for (int count = 0; count < _match.BestOfSets - firstPlayer.Sets.Count; count++)
+                {
+                    firstPlayer.Sets.Add("");
+                    secondPlayer.Sets.Add("");
+                }
+
+                // Add player to the model
+                model.Players.Add(firstPlayer);
+                model.Players.Add(secondPlayer);
+
+                // Prepare games list for referee board
+                model.Games = score.Sets.ToDictionary(k => k.Id, v => v.Games.Select(g => new GameModel()
+                {
+                    Server = new PlayerModel()
+                    {
+                        Id = g.Server.Id,
+                        FirstName = g.Server.FirstName,
+                        SurName = g.Server.SurName,
+                        Point = String.Format("{0}: {1}", "S", string.Join(" ",
+                            g.PlayerPoints.Where(p => p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
+                    },
+                    Receiver = new PlayerModel()
+                    {
+                        Point = String.Format("{0}: {1}", "R", string.Join(" ",
+                            g.PlayerPoints.Where(p => !p.Player.Id.Equals(g.Server.Id)).Select(s => s.Point.ToDigit())))
+                    }
+                }).ToList());
+
+                return model;
+            }            
         }
 
         /// <summary>

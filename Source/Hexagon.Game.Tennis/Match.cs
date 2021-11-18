@@ -169,7 +169,7 @@ namespace Hexagon.Game.Tennis
 
                 // Invoke match win event
                 if (_match.Status.Equals(Status.Completed) && _match.WonBy != null)
-                    MatchWin?.Invoke(winPlayer, _match.Score);
+                    MatchWin?.Invoke(_match.WonBy, _match.Score);
             }
             catch (DomainServiceException domainServiceException)
             {                

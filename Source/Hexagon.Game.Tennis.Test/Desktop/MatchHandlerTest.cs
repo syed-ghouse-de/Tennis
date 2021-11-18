@@ -268,8 +268,7 @@ namespace Hexagon.Game.Tennis.Test.Desktop
                 firstPlayer.Win();          // 40            0
                 firstPlayer.Win();          // GamePoint     0
 
-                var model = _matchHandler.GetScore(match.Score);
-                Assert.Null(model.Match.WonBy);
+                var model = _matchHandler.GetScore(match.Score);                
                 Assert.Equal((gameCount + 1).ToString(), model.Players[0].Sets[2]);
                 Assert.Equal("0", model.Players[1].Sets[2]);
 
@@ -425,8 +424,7 @@ namespace Hexagon.Game.Tennis.Test.Desktop
                 secondPlayer.Win();          // 40            0
                 secondPlayer.Win();          // GamePoint     0
 
-                var model = _matchHandler.GetScore(match.Score);
-                Assert.Null(model.Match.WonBy);
+                var model = _matchHandler.GetScore(match.Score);               
                 Assert.Equal("0", model.Players[0].Sets[4]);
                 Assert.Equal((gameCount + 1).ToString(), model.Players[1].Sets[4]);
 

@@ -13,13 +13,14 @@ namespace Hexagon.Game.Tennis.Desktop.Model
     {
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        public string Court { get; set; }       
+        public string Court { get; set; }   
+        public PlayerModel WonBy { get; set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public MatchModel()
-        {
+        {            
         }
     }
 }

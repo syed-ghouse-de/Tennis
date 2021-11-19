@@ -223,6 +223,9 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal(PlayerPoint.Fifteen, players.SecondPlayer.Point.Point);
         }
 
+        /// <summary>
+        /// Player current point after Player1 win
+        /// </summary>
         [Fact]
         public void PlayerCurrentPointForFirstPlayerWinScenario2()
         {

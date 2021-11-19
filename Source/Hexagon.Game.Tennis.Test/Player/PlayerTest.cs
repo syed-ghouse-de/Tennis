@@ -27,6 +27,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void AddPlayers()
         {
+            // Players details
             Players players = new Players();
 
             Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
@@ -34,6 +35,7 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
             players.Add(second);
 
+            // Players boundry checks
             Assert.True(players.Count.Equals(2));
             Assert.True(players.FirstPlayer.Identity.Unique(first));
             Assert.True(players.SecondPlayer.Identity.Unique(second));
@@ -45,6 +47,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]     
         public void AddMoreThenTwoPlayersThrowExcpetion()
         {
+            // Players details
             Players players = new Players();
 
             Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe" };
@@ -52,6 +55,7 @@ namespace Hexagon.Game.Tennis.Test
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex" };
             players.Add(second);
 
+            // Exception expected when third player is added
             Player third = new Player { Id = Guid.NewGuid(), FirstName = "Bernherd", SurName = "Ritter" };
             Exception exception = Assert.Throws<InvalidOperationException>(() => players.Add(third));
 
@@ -64,11 +68,13 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void AddingDuplicatePlayerThrowExcpetion()
         {
+            // Players details
             Players players = new Players();
 
             Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe" , DateOfBirth = new DateTime(1993, 11, 7)};
             players.Add(first);
 
+            // Exception is expected when duplicate player is added
             Exception exception = Assert.Throws<DuplicateException>(() => players.Add(first));
             Assert.NotNull(exception);
         }        

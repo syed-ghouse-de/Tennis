@@ -55,6 +55,7 @@
     <Compile Include="Score\Point\GamePoint.cs" />
     <Compile Include="Score\Point\IPoint.cs" />
     <Compile Include="Score\Point\Love.cs" />
+    <Compile Include="Score\Point\MatchPoint.cs" />
     <Compile Include="Score\Point\Thirty.cs" />
   </ItemGroup>
   <ItemGroup>

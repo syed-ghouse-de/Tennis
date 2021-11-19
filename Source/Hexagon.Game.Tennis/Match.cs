@@ -169,7 +169,14 @@ namespace Hexagon.Game.Tennis
 
                 // Invoke match win event
                 if (_match.Status.Equals(Status.Completed) && _match.WonBy != null)
+                {
+                    // Set the Match Ponint to both the players
+                    Players.FirstPlayer.SetMatchPoint();
+                    Players.SecondPlayer.SetMatchPoint();
+
+                    // Invoke the MathWin delegate to notify
                     MatchWin?.Invoke(_match.WonBy, _match.Score);
+                }
             }
             catch (DomainServiceException domainServiceException)
             {                

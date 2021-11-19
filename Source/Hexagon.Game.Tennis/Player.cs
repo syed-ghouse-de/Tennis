@@ -118,6 +118,14 @@ namespace Hexagon.Game.Tennis
         }
 
         /// <summary>
+        /// Method to set the Match point for the player
+        /// </summary>
+        public void SetMatchPoint()
+        {
+            _point = new MatchPoint();
+        }
+
+        /// <summary>
         /// Event action for player point win
         /// </summary>
         /// <param name="winPlayer">Winner player</param>

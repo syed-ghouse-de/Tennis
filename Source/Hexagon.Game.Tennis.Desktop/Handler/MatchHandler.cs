@@ -238,7 +238,9 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 secondPlayer.Sets = score.Sets.Select(k => k.Games.Where(
                     s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count().ToString()).ToList();
 
-                for (int count = 0; count < _match.BestOfSets - firstPlayer.Sets.Count; count++)
+                // Add empty for the remaining Sets
+                int emptySets = _match.BestOfSets - firstPlayer.Sets.Count;  
+                for (int count = 0; count < emptySets; count++)
                 {
                     firstPlayer.Sets.Add("");
                     secondPlayer.Sets.Add("");

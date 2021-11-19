@@ -40,5 +40,10 @@ namespace Hexagon.Game.Tennis
         /// Method to set the Deuce for the player
         /// </summary>
         void SetDeuce();
+
+        /// <summary>
+        /// Method to set the Match point for the player
+        /// </summary>
+        void SetMatchPoint();
     }
 }

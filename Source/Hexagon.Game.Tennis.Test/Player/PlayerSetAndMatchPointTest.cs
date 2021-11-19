@@ -543,7 +543,7 @@ namespace Hexagon.Game.Tennis.Test
             // Match & Set boundry checks
             Assert.NotNull(match.WonBy);
             Assert.Equal(secondPlayer.Identity.Id, match.WonBy.Id);
-            Assert.Equal(5, match.Score.TotalSets);
+            Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
             Assert.Equal(0, match.Score.Sets.Where(

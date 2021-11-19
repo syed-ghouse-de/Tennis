@@ -27,6 +27,7 @@ namespace Hexagon.Game.Tennis.Entity
         Forty = 3,
         Advantage = 4,
         Deuce = 5,
-        GamePoint = 6
+        GamePoint = 6,
+        MatchPoint = 7
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="Service\Persistence\IMatchPersistenceService.cs" />
     <Compile Include="Service\Persistence\IModel.cs" />
     <Compile Include="Service\Persistence\IPersistenceService.cs" />
+    <Compile Include="Service\Persistence\IPlayerPersistenceService.cs" />
     <Compile Include="Service\Persistence\IScorePersistenceService.cs" />
     <Compile Include="Service\Persistence\PersistenceService.cs" />
   </ItemGroup>

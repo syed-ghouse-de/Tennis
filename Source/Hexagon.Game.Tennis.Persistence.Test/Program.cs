@@ -17,6 +17,8 @@ namespace Hexagon.Game.Tennis.Persistence.Test
             //MatchPersistenceTest.AddSet();
             //MatchPersistenceTest.GetMatch();
             //MatchPersistenceTest.UpdateSet();
+
+            PlayerPersistenceServiceTest.GetAllPlayers();
         }
     }
 }

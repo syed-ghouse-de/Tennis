@@ -51,6 +51,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -82,6 +83,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -113,6 +115,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.NotNull(match.WonBy);
+            Assert.Equal(Status.Completed, match.Status);
             Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
@@ -162,6 +165,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -193,6 +197,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.NotNull(match.WonBy);
+            Assert.Equal(Status.Completed, match.Status);
             Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
@@ -242,6 +247,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -273,6 +279,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -304,6 +311,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -335,6 +343,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.NotNull(match.WonBy);
+            Assert.Equal(Status.Completed, match.Status);
             Assert.Equal(firstPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(4, match.Score.Sets.Where(
@@ -384,6 +393,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(2, match.Score.TotalSets);
             Assert.Equal(1, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -415,6 +425,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(3, match.Score.TotalSets);
             Assert.Equal(2, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -446,6 +457,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(4, match.Score.TotalSets);
             Assert.Equal(3, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -477,6 +489,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.Null(match.WonBy);
+            Assert.Equal(Status.InProgress, match.Status);
             Assert.Equal(5, match.Score.TotalSets);
             Assert.Equal(4, match.Score.Sets.Where(
                 s => s.Status.Equals(Status.Completed)).Count());
@@ -508,6 +521,7 @@ namespace Hexagon.Game.Tennis.Test
 
             // Match & Set boundry checks
             Assert.NotNull(match.WonBy);
+            Assert.Equal(Status.Completed, match.Status);
             Assert.Equal(secondPlayer.Identity.Id, match.WonBy.Id);
             Assert.Equal(5, match.Score.TotalSets);
             Assert.Equal(5, match.Score.Sets.Where(

@@ -90,7 +90,9 @@ namespace Hexagon.Game.Tennis
         public Match()
         {
             _scoreDomainService = new ScoreDomainService();
-            _match = new MatchEntity();                        
+           
+            _match = new MatchEntity();
+            Players = new Players();
         }
 
         /// <summary>
@@ -109,6 +111,9 @@ namespace Hexagon.Game.Tennis
             // Get the current score of the match
             _match.Score = _scoreDomainService
                 .GetMatchScore(_match, Players.Server.Identity);
+
+            _match.Status = Status.InProgress;
+            _match.StartedOn = DateTime.UtcNow;
 
             // Delegate subscribtion
             this.Players.PointWin += OnPointWin;

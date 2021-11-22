@@ -50,8 +50,10 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <summary>
         /// Private default constructor
         /// </summary>
-        private MatchHandler()
+        public MatchHandler()
         {
+            _match = new Match();
+
             _lock = new object();
             _disposable = new CompositeDisposable();
             _scoreObservable = _scoreSubject.ObserveOn(Scheduler.Default).Publish();
@@ -104,22 +106,25 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         {
             try
             {
+                // Execute the player wins Asynchronously
                 Task.Run(() =>
                     {
+                        // Start the match
                         _match.Start();
-
                         Random rnd = new Random();
 
-                        while (true)
+                        // Continue the play till the match is not completed
+                        while (!_match.Status.Equals(Status.Completed))
                         {
-                            int winner = rnd.Next() % 2;
-                            int looser = (winner + 1) % 2;
+                            // Get the random number to make the player win
+                            int player = rnd.Next() % 2;                            
 
-                            if (winner == 1)
+                            if (player == 1)
                                 _match.Players.FirstPlayer.Win();
                             else
                                 _match.Players.SecondPlayer.Win();
 
+                            // Sleep for 2 seconds for delay between players wins
                             Thread.Sleep(2000);
                         }
                     }
@@ -198,7 +203,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 if (Match.WonBy != null && Match.Status.Equals(Status.Completed))
                 {
                     // When the match is completed and by whom
-                    model.Match.CompletedOn = _match.CompletedOn;
+                    model.Match.CompletedOn = _match.CompletedOn;                    
                     model.Match.WonBy = new PlayerModel()
                     {
                         Id = Match.WonBy.Id,
@@ -249,6 +254,10 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 // Add player to the model
                 model.Players.Add(firstPlayer);
                 model.Players.Add(secondPlayer);
+
+                // Prepare Set list
+                for (int setCount = 1; setCount <= score.Sets.Count; setCount++)
+                    model.Sets.Add(score.Sets[setCount - 1].Id, string.Format("Set {0}", setCount));
 
                 // Prepare games list for referee board
                 model.Games = score.Sets.ToDictionary(k => k.Id, v => v.Games.Select(g => new GameModel()

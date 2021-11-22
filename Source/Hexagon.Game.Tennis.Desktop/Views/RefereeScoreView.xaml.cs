@@ -1,4 +1,4 @@
-﻿using Hexagon.Game.Tennis.Desktop.ViewModels;
+﻿using Hexagon.Game.Framework.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +11,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hexagon.Game.Tennis.Desktop
+namespace Hexagon.Game.Tennis.Desktop.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RefereeScoreView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RefereeScoreView : Window, IView
     {
-        public MainWindow()
+        public RefereeScoreView()
         {
             InitializeComponent();
-            //ScoreViewModel context = new ScoreViewModel();            
-            //this.DataContext = context;
         }
+
+        public void Initialize()
+        {
+           
+        }   
     }
 }

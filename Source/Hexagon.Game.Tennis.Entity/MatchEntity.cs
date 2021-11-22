@@ -26,6 +26,8 @@ namespace Hexagon.Game.Tennis.Entity
         /// </summary>
         public MatchEntity()
         {
+            Id = Guid.NewGuid();
+
             BestOfSets = 5;
             WonBy = null;
             Status = Status.NoStarted;

@@ -1,0 +1,15 @@
+﻿<Window x:Class="Hexagon.Game.Tennis.Desktop.Views.SpectatorScoreView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Spectator Score Board" Height="450" Width="800">
+    <Grid>
+        <DataGrid Name="dataGrid" CanUserAddRows="False" ItemsSource="{Binding Score.Players}" AutoGenerateColumns="False"
+                  CanUserDeleteRows="True" CanUserReorderColumns="True" 
+                  CanUserSortColumns="True" Margin="75,130,82,69.6">
+            <DataGrid.Columns/>
+        </DataGrid>
+    </Grid>
+</Window>

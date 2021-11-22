@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hexagon.Game.Framework.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Hexagon.Game.Tennis.Desktop.Model
     /// <summary>
     /// Player model
     /// </summary>
-    public class PlayerModel
+    public class PlayerModel : ObservableModel
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -18,6 +19,6 @@ namespace Hexagon.Game.Tennis.Desktop.Model
         public string Club { get; set; }
         public List<string> Sets { get; set; }
         public Dictionary<Guid, int> GamesWon { get; set; }
-        public string Point { get; set; }
+        public string Point { get; set; }  
     }
 }

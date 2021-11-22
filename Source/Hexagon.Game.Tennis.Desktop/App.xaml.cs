@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hexagon.Game.Framework.DependencyInjection;
+using Hexagon.Game.Tennis.Desktop.Service;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,12 @@ namespace Hexagon.Game.Tennis.Desktop
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            // Registation of dependency injection services
+            DependencyInjection.Instance
+                .RegisterModule<ServiceModule>().Build();
+        }
+
     }
 }

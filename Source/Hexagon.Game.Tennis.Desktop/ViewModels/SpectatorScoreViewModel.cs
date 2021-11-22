@@ -1,4 +1,4 @@
-﻿using Hexagon.Game.Tennis.Desktop.Command;
+﻿using Hexagon.Game.Framework.MVVM.Command;
 using Hexagon.Game.Tennis.Desktop.Handler;
 using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Entity;
@@ -13,9 +13,9 @@ using System.Windows.Input;
 namespace Hexagon.Game.Tennis.Desktop.ViewModels
 {
     /// <summary>
-    /// Score view model
+    /// Spectator score view model
     /// </summary>
-    public class ScoreViewModel : BaseViewModel, IDisposable
+    public class SpectatorScoreViewModel : BaseViewModel, IDisposable
     {
         private IMatchHandler _matchHandler;
         private readonly CompositeDisposable _disposable;
@@ -25,9 +25,12 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ScoreViewModel()
+        public SpectatorScoreViewModel(IMatchHandler handler)
         {
-            _matchHandler = MatchHandler.Instance;
+            // Initialize match handler instance
+            _matchHandler = handler;
+
+            // Subscribe for Score change
             _disposable = new CompositeDisposable
             {
                 // Subscribe for score 
@@ -45,7 +48,7 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// <summary>
         /// Match Handler
         /// </summary>
-        public IMatchHandler MatachHandler { get { return _matchHandler; } }
+        public IMatchHandler MatchHandler { get { return _matchHandler; } }
 
         /// <summary>
         /// Match updated score
@@ -62,23 +65,6 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         public void Dispose()
         {
             _disposable.Dispose();
-        }
-
-        private ICommand clickCommand;
-        public ICommand Click_Command
-        {
-            get
-            {
-                if (clickCommand == null) clickCommand = new RelayCommand(new Action<object>(Execute));
-                return clickCommand;
-            }
-            set { SetProperty(ref clickCommand, value); }
-        }
-
-        private void Execute(object obj)
-        {
-            var handler = MatchHandler.Instance;
-            handler.Start();
         }
     }
 }

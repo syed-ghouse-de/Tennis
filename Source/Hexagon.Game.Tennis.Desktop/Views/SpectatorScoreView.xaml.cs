@@ -1,4 +1,5 @@
-﻿using Hexagon.Game.Tennis.Desktop.ViewModels;
+﻿using Hexagon.Game.Framework.MVVM.View;
+using Hexagon.Game.Tennis.Desktop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,27 +12,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Hexagon.Game.Tennis.Desktop.Views
 {
     /// <summary>
-    /// Interaction logic for ScoreUserControl.xaml
+    /// Interaction logic for SpectatorScoreView.xaml
     /// </summary>
-    public partial class ScoreUserControl : UserControl
+    public partial class SpectatorScoreView : Window, IView
     {
-        public ScoreUserControl()
+        public SpectatorScoreView()
         {
-            InitializeComponent();
-            DataContext = new ScoreViewModel();
+            InitializeComponent();                       
+        }
 
+        public void Initialize()
+        {
             GenerateGridColumns();
         }
+
         private void GenerateGridColumns()
         {
             AddGridColumn("Name", "FirstName");
-            for (int sets = 0; sets < ((ScoreViewModel)DataContext).MatachHandler.Match.BestOfSets; sets++)
+            for (int sets = 0; sets < 5; sets++)
                 AddGridColumn(String.Format("Set {0}", sets + 1), String.Format("Sets[{0}]", sets));
             AddGridColumn(string.Empty, string.Empty);
             AddGridColumn("Point", "Point");

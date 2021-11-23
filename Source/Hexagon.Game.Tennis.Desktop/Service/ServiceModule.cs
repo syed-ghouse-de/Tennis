@@ -1,8 +1,13 @@
 ﻿using Autofac;
 using Hexagon.Game.Framework.DependencyInjection;
 using Hexagon.Game.Framework.MVVM.View;
+using Hexagon.Game.Framework.Service.Domain;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Desktop.Handler;
 using Hexagon.Game.Tennis.Desktop.ViewModels;
+using Hexagon.Game.Tennis.Domain.Service.Implementation;
+using Hexagon.Game.Tennis.Persistence.Context;
+using Hexagon.Game.Tennis.Persistence.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +33,26 @@ namespace Hexagon.Game.Tennis.Desktop.Service
 
             builder.RegisterType<MatchHandler>()
                 .As<IMatchHandler>()
+                .SingleInstance(); 
+
+            builder.RegisterType<MatchPersistenceService>()
+                .As<IMatchPersistenceService>()
+                .SingleInstance();
+            builder.RegisterType<PlayerPersistenceService>()
+                .As<IPlayerPersistenceService>()
+                .SingleInstance();
+            builder.RegisterType<ScorePersistenceService>()
+                .As<IScorePersistenceService>()
+                .SingleInstance();
+
+            builder.RegisterType<ScoreDomainService>()
+                .As<IScoreDomainService>()
                 .SingleInstance();
 
             // Register dependency services
+            builder
+                .RegisterType<Match>()
+                .InstancePerDependency();
             builder
                 .RegisterType<SpectatorScoreViewModel>()
                 .InstancePerDependency();

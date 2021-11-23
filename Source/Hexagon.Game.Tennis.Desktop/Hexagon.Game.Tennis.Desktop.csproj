@@ -58,6 +58,9 @@
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Reactive, Version=5.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.5.0.0\lib\netstandard2.0\System.Reactive.dll</HintPath>
@@ -179,9 +182,17 @@
       <Project>{3049aa40-c9a4-4282-86df-145391a99e2b}</Project>
       <Name>Hexagon.Game.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hexagon.Game.Tennis.Domain\Hexagon.Game.Tennis.Domain.csproj">
+      <Project>{6fd254f1-b1ae-427f-8158-89413251b4a2}</Project>
+      <Name>Hexagon.Game.Tennis.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hexagon.Game.Tennis.Entity\Hexagon.Game.Tennis.Entity.csproj">
       <Project>{d6acee5f-64b5-46c2-91aa-cfc5552e9ca0}</Project>
       <Name>Hexagon.Game.Tennis.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hexagon.Game.Tennis.Persistence\Hexagon.Game.Tennis.Persistence.csproj">
+      <Project>{dc4afd08-b43b-48c7-ba57-c1e5c2827d64}</Project>
+      <Name>Hexagon.Game.Tennis.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hexagon.Game.Tennis\Hexagon.Game.Tennis.csproj">
       <Project>{d2d3f2d7-dfaa-4eb7-9abe-b1d1704dde3a}</Project>

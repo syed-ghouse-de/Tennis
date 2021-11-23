@@ -20,11 +20,11 @@ namespace Hexagon.Game.Tennis.Persistence.Service
         /// </summary>
         public PlayerPersistenceService() { }
 
-        /// <summary>
-        /// Object Instance
-        /// </summary>
-        /// <returns>Returns an insance of Player PersistenceService</returns>
-        public IPersistenceService Instance()
+    /// <summary>
+    /// Object Instance
+    /// </summary>
+    /// <returns>Returns an insance of Player PersistenceService</returns>
+    public IPersistenceService Instance()
         {
             throw new NotImplementedException();
         }

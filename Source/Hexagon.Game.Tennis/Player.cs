@@ -223,7 +223,7 @@ namespace Hexagon.Game.Tennis
             // Check the duplication of the player, throw an exception when duplicate found
             var players = this.Where(pl => pl.Unique(player.Identity)).Select(entity => entity.Identity);
             if (players.Any())
-                throw new DuplicateException(string.Format("Player {0}, {1} already exists!", player.Identity.SurName, player.Identity.FirstName));
+                throw new DuplicateException(string.Format("Player {0}, {1} already selected as player, player's should be different!", player.Identity.SurName, player.Identity.FirstName));
 
             player.PointWin += OnPointWin;
             player.GamePointWin += OnGamePointWin;

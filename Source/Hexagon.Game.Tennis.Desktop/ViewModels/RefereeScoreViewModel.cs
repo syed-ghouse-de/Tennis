@@ -18,9 +18,7 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
     public class RefereeScoreViewModel : BaseViewModel, IDisposable
     {
         private IMatchHandler _matchHandler;
-        private readonly CompositeDisposable _disposable;
-
-        private ScoreModel _score;
+        private readonly CompositeDisposable _disposable;       
 
         /// <summary>
         /// Default constructor
@@ -43,6 +41,9 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                         Score = new ScoreModel();
                     })
             };
+
+            // Get the players from the database
+            Players = _matchHandler.Match.GetPlayers(); 
         }
 
         /// <summary>
@@ -66,6 +67,7 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// <summary>
         /// Match updated score
         /// </summary>
+        private ScoreModel _score;
         public ScoreModel Score
         {
             get { return _score; }
@@ -74,6 +76,7 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                 // Set and notifiy the change of Score data
                 SetPropertyAndNotify(ref _score, value, () => Score);
                 IsMatchInProgress = Score.Match.Status.Equals(Status.InProgress);               // Check if match is in progress
+                Message = string.Empty;
 
                 // If selected Set is empty or it has only one Set, the refreh the Game data
                 if (_selectedSet.Key.Equals(Guid.Empty) || _selectedSet.Key.Equals(Score.Sets.LastOrDefault().Key))                
@@ -93,6 +96,10 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                 // Set and notify the Selected Set
                 SetPropertyAndNotify(ref _selectedSet, value, () => SelectedSet);
 
+                // If any one is NULL, then do not continue
+                if (_score == null || _selectedSet.Key.Equals(Guid.Empty))
+                    return;
+
                 // Add default values to both the pla
                 GamesWon = new List<int>() { Score.Players[0].GamesWon[SelectedSet.Key], Score.Players[1].GamesWon[SelectedSet.Key] };         
                 Games = Score.Games[SelectedSet.Key];
@@ -107,6 +114,54 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         {
             get { return _games; }
             set { SetPropertyAndNotify(ref _games, value, () => Games); }
+        }
+
+        /// <summary>
+        /// Store the list available players
+        /// </summary>
+        private List<PlayerEntity> _players = new List<PlayerEntity>();
+        public List<PlayerEntity> Players
+        {
+            get { return _players; }
+            set
+            {
+                SetPropertyAndNotify(ref _players, value, () => Players);
+               
+                // Assigne the list of players to Player 1 and 2
+                if (Players.Any())
+                {
+                    PlayerOne = value.FirstOrDefault();
+                    PlayerTwo = value.FirstOrDefault();
+                }                    
+            }
+        }
+
+        /// <summary>
+        /// Selected player one 
+        /// </summary>
+        private PlayerEntity _playerOne = new PlayerEntity();
+        public PlayerEntity PlayerOne
+        {
+            get { return _playerOne; }
+            set
+            {
+                // Set and notify the selced player one
+                SetPropertyAndNotify(ref _playerOne, value, () => PlayerOne);
+            }
+        }
+
+        /// <summary>
+        /// Selected player one 
+        /// </summary>
+        private PlayerEntity _playerTwo = new PlayerEntity();
+        public PlayerEntity PlayerTwo
+        {
+            get { return _playerTwo; }
+            set
+            {
+                // Set and notify the selced player one
+                SetPropertyAndNotify(ref _playerTwo, value, () => PlayerTwo);
+            }
         }
 
         /// <summary>
@@ -126,7 +181,24 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         public bool IsMatchInProgress
         {
             get { return !_isMatchInProgress; }
-            set { SetPropertyAndNotify(ref _isMatchInProgress, value, () => IsMatchInProgress); }
+            set
+            {
+                SetPropertyAndNotify(ref _isMatchInProgress, value, () => IsMatchInProgress);
+                if (_isMatchInProgress && _score != null)
+                {
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Message to display on screen
+        /// </summary>
+        private string _message = string.Empty;
+        public string Message
+        {
+            get { return _message; }
+            set { SetPropertyAndNotify(ref _message, value, () => Message); }
         }
 
         /// <summary>
@@ -161,11 +233,13 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
             {       
                 // Initialize match data
                 MatchEntity match = new MatchEntity();
+                SelectedSet = new KeyValuePair<Guid, string>();
 
                 match.BestOfSets = Match.BestOfSets;
                 match.Name = Match.Name;
-                match.Players.Add(new PlayerEntity() { FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) });
-                match.Players.Add(new PlayerEntity() { FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) });
+                match.Players.Add(PlayerOne);
+                match.Players.Add(PlayerTwo);
+                match.Players.Add(PlayerTwo);
 
                 // Initialize new match data by calling initialize method
                 MatachHandler.Initialize(match);
@@ -176,7 +250,7 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
             }
             catch (Exception exception)
             {
-
+                Message = exception.Message;
             }
         }
     }

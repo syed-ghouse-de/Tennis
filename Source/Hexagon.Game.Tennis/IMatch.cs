@@ -74,5 +74,17 @@ namespace Hexagon.Game.Tennis
         /// Stop the match
         /// </summary>
         void Stop();
+
+        /// <summary>
+        /// Get all the players from the database
+        /// </summary>
+        /// <returns>Return list of players</returns>
+        List<PlayerEntity> GetPlayers();
+
+        /// <summary>
+        /// Initialize the new match before starting
+        /// </summary>
+        /// <param name="match">Match details to start a new match</param>
+        void NewMatch(MatchEntity match);
     }
 }

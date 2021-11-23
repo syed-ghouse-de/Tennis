@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Service.Domain;
+using Hexagon.Game.Framework.Service.Persistence;
+using Hexagon.Game.Tennis.Domain.Implemenation;
 using Hexagon.Game.Tennis.Domain.Service;
 using Hexagon.Game.Tennis.Domain.Service.Implementation;
 using Hexagon.Game.Tennis.Entity;
@@ -20,18 +22,20 @@ namespace Hexagon.Game.Tennis
         public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegat for player game point win
 
         // Privte memeber variables
-        private IScoreDomainService _scoreDomainService;                // Score business logic service     
+        private IScoreDomainService _scoreDomainService;                // Score business logic service  
+        private IPlayerDomainService _playerDomainService;              // Player business logic service
+
         private MatchEntity _match;                                     // Match information
-        
+
         public Players Players { get; set; }                            // List of match players
         public ScoreEntity Score { get { return _match.Score; } }       // To maintain player current point     
-        
+
         /// <summary>
         /// Id of a match
         /// </summary>
         public Guid Id
         {
-            get { return _match.Id; }            
+            get { return _match.Id; }
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public DateTime StartedOn
         {
-            get { return _match.StartedOn; }            
+            get { return _match.StartedOn; }
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public Nullable<System.DateTime> CompletedOn
         {
-            get { return _match.CompletedOn; }           
+            get { return _match.CompletedOn; }
         }
 
         /// <summary>
@@ -64,7 +68,7 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public Status Status
         {
-            get { return _match.Status; }            
+            get { return _match.Status; }
         }
 
         /// <summary>
@@ -81,16 +85,19 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public PlayerEntity WonBy
         {
-            get { return _match.WonBy; }            
+            get { return _match.WonBy; }
         }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Match()
+        public Match(IMatchPersistenceService matchPersistenceService,
+            IPlayerPersistenceService playerPersistenceService,
+            IScorePersistenceService scorePersistenceService)
         {
             _scoreDomainService = new ScoreDomainService();
-           
+            _playerDomainService = new PlayerDomainService(playerPersistenceService);
+
             _match = new MatchEntity();
             Players = new Players();
         }
@@ -100,7 +107,7 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public void Play()
         {
-            throw new NotImplementedException();            
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -126,6 +133,43 @@ namespace Hexagon.Game.Tennis
         public void Stop()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get all the players from the database
+        /// </summary>
+        /// <returns>Return list of players</returns>
+        public List<PlayerEntity> GetPlayers()
+        {
+            try
+            {
+                // Get the list of available players 
+                return _playerDomainService.GetPlayers();
+            }
+            catch (DomainServiceException domainServiceException)
+            {
+                throw domainServiceException;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        /// <summary>
+        /// Initialize the new match before starting
+        /// </summary>
+        /// <param name="match">Match details to start a new match</param>
+        public void NewMatch(MatchEntity match)
+        {
+            _match = new MatchEntity()
+            {
+                Id = match.Id,
+                Name = match.Name,
+                BestOfSets = match.BestOfSets
+            };
+
+            Players = new Players();
         }
 
         /// <summary>

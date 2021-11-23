@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hexagon.Game.Framework;
+using Hexagon.Game.Framework.DependencyInjection;
 using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Extension;
 using Hexagon.Game.Tennis.Desktop.Model;
@@ -29,7 +31,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         private readonly object _lock;
         private bool _scoreConnected;
 
-        // Handler & Match member variables
+        // Handler & Match member variables        
         private static IMatchHandler _instance;
         private IMatch _match;
 
@@ -42,7 +44,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             {
                 // Create a single instance of a handler
                 if (_instance == null)
-                    _instance = new MatchHandler();
+                    _instance = new MatchHandler(null);
                 return _instance;
             }
         }
@@ -50,9 +52,9 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <summary>
         /// Private default constructor
         /// </summary>
-        public MatchHandler()
+        public MatchHandler(Match match)
         {
-            _match = new Match();
+            _match = match;
 
             _lock = new object();
             _disposable = new CompositeDisposable();
@@ -141,14 +143,13 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// </summary>
         /// <param name="match">Match to start</param>
         public void Initialize(MatchEntity match)
-        {
-            _match = new Match();
-
+        {            
             // Throw exception when no palyers are added
             if (!match.Players.Any())
                 throw new InvalidOperationException("Playres needs to be initialized before starting the match");
 
-            // Initialize players details
+            // Initialize players details            
+            _match.NewMatch(match);            
             _match.Players.Add(new Player(match.Players[0]));
             _match.Players.Add(new Player(match.Players[1]));
 
@@ -227,6 +228,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                     s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count());
                 firstPlayer.Sets = score.Sets.Select(k => k.Games.Where(
                     s => s.WonBy != null && s.WonBy.Id.Equals(firstPlayer.Id)).Count().ToString()).ToList();
+                firstPlayer.Server = _match.Players.Server.Identity.Id.Equals(firstPlayer.Id) ? "*" : string.Empty;
 
                 // Prepare Second player model
                 PlayerModel secondPlayer = new PlayerModel()
@@ -242,6 +244,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                     s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count());
                 secondPlayer.Sets = score.Sets.Select(k => k.Games.Where(
                     s => s.WonBy != null && s.WonBy.Id.Equals(secondPlayer.Id)).Count().ToString()).ToList();
+                secondPlayer.Server = _match.Players.Server.Identity.Id.Equals(secondPlayer.Id) ? "*" : string.Empty;
 
                 // Add empty for the remaining Sets
                 int emptySets = _match.BestOfSets - firstPlayer.Sets.Count;  

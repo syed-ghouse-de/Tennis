@@ -19,6 +19,7 @@ namespace Hexagon.Game.Tennis.Desktop.Model
         public string Club { get; set; }
         public List<string> Sets { get; set; }
         public Dictionary<Guid, int> GamesWon { get; set; }
-        public string Point { get; set; }  
+        public string Point { get; set; } 
+        public string Server { get; set; }
     }
 }

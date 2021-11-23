@@ -7,28 +7,24 @@
         Title="Referee Score Board" Height="799.6" Width="768" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,10,24.6,0" Height="778" VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            <RowDefinition Height="175*"/>
-            <RowDefinition Height="614*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="476*"/>
-            <ColumnDefinition Width="261*"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Button IsEnabled="{Binding IsMatchInProgress}" Content="Start" HorizontalAlignment="Left" Margin="166.8,34.2,0,0" VerticalAlignment="Top" Width="75" Command="{Binding StartMatchCommand}" Height="19" Grid.Row="1" Grid.Column="1"/>
+        <Button IsEnabled="{Binding IsMatchInProgress}" Content="Start" HorizontalAlignment="Left" Margin="643,207,0,0" VerticalAlignment="Top" Width="75" Command="{Binding StartMatchCommand}" Height="19"/>
         <ComboBox Name="cmbSets" ItemsSource="{Binding Score.Sets}" 
                   DisplayMemberPath="Value"
                   SelectedValuePath="Id"
                   SelectedItem="{Binding SelectedSet, Mode=TwoWay}" 
-                  HorizontalAlignment="Left" Margin="33,31.2,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.659,0.56" Height="22" Grid.Row="1">
-
-        </ComboBox>
+                  HorizontalAlignment="Left" Margin="33,204,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.659,0.56" Height="22"/>
         <DataGrid x:Name="grdRefereeScore" CanUserAddRows="False" ItemsSource="{Binding Games}" AutoGenerateColumns="False"
             CanUserDeleteRows="True" CanUserReorderColumns="True" 
-            CanUserSortColumns="True" Margin="33,58.2,9.8,44.6" Grid.Row="1" Grid.ColumnSpan="2">
+            CanUserSortColumns="True" Margin="33,231,18.8,44.6">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Game" />
                 <DataGridTextColumn Header="Server's Initials" Binding="{Binding Server.FirstName}" />
@@ -55,19 +51,31 @@
         <TextBox Text="{Binding Match.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="129,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
         <Label Content="Court : " HorizontalAlignment="Left" Margin="33,53,0,0" VerticalAlignment="Top" Height="26" Width="48"/>
         <TextBox Text="{Binding Match.Court, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="129,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
-        <Label Content="Started On : " HorizontalAlignment="Left" Margin="423,24,0,0" VerticalAlignment="Top" Height="26" Width="77" Grid.ColumnSpan="2"/>
-        <TextBox Text="{Binding Score.Match.StartedOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="42.8,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Grid.Column="1" IsEnabled="False"/>
-        <Label Content="Completed On : " HorizontalAlignment="Left" Margin="423,53,0,0" VerticalAlignment="Top" Height="26" Width="96" Grid.ColumnSpan="2"/>
-        <TextBox Text="{Binding Match.CompletedOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="42.8,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Grid.Column="1" IsEnabled="False"/>
-        <ComboBox HorizontalAlignment="Left" Margin="129,116,0,0" VerticalAlignment="Top" Width="199" Height="22"/>
+        <Label Content="Started On : " HorizontalAlignment="Left" Margin="423,24,0,0" VerticalAlignment="Top" Height="26" Width="77"/>
+        <TextBox Text="{Binding Score.Match.StartedOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="519,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
+        <Label Content="Completed On : " HorizontalAlignment="Left" Margin="423,53,0,0" VerticalAlignment="Top" Height="26" Width="96"/>
+        <TextBox Text="{Binding Score.Match.CompletedOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="519,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
+        <ComboBox ItemsSource="{Binding Players}" 
+            DisplayMemberPath="FirstName"
+            SelectedValuePath="Id"
+            SelectedItem="{Binding PlayerOne, Mode=TwoWay}" 
+            HorizontalAlignment="Left" Margin="129,116,0,0" VerticalAlignment="Top" Width="199" Height="22"/>
         <Label Content="Player 1 : " HorizontalAlignment="Left" Margin="33,116,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
-        <ComboBox HorizontalAlignment="Left" Margin="42.8,116,0,0" VerticalAlignment="Top" Width="199" Height="22" Grid.Column="1"/>
-        <Label Content="Player 2 : " HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Height="26" Width="61" Grid.ColumnSpan="2"/>
+        <ComboBox 
+            ItemsSource="{Binding Players}" 
+            DisplayMemberPath="FirstName"
+            SelectedValuePath="Id"
+            SelectedItem="{Binding PlayerTwo, Mode=TwoWay}"             
+            HorizontalAlignment="Left" Margin="519,116,0,0" VerticalAlignment="Top" Width="199" Height="22"/>
+        <Label Content="Player 2 : " HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
         <Label Content="Games Won : " HorizontalAlignment="Left" Margin="33,142,0,0" VerticalAlignment="Top" Height="26" Width="83"/>
         <TextBox Text="{Binding GamesWon[0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="129,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
-        <Label Content="Games Won : " HorizontalAlignment="Left" Margin="423,142,0,0" VerticalAlignment="Top" Height="26" Width="83" Grid.ColumnSpan="2"/>
-        <TextBox Text="{Binding GamesWon[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="42.8,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" Grid.Column="1" IsEnabled="False"/>
+        <Label Content="Games Won : " HorizontalAlignment="Left" Margin="423,142,0,0" VerticalAlignment="Top" Height="26" Width="83"/>
+        <TextBox Text="{Binding GamesWon[1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="519,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
         <Label Content="Best Of Sets : " HorizontalAlignment="Left" Margin="33,81,0,0" VerticalAlignment="Top" Height="26" Width="83"/>
         <TextBox Text="{Binding Match.BestOfSets, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="129,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199"/>
+        <TextBlock Text="{Binding Message}" HorizontalAlignment="Left" Margin="129,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Content="Won By : " HorizontalAlignment="Left" Margin="423,81,0,0" VerticalAlignment="Top" Height="26" Width="96"/>
+        <TextBox Text="{Binding Score.Match.WonBy.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="519,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="199" IsEnabled="False"/>
     </Grid>
 </Window>

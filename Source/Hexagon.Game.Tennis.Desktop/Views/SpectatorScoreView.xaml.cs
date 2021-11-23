@@ -34,6 +34,7 @@ namespace Hexagon.Game.Tennis.Desktop.Views
         private void GenerateGridColumns()
         {
             AddGridColumn("Name", "FirstName");
+            AddGridColumn(" ", "Server");
             for (int sets = 0; sets < 5; sets++)
                 AddGridColumn(String.Format("Set {0}", sets + 1), String.Format("Sets[{0}]", sets));
             AddGridColumn(string.Empty, string.Empty);
@@ -43,7 +44,7 @@ namespace Hexagon.Game.Tennis.Desktop.Views
         private void AddGridColumn(string header, string binding)
         {
             DataGridTextColumn column = new DataGridTextColumn();
-            column.Header = header;
+            column.Header = header;         
             if (!header.Equals(string.Empty)) column.Binding = new Binding(binding);
             dataGrid.Columns.Add(column);
         }

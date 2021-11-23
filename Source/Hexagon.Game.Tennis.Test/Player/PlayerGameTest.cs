@@ -1,5 +1,7 @@
 ﻿using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,37 @@ namespace Hexagon.Game.Tennis.Test
     /// </summary>
     public class PlayerGameTest : BaseTest
     {
+        // Member variable objects for persistence mock
+        private Mock<IMatchPersistenceService> _matchPersistenceMock;
+        private Mock<IPlayerPersistenceService> _playerPersistenceMock;
+        private Mock<IScorePersistenceService> _scorePersistenceMock;
+        private IMatch _match;
+       
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PlayerGameTest()
+        {
+            // Mock the match, player and score persistence serivices
+            _matchPersistenceMock = new Mock<IMatchPersistenceService>();
+            _playerPersistenceMock = new Mock<IPlayerPersistenceService>();
+            _scorePersistenceMock = new Mock<IScorePersistenceService>();
+
+            // Create an instance of Match object by passing Mock objects
+            _match = new Match(_matchPersistenceMock.Object,
+                _playerPersistenceMock.Object, _scorePersistenceMock.Object);
+        }
+
+        /// <summary>
+        /// Get the instance of Match object
+        /// </summary>
+        /// <returns>Return of type IMatch</returns>
+        private IMatch GetMatch()
+        {
+            // Return the instance of Match object
+            return _match;
+        }
+
         /// <summary>
         /// Playe game with first inprogress game
         /// </summary>
@@ -22,7 +55,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayGameWithFirstInprogressGame()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -91,7 +124,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayGameWithPlayerPoints()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -120,8 +153,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithFirstPlayerGamePoint()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -151,8 +184,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithFirstPlayerStraightGamePointWin()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -180,8 +213,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithSecondPlayerStraightGamePointWin()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -216,7 +249,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayGameWithDeuce()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -247,7 +280,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayGameWithSecondPlayerAdvantage()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -278,8 +311,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithFirstPlayerAdvantage()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -311,7 +344,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayGameWithMultipleDeuceAndAdvantages()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -347,8 +380,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithMultipleDeuceAndAdvantagesFirstPlayerWin()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -392,8 +425,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayGameWithMultipleDeuceAndAdvantagesSecondPlayerWin()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -438,8 +471,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void GetCurrentSetDetailsWithoutStartingOfMatch()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -459,7 +492,7 @@ namespace Hexagon.Game.Tennis.Test
         public void GetCurrentGameDetailsWithoutStartingOfMatch()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -477,8 +510,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void GetSetDetailsWithoutStartingOfMatch()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
 
             var firstPlayer = match.Players.FirstPlayer;

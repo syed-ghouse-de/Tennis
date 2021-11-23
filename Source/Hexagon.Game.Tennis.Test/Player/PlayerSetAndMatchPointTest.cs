@@ -1,5 +1,7 @@
 ﻿using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,37 @@ namespace Hexagon.Game.Tennis.Test
     /// </summary>
     public class PlayerSetAndMatchPointTest : BaseTest
     {
+        // Member variable objects for persistence mock
+        private Mock<IMatchPersistenceService> _matchPersistenceMock;
+        private Mock<IPlayerPersistenceService> _playerPersistenceMock;
+        private Mock<IScorePersistenceService> _scorePersistenceMock;
+        private IMatch _match;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PlayerSetAndMatchPointTest()
+        {
+            // Mock the match, player and score persistence serivices
+            _matchPersistenceMock = new Mock<IMatchPersistenceService>();
+            _playerPersistenceMock = new Mock<IPlayerPersistenceService>();
+            _scorePersistenceMock = new Mock<IScorePersistenceService>();
+
+            // Create an instance of Match object by passing Mock objects
+            _match = new Match(_matchPersistenceMock.Object,
+                _playerPersistenceMock.Object, _scorePersistenceMock.Object);
+        }
+
+        /// <summary>
+        /// Get the instance of Match object
+        /// </summary>
+        /// <returns>Return of type IMatch</returns>
+        private IMatch GetMatch()
+        {
+            // Return the instance of Match object
+            return _match;
+        }
+
         /// <summary>
         /// Best of 3 Sets win scenario 1
         /// </summary>
@@ -21,7 +54,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfThreeSetsWinScenarioOne()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();    
             match.BestOfSets = 3;
 
@@ -134,9 +167,9 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayBestOfThreeSetsWinScenarioTwo()
         {
-            // Match & players details
-            IMatch match = new Match();
-            match.Players = AddPlayers();            ;
+            // Match and players details
+            IMatch match = GetMatch();
+            match.Players = AddPlayers();
             match.BestOfSets = 3;
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -217,7 +250,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfFiveSetsWinScenarioOne()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();            
             match.BestOfSets = 5;
 
@@ -363,7 +396,7 @@ namespace Hexagon.Game.Tennis.Test
         public void PlayBestOfFiveSetsWinScenarioTwo()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();          
             match.BestOfSets = 5;
 
@@ -541,7 +574,7 @@ namespace Hexagon.Game.Tennis.Test
         public void ThrowExceptionWhenPlayerContinueToPlayAfterWinningTheMatch()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
             match.BestOfSets = 5;
 

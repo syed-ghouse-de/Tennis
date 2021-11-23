@@ -1,5 +1,6 @@
 ﻿using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Service.Domain;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Desktop.Handler;
 using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Domain.Service.Implementation;
@@ -20,15 +21,37 @@ namespace Hexagon.Game.Tennis.Test.Desktop
     /// </summary>
     public class MatchHandlerTest : BaseTest
     {
+        // Member variable objects for persistence mock
+        private Mock<IMatchPersistenceService> _matchPersistenceMock;
+        private Mock<IPlayerPersistenceService> _playerPersistenceMock;
+        private Mock<IScorePersistenceService> _scorePersistenceMock;
+
         private MatchHandler _matchHandler;
+        private IMatch _match;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public MatchHandlerTest()
         {
-            // Get the handler of match
-            _matchHandler = (MatchHandler)MatchHandler.Instance;
+            _matchPersistenceMock = new  Mock<IMatchPersistenceService>();
+            _playerPersistenceMock = new Mock<IPlayerPersistenceService>();
+            _scorePersistenceMock = new Mock<IScorePersistenceService>();
+
+            // Create an instance of Match object by passing Mock objects
+            _match = new Match(_matchPersistenceMock.Object,
+                _playerPersistenceMock.Object, _scorePersistenceMock.Object);    
+            _matchHandler = new MatchHandler((Match)_match);
+        }
+
+        /// <summary>
+        /// Get the instance of Match object
+        /// </summary>
+        /// <returns>Return of type IMatch</returns>
+        private IMatch GetMatch()
+        {
+            // Return the instance of Match object
+            return _match;
         }
 
         /// <summary>
@@ -38,9 +61,8 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         public void ScoreBoardPointWinWithFirstSetAndFirstGame()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
-            _matchHandler.Match = match;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -114,9 +136,8 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         public void ScoreBoardPointWinWithSwapingOfSeverAndReceiver()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
-            _matchHandler.Match = match;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -171,9 +192,8 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         public void ScoreBoardPointWinWithWithMultipleDeuceAndAdvantages()
         {
             // Match and players details
-            IMatch match = new Match();
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
-            _matchHandler.Match = match;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -226,10 +246,9 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         public void ScoreBoardForBestOfThreeSetsWin()
         {
             // Match and players details
-            IMatch match = new Match();
-            match.Players = AddPlayers(); ;
+            IMatch match = GetMatch();
+            match.Players = AddPlayers();
             match.BestOfSets = 3;
-            _matchHandler.Match = match;
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -339,11 +358,10 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         [Fact]
         public void ScoreBoardForBestOfFiveSetsWin()
         {
-            // Match and player details
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
-            match.BestOfSets = 5;
-            _matchHandler.Match = match;
+            match.BestOfSets = 5;   
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -507,10 +525,10 @@ namespace Hexagon.Game.Tennis.Test.Desktop
         [Fact]
         public void ThrowExceptionWhenPlayerContinueToPlayAfterWinningTheMatch()
         {
-            IMatch match = new Match();
+            // Match and players details
+            IMatch match = GetMatch();
             match.Players = AddPlayers();
-            match.BestOfSets = 5;
-            _matchHandler.Match = match;
+            match.BestOfSets = 5;   
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;

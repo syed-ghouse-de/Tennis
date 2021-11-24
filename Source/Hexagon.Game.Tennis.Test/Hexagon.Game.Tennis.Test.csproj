@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="Desktop\MatchHandlerTest.cs" />
+    <Compile Include="Domain\MatchDomainServiceTest.cs" />
     <Compile Include="Domain\PlayerDomainServiceTest.cs" />
     <Compile Include="Domain\ScoreDomainServiceTest.cs" />
     <Compile Include="Player\PlayerGameTest.cs" />

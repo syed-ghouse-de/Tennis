@@ -67,6 +67,7 @@
     <Compile Include="MVVM\View\IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Domain\IDomainService.cs" />
+    <Compile Include="Service\Domain\IMatchDomainService.cs" />
     <Compile Include="Service\Domain\IPlayerDomainService.cs" />
     <Compile Include="Service\Domain\IScoreDomainService.cs" />
     <Compile Include="Service\IService.cs" />

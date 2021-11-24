@@ -95,7 +95,7 @@ namespace Hexagon.Game.Tennis
             IPlayerPersistenceService playerPersistenceService,
             IScorePersistenceService scorePersistenceService)
         {
-            _scoreDomainService = new ScoreDomainService();
+            _scoreDomainService = new ScoreDomainService(matchPersistenceService, scorePersistenceService);
             _playerDomainService = new PlayerDomainService(playerPersistenceService);
 
             _match = new MatchEntity();

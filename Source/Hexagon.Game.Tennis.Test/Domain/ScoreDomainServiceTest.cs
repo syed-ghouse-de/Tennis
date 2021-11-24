@@ -8,7 +8,7 @@ using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Domain.Service;
 using Hexagon.Game.Tennis.Domain.Service.Implementation;
 using Hexagon.Game.Tennis.Entity;
-
+using Moq;
 using Xunit;
 
 namespace Hexagon.Game.Tennis.Test
@@ -18,15 +18,29 @@ namespace Hexagon.Game.Tennis.Test
     /// </summary>
     public class ScoreDomainServiceTest
     {
+        // Member variable objects for persistence mock
+        private Mock<IMatchPersistenceService> _matchPersistenceMock;
+        private Mock<IScorePersistenceService> _scorePersistenceMock;
+        private IScoreDomainService _scoreDomainService;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ScoreDomainServiceTest()
+        {
+            _matchPersistenceMock = new Mock<IMatchPersistenceService>();  
+            _scorePersistenceMock = new Mock<IScorePersistenceService>();
+
+            _scoreDomainService = new ScoreDomainService(
+                _matchPersistenceMock.Object, _scorePersistenceMock.Object);
+        }
+
         /// <summary>
         /// Player points win with Zero Sets
         /// </summary>
         [Fact]
         public void PointWinHavingZeroSets()
-        {
-            // Score domain service instance
-            IScoreDomainService scoreService = new ScoreDomainService();
-
+        { 
             // Player details of the match
             ScoreEntity score = new ScoreEntity();
             PlayerEntity winner = new PlayerEntity()
@@ -35,8 +49,8 @@ namespace Hexagon.Game.Tennis.Test
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };
             PlayerEntity server = looser;
 
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, server, winner, looser, PlayerPoint.Fifteen);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, server, winner, looser, PlayerPoint.Fifteen);
 
             Assert.Equal(1, score.TotalSets);
             Assert.Equal(Status.InProgress, score.CurrentSet.Status);
@@ -54,14 +68,14 @@ namespace Hexagon.Game.Tennis.Test
                 (p => p.Player.Id.Equals(looser.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
 
             // Score comparision after player win
-            score = scoreService.PointWin(score, server, looser, winner, PlayerPoint.Fifteen);
+            score = _scoreDomainService.PointWin(score, server, looser, winner, PlayerPoint.Fifteen);
             Assert.Equal(PlayerPoint.Fifteen, score.CurrentGame.PlayerPoints.Where
                 (p => p.Player.Id.Equals(winner.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
             Assert.Equal(PlayerPoint.Fifteen, score.CurrentGame.PlayerPoints.Where
                 (p => p.Player.Id.Equals(looser.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
 
             // Score comparision after player win
-            score = scoreService.PointWin(score, server, looser, winner, PlayerPoint.Fifteen);
+            score = _scoreDomainService.PointWin(score, server, looser, winner, PlayerPoint.Fifteen);
             Assert.Equal(PlayerPoint.Fifteen, score.CurrentGame.PlayerPoints.Where
                 (p => p.Player.Id.Equals(winner.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
             Assert.Equal(PlayerPoint.Fifteen, score.CurrentGame.PlayerPoints.Where
@@ -74,9 +88,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PointWinWhenLooserIsInAdvantage()
         {
-            // Domain service instance for business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Player details of the match
             ScoreEntity score = new ScoreEntity();
             PlayerEntity winner = new PlayerEntity()
@@ -84,8 +95,8 @@ namespace Hexagon.Game.Tennis.Test
             PlayerEntity looser = new PlayerEntity()
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };   
 
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, looser, winner, looser, PlayerPoint.Advantage);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, looser, winner, looser, PlayerPoint.Advantage);
 
             Assert.Equal(1, score.TotalSets);
             Assert.Equal(Status.InProgress, score.CurrentSet.Status);
@@ -103,7 +114,7 @@ namespace Hexagon.Game.Tennis.Test
                 (p => p.Player.Id.Equals(looser.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
 
             // The players score after the opponent player when the other player is in Advantage
-            score = scoreService.PointWin(score, looser, looser, winner, PlayerPoint.Fifteen);
+            score = _scoreDomainService.PointWin(score, looser, looser, winner, PlayerPoint.Fifteen);
             Assert.Equal(PlayerPoint.Forty, score.CurrentGame.PlayerPoints.Where
                 (p => p.Player.Id.Equals(winner.Id)).OrderBy(o => o.UpdatedOn).Last().Point);
             Assert.Equal(PlayerPoint.Fifteen, score.CurrentGame.PlayerPoints.Where
@@ -116,9 +127,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void GamePointWithSimpleWin()
         {
-            // Domain service instance for business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Match and player information
             MatchEntity match = new MatchEntity() { Id = Guid.NewGuid(), Name = "First Match" };
             ScoreEntity score = new ScoreEntity();
@@ -127,8 +135,8 @@ namespace Hexagon.Game.Tennis.Test
             PlayerEntity receiver = new PlayerEntity()
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };         
 
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, receiver, winner, receiver, PlayerPoint.Advantage);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, receiver, winner, receiver, PlayerPoint.Advantage);
             
             Assert.Equal(1, score.TotalSets);
             Assert.Equal(Status.InProgress, score.CurrentSet.Status);
@@ -137,7 +145,7 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Equal(Status.InProgress, score.CurrentGame.Status);
 
             // Player game point win when the player is in Advantage
-            score = scoreService.GamePointWin(match, score, receiver, winner);
+            score = _scoreDomainService.GamePointWin(match, score, receiver, winner);
             Assert.Equal(string.Format("{0}, {1}", receiver.FirstName, receiver.SurName),
                 string.Format("{0}, {1}", score.CurrentGame.Server.FirstName, score.CurrentGame.Server.SurName));
 
@@ -156,9 +164,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void SetWinWithFirstPlayerSixGamePoint()
         {
-            // Domain service instance for the business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Match and player details 
             MatchEntity match = new MatchEntity() { Id = Guid.NewGuid(), Name = "First Match" };
             ScoreEntity score = new ScoreEntity();
@@ -168,10 +173,10 @@ namespace Hexagon.Game.Tennis.Test
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };            
 
             // Game point win for both the players
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
 
             // Current set details after game point win
             Assert.Equal(3, score.CurrentSet.TotalGames);
@@ -181,27 +186,27 @@ namespace Hexagon.Game.Tennis.Test
                 g => g.WonBy != null && g.WonBy.Id.Equals(secondPlayer.Id)).Count());
 
             // Current score detail after game point win
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(2, score.CurrentSet.Games.Where(
                 g => g.WonBy != null && g.WonBy.Id.Equals(firstPlayer.Id)).Count());
 
             // Current score detail after game point win
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(3, score.CurrentSet.Games.Where(
                 g => g.WonBy != null && g.WonBy.Id.Equals(firstPlayer.Id)).Count());
 
             // Current score detail after game point win
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(4, score.CurrentSet.Games.Where(
                 g => g.WonBy != null && g.WonBy.Id.Equals(firstPlayer.Id)).Count());
 
             // Current score detail after game point win
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(5, score.CurrentSet.Games.Where(
                 g => g.WonBy != null && g.WonBy.Id.Equals(firstPlayer.Id)).Count());
 
             // Current Set details after winning all the 6 games 
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(2, score.TotalSets);
             Assert.Equal(Status.Completed, score.GetSet(0).Status);
             Assert.Equal(Status.InProgress, score.CurrentSet.Status);
@@ -217,9 +222,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void SetWinWithFirstPlayerFourGamePointAndSecondPlayerSixGamePoint()
         {
-            // Domain service instance for business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Match and players details
             MatchEntity match = new MatchEntity() { Id = Guid.NewGuid(), Name = "First Match" };
             ScoreEntity score = new ScoreEntity();
@@ -229,18 +231,18 @@ namespace Hexagon.Game.Tennis.Test
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };
 
             // Score boundries check after Players 10 game point wins
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);            
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);            
            
             // Score board boundries check and verification after game point wins
             Assert.Equal(2, score.TotalSets);
@@ -260,9 +262,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void SetWinWithFirstPlayerSevenGamePointAndSecondPlayerFiveGamePoint()
         {
-            // Domain service instance for business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Match and player details
             MatchEntity match = new MatchEntity() { Id = Guid.NewGuid(), Name = "First Match" };
             ScoreEntity score = new ScoreEntity();
@@ -272,19 +271,19 @@ namespace Hexagon.Game.Tennis.Test
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };
 
             // Player score boundries check after players gamepoint wins
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
 
             // Current score boundries check after player game point wins
             Assert.Equal(1, score.TotalSets); 
@@ -295,7 +294,7 @@ namespace Hexagon.Game.Tennis.Test
                 g => g.WonBy != null && g.WonBy.Id.Equals(secondPlayer.Id)).Count());
 
             // Score boundery checks for set win
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
             Assert.Equal(2, score.TotalSets);
             Assert.Equal(Status.Completed, score.GetSet(0).Status);         
             Assert.Equal(string.Format("{0}, {1}", firstPlayer.FirstName, firstPlayer.SurName),
@@ -319,9 +318,6 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void SetWinWithFirstPlayerSevenGamePointAndSecondPlayerNineGamePoint()
         {
-            // Domain service instance for business rule execution
-            IScoreDomainService scoreService = new ScoreDomainService();
-
             // Match and player details
             MatchEntity match = new MatchEntity() { Id = Guid.NewGuid(), Name = "First Match" };
             ScoreEntity score = new ScoreEntity();
@@ -331,23 +327,23 @@ namespace Hexagon.Game.Tennis.Test
             { Id = Guid.NewGuid(), FirstName = "Bernhard", SurName = "Ritter" };
 
             // Player score boundries check after players gamepoint wins
-            Assert.NotNull(scoreService);
-            score = scoreService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, secondPlayer, firstPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            Assert.NotNull(_scoreDomainService);
+            score = _scoreDomainService.PointWin(score, firstPlayer, firstPlayer, secondPlayer, PlayerPoint.Forty);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, secondPlayer, firstPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
 
             // Current score boundries check after player game point wins
             Assert.Equal(1, score.TotalSets);
@@ -358,7 +354,7 @@ namespace Hexagon.Game.Tennis.Test
                 g => g.WonBy != null && g.WonBy.Id.Equals(secondPlayer.Id)).Count());
 
             // Score boundery checks for set win
-            score = scoreService.GamePointWin(match, score, firstPlayer, secondPlayer);
+            score = _scoreDomainService.GamePointWin(match, score, firstPlayer, secondPlayer);
             Assert.Equal(2, score.TotalSets);
             Assert.Equal(Status.Completed, score.GetSet(0).Status);
             Assert.Equal(string.Format("{0}, {1}", secondPlayer.FirstName, secondPlayer.SurName),

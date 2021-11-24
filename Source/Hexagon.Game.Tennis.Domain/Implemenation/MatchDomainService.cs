@@ -1,4 +1,5 @@
-﻿using Hexagon.Game.Framework.Service.Domain;
+﻿using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
 using System;
@@ -14,12 +15,15 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
     /// </summary>
     public class MatchDomainService : IMatchDomainService
     {
+        // Member variable for player persistence service
+        private IMatchPersistenceService _matchPersistenceService;
+
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MatchDomainService(IMatchPersistenceService _matchPersistenceService)
+        public MatchDomainService(IMatchPersistenceService matchPersistenceService)
         {
-   
+            _matchPersistenceService = matchPersistenceService;
         }
 
         /// <summary>
@@ -28,8 +32,22 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
         /// <param name="match">Match details to add</param>
         public void AddMatch(MatchEntity match)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Initialize match status and started data                
+                match.Status = Status.NoStarted;
+                _matchPersistenceService.AddMatch(match);
+            }
+            catch (PersistenceServiceException persistenceException)
+            {
+                throw new DomainServiceException(persistenceException.Message);
+            }
+            catch (Exception exception)
+            {
+                throw new DomainServiceException(exception.Message);
+            }
         }
+
 
         /// <summary>
         /// Service method to get the match details
@@ -38,7 +56,19 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
         /// <returns>Return MatchEntity type</returns>
         public MatchEntity GetMatch(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Get the match details by passing match id  
+                return _matchPersistenceService.GetMatch(id);
+            }
+            catch (PersistenceServiceException persistenceException)
+            {
+                throw new DomainServiceException(persistenceException.Message);
+            }
+            catch (Exception exception)
+            {
+                throw new DomainServiceException(exception.Message);
+            }
         }
     }
 }

@@ -17,6 +17,21 @@ namespace Hexagon.Game.Tennis.Domain.Service.Implementation
     /// </summary>
     public class ScoreDomainService : IScoreDomainService
     {
+        // Member variable for persistence service
+        private IMatchPersistenceService _matchPersistenceService;
+        private IScorePersistenceService _scorePersistenceService;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ScoreDomainService(IMatchPersistenceService matchPersistenceService,
+            IScorePersistenceService scorePersistenceService)
+        {
+            // Initialize persistence services
+            _matchPersistenceService = matchPersistenceService;
+            _scorePersistenceService = scorePersistenceService;
+        }
+
         /// <summary>
         /// Service method to calculate and update player game point win 
         /// </summary>

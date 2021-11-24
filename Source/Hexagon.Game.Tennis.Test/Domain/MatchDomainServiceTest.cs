@@ -39,7 +39,7 @@ namespace Hexagon.Game.Tennis.Test.Domain
         public void AddMatchDetails()
         {
             // Prepare match information
-            var match = new MatchEntity()
+          var match = new MatchEntity()
             {
                 Id = Guid.NewGuid(),
                 Name = "First Match",

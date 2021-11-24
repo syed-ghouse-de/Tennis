@@ -16,7 +16,7 @@ namespace Hexagon.Game.Framework.Service.Domain
         /// Service method to add match
         /// </summary>
         /// <param name="match">Match details to add</param>
-        void AddMatch(MatchEntity match);
+        MatchEntity AddMatch(MatchEntity match);
 
         /// <summary>
         /// Service method to start the match

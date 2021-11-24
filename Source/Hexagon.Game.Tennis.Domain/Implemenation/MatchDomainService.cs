@@ -1,4 +1,5 @@
-﻿using Hexagon.Game.Framework.Exceptions;
+﻿using Hexagon.Game.Framework;
+using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Service.Domain;
 using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
@@ -30,12 +31,19 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
         /// Service method to add match
         /// </summary>
         /// <param name="match">Match details to add</param>
-        public void AddMatch(MatchEntity match)
+        public MatchEntity AddMatch(MatchEntity match)
         {
             try
-            {
-                // Initialize match status and started data                
+            {              
+                // Check for the required fields
+                if (match.Name.Equals(string.Empty))
+                    throw new InvalidOperationException("Match name is requied !");
+
+                // Initialize match status and other information
+                match.Id = Guid.NewGuid();
                 match.Status = Status.NoStarted;
+
+                // Add match in to the database
                 _matchPersistenceService.AddMatch(match);
             }
             catch (PersistenceServiceException persistenceException)
@@ -46,6 +54,8 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
             {
                 throw new DomainServiceException(exception.Message);
             }
+
+            return match;
         }
 
         /// <summary>
@@ -55,7 +65,22 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
         /// <returns>Returns updated match details</returns>
         public MatchEntity StartMatch(MatchEntity match)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Update StartedOn and Status                
+                match.StartedOn = DateTime.UtcNow;
+                match.Status = Status.InProgress;
+
+                // Update the match details
+                _matchPersistenceService.UpdateMatch(match);
+            }
+            catch (Exception exception)
+            {
+                // Throw an exception
+                throw new PersistenceServiceException(exception.Message);
+            }
+
+            return match;
         }
 
         /// <summary>

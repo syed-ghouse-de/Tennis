@@ -74,11 +74,12 @@ namespace Hexagon.Game.Tennis.Test.Domain
             };  
 
             // Call method the add match
+            newMatch = _matchDomainService.AddMatch(newMatch);
             var actual = _matchDomainService.StartMatch(newMatch);          
 
             // Boundry checks for verification
             Assert.NotNull(actual);
-            Assert.NotEqual<Guid>(Guid.Empty, actual.Id);
+            Assert.Equal(newMatch.Id, actual.Id);
             Assert.Equal(newMatch.StartedOn, actual.StartedOn);
             Assert.Equal(Status.InProgress, actual.Status);
         }

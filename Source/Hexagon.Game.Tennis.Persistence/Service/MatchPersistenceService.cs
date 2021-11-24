@@ -9,6 +9,7 @@ using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
 using Hexagon.Game.Tennis.Persistence.Context;
 using Hexagon.Game.Tennis.Persistence.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hexagon.Game.Tennis.Persistence.Service
 {
@@ -43,7 +44,7 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 MatchModel model = new MatchModel()
                 {
                     Id = match.Id,
-                    Name = match.Name,                                       
+                    Name = match.Name,                       
                     StatusId = (int)match.Status                     
                 };
 
@@ -63,7 +64,26 @@ namespace Hexagon.Game.Tennis.Persistence.Service
         /// <param name="match">Match information to update into database</param>
         public void UpdateMatch(MatchEntity match)
         {
-   
+            try
+            {               
+                // Find the match by passing match id
+                MatchModel model = Repository<MatchModel>().Find(match.Id);
+                model.Id = match.Id;
+                model.Name = match.Name;
+                model.StartedOn = match.StartedOn;
+                model.StatusId = (int)match.Status;          
+
+                if (match.CompletedOn != null)
+                    model.CompletedOn = match.CompletedOn;
+
+                // Add an Match record in to database
+                Repository<MatchModel>().Update(model);
+            }
+            catch (Exception exception)
+            {
+                // Throw an exception
+                throw new PersistenceServiceException(exception.Message);
+            }
         }
 
         /// <summary>
@@ -75,8 +95,8 @@ namespace Hexagon.Game.Tennis.Persistence.Service
         {
             try
             {
-                // Prepare a Match entity along with Set, Game & Point 
-                var match = Repository<MatchModel>().Entities.Where(w => w.Id.Equals(id))
+                // Prepare a Match entity along with Set, Game & Point  
+                var match = Repository<MatchModel>().Entities.AsNoTracking().Where(w => w.Id.Equals(id))
                     // Prepare match entity
                     .Select(m => new MatchEntity()
                     {
@@ -92,7 +112,7 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                             StartedOn = s.StartedOn,
                             CompletedOn = s.CompletedOn,
                             Status = (Status)s.StatusId,
-                            WonBy =  GetPlayer(s.WonByNavigation), 
+                            WonBy = GetPlayer(s.WonByNavigation),
                             // Prepare Game entity
                             Games = s.GameScore.Select(g => new GameEntity()
                             {
@@ -107,7 +127,7 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                                 {
                                     Id = pp.Id,
                                     Player = GetPlayer(pp.Player),
-                                    Point = (PlayerPoint) pp.PointId,
+                                    Point = (PlayerPoint)pp.PointId,
                                     UpdatedOn = pp.UpdatedOn
                                 }).OrderBy(o => o.UpdatedOn).ToList()
                             }).OrderBy(o => o.StartedOn).ToList()

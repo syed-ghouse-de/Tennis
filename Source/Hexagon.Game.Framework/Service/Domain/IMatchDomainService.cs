@@ -19,6 +19,13 @@ namespace Hexagon.Game.Framework.Service.Domain
         void AddMatch(MatchEntity match);
 
         /// <summary>
+        /// Service method to start the match
+        /// </summary>
+        /// <param name="match">Match details to update</param>
+        /// <returns>Returns updated match details</returns>
+        MatchEntity StartMatch(MatchEntity match);
+
+        /// <summary>
         /// Service method to get the match details
         /// </summary>
         /// <param name="id">Id of the match</param>

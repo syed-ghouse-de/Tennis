@@ -48,6 +48,15 @@ namespace Hexagon.Game.Tennis.Domain.Implemenation
             }
         }
 
+        /// <summary>
+        /// Service method to start the match
+        /// </summary>
+        /// <param name="match">Match details to update</param>
+        /// <returns>Returns updated match details</returns>
+        public MatchEntity StartMatch(MatchEntity match)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Service method to get the match details

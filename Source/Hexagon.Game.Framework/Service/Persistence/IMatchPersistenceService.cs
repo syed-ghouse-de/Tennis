@@ -19,6 +19,12 @@ namespace Hexagon.Game.Framework.Service.Persistence
         void AddMatch(MatchEntity match);
 
         /// <summary>
+        /// Update match details into database
+        /// </summary>
+        /// <param name="match">Match information to update into database</param>
+        void UpdateMatch(MatchEntity match);
+
+        /// <summary>
         /// Get the match infomation
         /// </summary>
         /// <param name="id">Math id to get the match details</param>

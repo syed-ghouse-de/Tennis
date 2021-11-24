@@ -43,9 +43,7 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 MatchModel model = new MatchModel()
                 {
                     Id = match.Id,
-                    Name = match.Name,
-                    StartedOn = match.StartedOn,
-                    CompletedOn = match.CompletedOn,
+                    Name = match.Name,                                       
                     StatusId = (int)match.Status                     
                 };
 
@@ -57,6 +55,15 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 // Throw an exception
                 throw new PersistenceServiceException(exception.Message);
             }
+        }
+
+        /// <summary>
+        /// Update match details into database
+        /// </summary>
+        /// <param name="match">Match information to update into database</param>
+        public void UpdateMatch(MatchEntity match)
+        {
+   
         }
 
         /// <summary>

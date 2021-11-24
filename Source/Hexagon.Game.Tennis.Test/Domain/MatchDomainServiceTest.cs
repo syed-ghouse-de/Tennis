@@ -59,5 +59,28 @@ namespace Hexagon.Game.Tennis.Test.Domain
             Assert.NotNull(actual);
             Assert.True(Equals(match, actual));
         }
+
+        /// <summary>
+        /// Start new match
+        /// </summary>
+        [Fact]
+        public void StartNewMatch()
+        {
+            // Prepare match information
+            var newMatch = new MatchEntity()
+            {                
+                Name = "First Match", 
+                Status = Status.NoStarted
+            };  
+
+            // Call method the add match
+            var actual = _matchDomainService.StartMatch(newMatch);          
+
+            // Boundry checks for verification
+            Assert.NotNull(actual);
+            Assert.NotEqual<Guid>(Guid.Empty, actual.Id);
+            Assert.Equal(newMatch.StartedOn, actual.StartedOn);
+            Assert.Equal(Status.InProgress, actual.Status);
+        }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Hexagon.Game.Tennis.Entity;
+﻿using Hexagon.Game.Framework.Cache;
+using Hexagon.Game.Tennis.Entity;
 using Hexagon.Game.Tennis.Persistence.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
-
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Hexagon.Game.Tennis.Persistence.Context
     /// Persistence context for database operations
     /// </summary>
     public class PersistenceContext : DbContext
-    {
+    {        
         public virtual DbSet<GameScoreModel> GameScore { get; set; }
         public virtual DbSet<MatchModel> Match { get; set; }
         public virtual DbSet<MatchPlayerModel> MatchPlayer { get; set; }
@@ -30,8 +31,8 @@ namespace Hexagon.Game.Tennis.Persistence.Context
         /// </summary>
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {           
-            optionsBuilder.UseSqlServer(@"data source=.\SQLEXPRESS01;initial catalog=Tennis;integrated security=True;MultipleActiveResultSets=True;");
+        {
+            optionsBuilder.UseSqlServer(Application.Instance.PersistenceConnection);
         }
 
         /// <summary>

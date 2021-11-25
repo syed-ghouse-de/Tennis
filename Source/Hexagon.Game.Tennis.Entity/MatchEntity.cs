@@ -12,8 +12,9 @@ namespace Hexagon.Game.Tennis.Entity
     public class MatchEntity : BaseEntity
     {
         public string Name { get; set; }
-        public DateTime StartedOn { get; set; }
-        public Nullable<System.DateTime> CompletedOn { get; set; }
+        public string Court { get; set; }
+        public DateTime? StartedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
         public Status Status { get; set; }
         public int BestOfSets { get; set; }
         public PlayerEntity WonBy { get; set; }
@@ -25,9 +26,7 @@ namespace Hexagon.Game.Tennis.Entity
         /// Default constructor
         /// </summary>
         public MatchEntity()
-        {
-            Id = Guid.NewGuid();
-
+        {  
             BestOfSets = 5;
             WonBy = null;
             Status = Status.NoStarted;

@@ -10,15 +10,15 @@ namespace Hexagon.Game.Tennis.Persistence.Test
     {
         static void Main(string[] args)
         {
-            //MatchPersistenceTest.AddMatch();
-            //MatchPersistenceTest.AddMatch();
+            MatchPersistenceTest.AddMatch();
+            MatchPersistenceTest.AddMatch();
             //MatchPersistenceTest.AddMatch();
 
             //MatchPersistenceTest.AddSet();
             //MatchPersistenceTest.GetMatch();
             //MatchPersistenceTest.UpdateSet();
 
-            PlayerPersistenceServiceTest.GetAllPlayers();
+            //PlayerPersistenceServiceTest.GetAllPlayers();
         }
     }
 }

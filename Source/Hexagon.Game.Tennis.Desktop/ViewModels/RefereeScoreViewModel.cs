@@ -100,8 +100,12 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                 if (_score == null || _selectedSet.Key.Equals(Guid.Empty))
                     return;
 
-                // Add default values to both the pla
-                GamesWon = new List<int>() { Score.Players[0].GamesWon[SelectedSet.Key], Score.Players[1].GamesWon[SelectedSet.Key] };         
+                // Add default values to both the players
+                GamesWon = new List<int>()
+                {
+                    Score.Players[0].GamesWon[SelectedSet.Key],
+                    Score.Players[1].GamesWon[SelectedSet.Key]
+                };         
                 Games = Score.Games[SelectedSet.Key];
             }
         }
@@ -217,7 +221,8 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         {
             get
             {
-                if (startMatchCommand == null) startMatchCommand = new RelayCommand(new Action<object>(OnStartMatch));
+                if (startMatchCommand == null) startMatchCommand = 
+                        new RelayCommand(new Action<object>(OnStartMatch));
                 return startMatchCommand;
             }
             set { SetProperty(ref startMatchCommand, value); }
@@ -235,11 +240,14 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                 MatchEntity match = new MatchEntity();
                 SelectedSet = new KeyValuePair<Guid, string>();
 
+                // Add match information
                 match.BestOfSets = Match.BestOfSets;
                 match.Name = Match.Name;
-                match.Players.Add(PlayerOne);
-                match.Players.Add(PlayerTwo);
-                match.Players.Add(PlayerTwo);
+                match.Court = Match.Court;
+
+                // Initialize match players
+                match.Players.Add(PlayerOne);                               // Player one
+                match.Players.Add(PlayerTwo);                               // Player two
 
                 // Initialize new match data by calling initialize method
                 MatachHandler.Initialize(match);

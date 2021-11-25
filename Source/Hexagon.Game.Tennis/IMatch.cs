@@ -28,12 +28,12 @@ namespace Hexagon.Game.Tennis
         /// <summary>
         /// Date and time of match when it started
         /// </summary>
-        DateTime StartedOn { get; }
+        DateTime? StartedOn { get; }
 
         /// <summary>
         /// Date and time of match when it completed
         /// </summary>
-        Nullable<System.DateTime> CompletedOn { get; }
+        DateTime? CompletedOn { get; }
 
         /// <summary>
         /// Status of the match

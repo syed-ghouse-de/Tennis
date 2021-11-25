@@ -15,8 +15,8 @@ namespace Hexagon.Game.Tennis.Desktop.Model
     {
         public string Name { get; set; }
         public string Court { get; set; }
-        public DateTime StartedOn { get; set; }
-        public Nullable<System.DateTime> CompletedOn { get; set; }
+        public DateTime? StartedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
         public Status Status { get; set; }
         public int BestOfSets { get; set; }
         public PlayerModel WonBy { get; set; }

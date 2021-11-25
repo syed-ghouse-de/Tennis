@@ -148,10 +148,8 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
             if (!match.Players.Any())
                 throw new InvalidOperationException("Playres needs to be initialized before starting the match");
 
-            // Initialize players details            
-            _match.NewMatch(match);            
-            _match.Players.Add(new Player(match.Players[0]));
-            _match.Players.Add(new Player(match.Players[1]));
+            // Start a new match           
+            _match.NewMatch(match);                                     // Start a new match         
 
             // Subscribe delegates for both score update and match win
             _match.ScoreUpdate += OnScoreUpdate;

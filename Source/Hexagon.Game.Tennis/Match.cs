@@ -22,6 +22,7 @@ namespace Hexagon.Game.Tennis
         public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegat for player game point win
 
         // Privte memeber variables
+        private IMatchDomainService _matchDomainService;                // Score business logic service  
         private IScoreDomainService _scoreDomainService;                // Score business logic service  
         private IPlayerDomainService _playerDomainService;              // Player business logic service
 
@@ -50,7 +51,7 @@ namespace Hexagon.Game.Tennis
         /// <summary>
         /// Date and time of match when it started
         /// </summary>
-        public DateTime StartedOn
+        public DateTime? StartedOn
         {
             get { return _match.StartedOn; }
         }
@@ -58,7 +59,7 @@ namespace Hexagon.Game.Tennis
         /// <summary>
         /// Date and time of match when it completed
         /// </summary>
-        public Nullable<System.DateTime> CompletedOn
+        public DateTime? CompletedOn
         {
             get { return _match.CompletedOn; }
         }
@@ -95,6 +96,8 @@ namespace Hexagon.Game.Tennis
             IPlayerPersistenceService playerPersistenceService,
             IScorePersistenceService scorePersistenceService)
         {
+            // Initialization of domain services
+            _matchDomainService = new MatchDomainService(matchPersistenceService);
             _scoreDomainService = new ScoreDomainService(matchPersistenceService, scorePersistenceService);
             _playerDomainService = new PlayerDomainService(playerPersistenceService);
 
@@ -115,16 +118,25 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         public void Start()
         {
-            // Get the current score of the match
-            _match.Score = _scoreDomainService
-                .GetMatchScore(_match, Players.Server.Identity);
+            try
+            { 
+                // Start the new match and get the current score of the match
+                _match = _matchDomainService.StartMatch(_match);              
+                _match.Score = _scoreDomainService
+                    .GetMatchScore(_match, Players.Server.Identity);
 
-            _match.Status = Status.InProgress;
-            _match.StartedOn = DateTime.UtcNow;
-
-            // Delegate subscribtion
-            this.Players.PointWin += OnPointWin;
-            this.Players.GamePointWin += OnGamePointWin;
+                // Delegate subscribtion
+                this.Players.PointWin += OnPointWin;
+                this.Players.GamePointWin += OnGamePointWin;
+            }
+            catch (DomainServiceException domainServiceException)
+            {
+                throw domainServiceException;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            } 
         }
 
         /// <summary>
@@ -162,14 +174,30 @@ namespace Hexagon.Game.Tennis
         /// <param name="match">Match details to start a new match</param>
         public void NewMatch(MatchEntity match)
         {
-            _match = new MatchEntity()
+            try
             {
-                Id = match.Id,
-                Name = match.Name,
-                BestOfSets = match.BestOfSets
-            };
+                _match = new MatchEntity()
+                {                    
+                    Name = match.Name,
+                    Court = match.Court,
+                    BestOfSets = match.BestOfSets
+                };
 
-            Players = new Players();
+                Players = new Players();    
+                Players.Add(new Player(match.Players[0]));           // Add player one 
+                Players.Add(new Player(match.Players[1]));           // Add player two
+
+                // Add new math in the database
+                _matchDomainService.AddMatch(_match);
+            }
+            catch (DomainServiceException domainServiceException)
+            {
+                throw domainServiceException;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }           
         }
 
         /// <summary>
@@ -182,8 +210,8 @@ namespace Hexagon.Game.Tennis
             try
             {
                 // Calculate score after every point win
-                _match.Score = _scoreDomainService.PointWin(Score, Players.Server.Identity, 
-                    winPlayer, Players[winPlayer.Id].Opponent.Identity, point);
+                _match.Score = _scoreDomainService.PointWin(_match, Score, 
+                    Players.Server.Identity, winPlayer, Players[winPlayer.Id].Opponent.Identity, point);
 
                 // Invoke score update event
                 ScoreUpdate?.Invoke(winPlayer, _match.Score);

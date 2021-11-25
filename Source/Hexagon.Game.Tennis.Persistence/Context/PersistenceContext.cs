@@ -105,11 +105,23 @@ namespace Hexagon.Game.Tennis.Persistence.Context
                     .HasColumnName("NAME")
                     .HasMaxLength(100);
 
+                entity.Property(e => e.Court)
+                    .IsRequired()
+                    .HasColumnName("COURT")
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.StartedOn)
                     .HasColumnName("STARTED_ON")
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.StatusId).HasColumnName("STATUS_ID");
+
+                entity.Property(e => e.WonBy).HasColumnName("WON_BY");
+
+                entity.HasOne(d => d.WonByNavigation)
+                    .WithMany(p => p.Match)
+                    .HasForeignKey(d => d.WonBy)
+                    .HasConstraintName("FK_MATCH_FROM_PLAYER");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Match)

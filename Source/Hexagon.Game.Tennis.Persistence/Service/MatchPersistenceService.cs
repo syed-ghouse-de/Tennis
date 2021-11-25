@@ -44,7 +44,8 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 MatchModel model = new MatchModel()
                 {
                     Id = match.Id,
-                    Name = match.Name,                       
+                    Name = match.Name, 
+                    Court = match.Court,
                     StatusId = (int)match.Status                     
                 };
 
@@ -68,10 +69,12 @@ namespace Hexagon.Game.Tennis.Persistence.Service
             {               
                 // Find the match by passing match id
                 MatchModel model = Repository<MatchModel>().Find(match.Id);
-                model.Id = match.Id;
-                model.Name = match.Name;
+
                 model.StartedOn = match.StartedOn;
-                model.StatusId = (int)match.Status;          
+                model.StatusId = (int)match.Status;
+
+                if (match.WonBy != null)
+                    model.WonBy = match.WonBy.Id;
 
                 if (match.CompletedOn != null)
                     model.CompletedOn = match.CompletedOn;
@@ -96,7 +99,8 @@ namespace Hexagon.Game.Tennis.Persistence.Service
             try
             {
                 // Prepare a Match entity along with Set, Game & Point  
-                var match = Repository<MatchModel>().Entities.AsNoTracking().Where(w => w.Id.Equals(id))
+                var match = Repository<MatchModel>().Entities
+                    .AsNoTracking().Where(w => w.Id.Equals(id))
                     // Prepare match entity
                     .Select(m => new MatchEntity()
                     {

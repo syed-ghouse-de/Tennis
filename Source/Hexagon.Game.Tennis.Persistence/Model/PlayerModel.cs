@@ -20,6 +20,7 @@ namespace Hexagon.Game.Tennis.Persistence.Model
             MatchPlayer = new HashSet<MatchPlayerModel>();
             PointScore = new HashSet<PointScoreModel>();
             SetScore = new HashSet<SetScoreModel>();
+            Match = new HashSet<MatchModel>();
         }
 
         public Guid Id { get; set; }
@@ -34,5 +35,6 @@ namespace Hexagon.Game.Tennis.Persistence.Model
         public virtual ICollection<MatchPlayerModel> MatchPlayer { get; set; }
         public virtual ICollection<PointScoreModel> PointScore { get; set; }
         public virtual ICollection<SetScoreModel> SetScore { get; set; }
+        public virtual ICollection<MatchModel> Match { get; set; }
     }
 }

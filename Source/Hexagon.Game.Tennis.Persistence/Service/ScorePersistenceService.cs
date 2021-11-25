@@ -43,10 +43,8 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 {
                     Id = game.Id,
                     SetId = setId,
-                    ServedBy = game.Server.Id,
-                    WonBy = game.WonBy.Id,
-                    StartedOn = game.StartedOn,
-                    CompletedOn = game.CompletedOn,
+                    ServedBy = game.Server.Id,                    
+                    StartedOn = game.StartedOn,                    
                     StatusId = (int)game.Status
                 };
 
@@ -75,6 +73,7 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                     Id = point.Id,
                     GameId = gameId,
                     PlayerId = point.Player.Id,
+                    PointId = (int)point.Point,
                     UpdatedOn = point.UpdatedOn
                 };
 
@@ -101,10 +100,8 @@ namespace Hexagon.Game.Tennis.Persistence.Service
                 SetScoreModel model = new SetScoreModel()
                 {
                     Id = set.Id,
-                    MatchId = matchId,
-                    WonBy = set.WonBy.Id,
-                    StartedOn = set.StartedOn,
-                    CompletedOn = set.CompletedOn,
+                    MatchId = matchId,                    
+                    StartedOn = set.StartedOn,                    
                     StatusId = (int)set.Status
                 };
 

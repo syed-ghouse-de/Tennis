@@ -14,7 +14,14 @@ namespace Hexagon.Game.Tennis.Score
     /// </summary>
     public abstract class BasePoint
     {
+        /// <summary>
+        /// PointWin action event for notifying player point win
+        /// </summary>
         public event Action<PlayerEntity, PlayerPoint> PointWin;
+
+        /// <summary>
+        /// GamePointWin action event for notifying player game point win
+        /// </summary>
         public event Action<PlayerEntity> GamePointWin;
 
         /// <summary>

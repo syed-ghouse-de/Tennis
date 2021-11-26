@@ -13,7 +13,7 @@ namespace Hexagon.Game.Tennis.Test
     /// <summary>
     /// Player unit test class
     /// </summary>
-    public class PlayerTest
+    public class PlayerTest 
     {
         /// <summary>
         /// Player test constructor
@@ -31,36 +31,14 @@ namespace Hexagon.Game.Tennis.Test
             Players players = new Players();
 
             Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
-            players.Add(first);
+            players.FirstPlayer = first;
             Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
-            players.Add(second);
+            players.SecondPlayer = second;
 
-            // Players boundry checks
-            Assert.True(players.Count.Equals(2));
+            // Players boundry checks            
             Assert.True(players.FirstPlayer.Identity.Unique(first));
             Assert.True(players.SecondPlayer.Identity.Unique(second));
-        }
-        
-        /// <summary>
-        /// Test case to throw excpetion when more than two players gets added
-        /// </summary>
-        [Fact]     
-        public void AddMoreThenTwoPlayersThrowExcpetion()
-        {
-            // Players details
-            Players players = new Players();
-
-            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe" };
-            players.Add(first);
-            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex" };
-            players.Add(second);
-
-            // Exception expected when third player is added
-            Player third = new Player { Id = Guid.NewGuid(), FirstName = "Bernherd", SurName = "Ritter" };
-            Exception exception = Assert.Throws<InvalidOperationException>(() => players.Add(third));
-
-            Assert.NotNull(exception);
-        }
+        }         
 
         /// <summary>
         /// Test case to throw exception when trys to add duplicate player
@@ -72,10 +50,10 @@ namespace Hexagon.Game.Tennis.Test
             Players players = new Players();
 
             Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe" , DateOfBirth = new DateTime(1993, 11, 7)};
-            players.Add(first);
+            players.FirstPlayer = first;
 
             // Exception is expected when duplicate player is added
-            Exception exception = Assert.Throws<DuplicateException>(() => players.Add(first));
+            Exception exception = Assert.Throws<DuplicateException>(() => players.SecondPlayer = first);
             Assert.NotNull(exception);
         }        
     }

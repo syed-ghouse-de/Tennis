@@ -13,7 +13,14 @@ namespace Hexagon.Game.Tennis.Score
     /// </summary>
     public interface IPoint
     {
+        /// <summary>
+        /// PointWin action event for notifying player point win
+        /// </summary>
         event Action<PlayerEntity, PlayerPoint> PointWin;
+
+        /// <summary>
+        /// GamePointWin action event for notifying player game point win
+        /// </summary>
         event Action<PlayerEntity> GamePointWin;
 
         /// <summary>

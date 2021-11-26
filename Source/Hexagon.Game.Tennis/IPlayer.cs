@@ -13,12 +13,34 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IPlayer
     {
+        /// <summary>
+        /// PointWin action event for notifying player point win
+        /// </summary>
         event Action<PlayerEntity, PlayerPoint> PointWin;   // Delegate for player point win
+
+        /// <summary>
+        /// GamePointWin action event for notifying player game point win
+        /// </summary>
         event Action<PlayerEntity> GamePointWin;            // Delegat for player game point win
+
+        /// <summary>
+        /// Deuce action event for notifying Deuce 
+        /// </summary>
         event Action<PlayerEntity> Deuce;                   // Delegate for Deuce point
 
+        /// <summary>
+        /// Opponent player
+        /// </summary>
         IPlayer Opponent { get; }                           // To get the opponent player
-        IPoint Point { get; }                               // To maintain player current point    
+
+        /// <summary>
+        /// Player point
+        /// </summary>
+        IPoint Point { get; }                               // To maintain player current point   
+        
+        /// <summary>
+        /// Player identification
+        /// </summary>
         PlayerEntity Identity { get; }                      // To maintain the identity of player  
 
         /// <summary>

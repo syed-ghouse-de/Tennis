@@ -12,7 +12,14 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public interface IMatch
     {
-        event Action<PlayerEntity, ScoreEntity> ScoreUpdate;        // Delegate for player point win       
+        /// <summary>
+        /// ScoreUpdate action event for monitoring score
+        /// </summary>
+        event Action<PlayerEntity, ScoreEntity> ScoreUpdate;        // Delegate for player point win    
+        
+        /// <summary>
+        /// MatchWin action event for to notify winner of the match
+        /// </summary>
         event Action<PlayerEntity, ScoreEntity> MatchWin;           // Delegat for player game point win
 
         /// <summary>
@@ -24,6 +31,11 @@ namespace Hexagon.Game.Tennis
         /// Name of the match
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// Name of the match
+        /// </summary>
+        string Court { get; set; }
 
         /// <summary>
         /// Date and time of match when it started
@@ -58,12 +70,23 @@ namespace Hexagon.Game.Tennis
         /// <summary>
         /// Score of the match
         /// </summary>
-        ScoreEntity Score { get; }                                 
-        
+        ScoreEntity Score { get; }
+
         /// <summary>
-        /// Play the match by two players
+        /// First player of the match
         /// </summary>
-        void Play();
+        IPlayer FirstPlayer { get; set; }
+
+        /// <summary>
+        /// Second player of the match
+        /// </summary>
+        IPlayer SecondPlayer { get; set; }
+
+        /// <summary>
+        /// Initialize the new match before starting
+        /// </summary>
+        /// <param name="match">Match details to start a new match</param>
+        void NewMatch(MatchEntity match);
 
         /// <summary>
         /// To start the match
@@ -80,11 +103,5 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         /// <returns>Return list of players</returns>
         List<PlayerEntity> GetPlayers();
-
-        /// <summary>
-        /// Initialize the new match before starting
-        /// </summary>
-        /// <param name="match">Match details to start a new match</param>
-        void NewMatch(MatchEntity match);
     }
 }

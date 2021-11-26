@@ -17,12 +17,34 @@ namespace Hexagon.Game.Tennis
     {        
         private IPoint _point;
 
+        /// <summary>
+        /// PointWin action event for notifying player point win
+        /// </summary>
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for poin win
+
+        /// <summary>
+        /// GamePointWin action event for notifying player game point win
+        /// </summary>
         public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win
+
+        /// <summary>
+        /// Deuce action event for notifying Deuce 
+        /// </summary>
         public event Action<PlayerEntity> Deuce;                            // Delegate for Deuce point 
 
+        /// <summary>
+        /// Opponent player
+        /// </summary>
         public IPlayer Opponent { get; set; }                               // To get the opponent player
+
+        /// <summary>
+        /// Player identification
+        /// </summary>
         public PlayerEntity Identity { get { return (PlayerEntity)this; } } // To maintain the identity of player  
+
+        /// <summary>
+        /// Player point
+        /// </summary>
         public IPoint Point { get { return _point; } }                      // To maintain player current point
 
         /// <summary>
@@ -151,18 +173,30 @@ namespace Hexagon.Game.Tennis
     /// <summary>
     /// Class to maintain the list of Players
     /// </summary>
-    public class Players : EntityList<Player>
+    public class Players  
     {
-        private readonly byte FIRST_PLAYER = 0;                              // Constant to maintain the index of first player
-        private readonly byte SECOND_PLAYER = 1;                             // Constant to maintain the index of second player        
+        private readonly byte FIRST_PLAYER = 0;                             // Constant to maintain the index of first player
+        private readonly byte SECOND_PLAYER = 1;                            // Constant to maintain the index of second player        
 
+        private EntityList<Player> _players = new EntityList<Player>();     // To maintain the players list         
+        /// <summary>
+        /// PointWin action event for notifying player point win
+        /// </summary>
         public event Action<PlayerEntity, PlayerPoint> PointWin;            // Delegate for point win
+
+        /// <summary>
+        /// GamePointWin action event for notifying player game point win
+        /// </summary>
         public event Action<PlayerEntity> GamePointWin;                     // Delegate for game point win         
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Players() { }
+        public Players()
+        {
+            // Remove the players if any
+            this.RemoveAll();
+        }
 
         /// <summary>
         /// Indexer to return IPlayer object
@@ -173,7 +207,7 @@ namespace Hexagon.Game.Tennis
         {
             get
             {
-                return this.Where(p => p.Id.Equals(id)).FirstOrDefault();
+                return this._players.Where(p => p.Id.Equals(id)).FirstOrDefault();
             }            
         }
 
@@ -184,12 +218,14 @@ namespace Hexagon.Game.Tennis
         {
             get
             {
-                Player player = this[FIRST_PLAYER];
-                player.Opponent = this[SECOND_PLAYER];
+                Player player = _players[FIRST_PLAYER];
+                player.Opponent = _players[SECOND_PLAYER];
 
                 return player;
             }
-        }
+
+            set { _players[FIRST_PLAYER] = AssignPlayer(value); }
+        } 
 
         /// <summary>
         /// To get the Second player of the match
@@ -198,39 +234,53 @@ namespace Hexagon.Game.Tennis
         {
             get
             {
-                Player player = this[SECOND_PLAYER];
-                player.Opponent = this[FIRST_PLAYER];
+                Player player = _players[SECOND_PLAYER];
+                player.Opponent = _players[FIRST_PLAYER];
 
                 return player;
             }
+
+            set { _players[SECOND_PLAYER] = AssignPlayer(value); }
         }
 
         /// <summary>
         /// Set the current server
         /// </summary>
         public IPlayer Server { get; set; }
-
+ 
         /// <summary>
-        /// Add a player in to the list
+        /// Validate and assign the event actions for the player
         /// </summary>
-        /// <param name="player">Player to add</param>
-        public void Add(IPlayer player)
-        {            
-            // Check the number of players added in to the list, throw an exception if more than 2 players is added
-            if (this.Count >= 2)
-                throw new InvalidOperationException("Can not add more than 2 players!");
-
+        /// <param name="player">Player to validate</param>
+        /// <returns>Returns valid player</returns>
+        private Player AssignPlayer(IPlayer player)
+        {
             // Check the duplication of the player, throw an exception when duplicate found
-            var players = this.Where(pl => pl.Unique(player.Identity)).Select(entity => entity.Identity);
+            var players = _players.Where(pl => pl != null && pl.Identity != null &&
+                pl.Unique(player.Identity)).Select(entity => entity.Identity);
+
             if (players.Any())
                 throw new DuplicateException(string.Format("Player {0}, {1} already selected as player, player's should be different!", player.Identity.SurName, player.Identity.FirstName));
 
+            // Subscribe action events
             player.PointWin += OnPointWin;
             player.GamePointWin += OnGamePointWin;
             player.Deuce += OnDeuce;
 
-            base.Add((Player) player);
-        } 
+            return (Player)player;
+        }
+
+        /// <summary>
+        /// Remove the palyers
+        /// </summary>
+        public void RemoveAll()
+        {
+            // Remove the players from the list
+            _players.Clear();
+
+            _players.Add(null);
+            _players.Add(null);
+        }
 
         /// <summary>
         /// Player point win

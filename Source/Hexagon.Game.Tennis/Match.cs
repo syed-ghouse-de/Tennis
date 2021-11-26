@@ -18,7 +18,14 @@ namespace Hexagon.Game.Tennis
     /// </summary>
     public class Match : IMatch
     {
-        public event Action<PlayerEntity, ScoreEntity> ScoreUpdate;     // Delegate for player point win       
+        /// <summary>
+        /// ScoreUpdate action event for monitoring score
+        /// </summary>
+        public event Action<PlayerEntity, ScoreEntity> ScoreUpdate;     // Delegate for player point win   
+
+        /// <summary>
+        /// MatchWin action event for to notify winner of the match
+        /// </summary>
         public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegat for player game point win
 
         // Privte memeber variables
@@ -28,7 +35,14 @@ namespace Hexagon.Game.Tennis
 
         private MatchEntity _match;                                     // Match information
 
+        /// <summary>
+        /// Players of the match
+        /// </summary>
         public Players Players { get; set; }                            // List of match players
+
+        /// <summary>
+        /// Score of the match, which contains Set's, Game's and Point's
+        /// </summary>
         public ScoreEntity Score { get { return _match.Score; } }       // To maintain player current point     
 
         /// <summary>
@@ -46,6 +60,15 @@ namespace Hexagon.Game.Tennis
         {
             get { return _match.Name; }
             set { _match.Name = value; }
+        }
+
+        /// <summary>
+        /// Name of the match
+        /// </summary>
+        public string Court
+        {
+            get { return _match.Court; }
+            set { _match.Court = value; }
         }
 
         /// <summary>
@@ -90,6 +113,24 @@ namespace Hexagon.Game.Tennis
         }
 
         /// <summary>
+        /// First player of the match
+        /// </summary>
+        public IPlayer FirstPlayer
+        {
+            get { return Players.FirstPlayer; }
+            set { Players.FirstPlayer = value; }
+        }
+
+        /// <summary>
+        /// Second player of the match
+        /// </summary>
+        public IPlayer SecondPlayer
+        {
+            get { return Players.SecondPlayer; }
+            set { Players.SecondPlayer = value; }
+        }
+
+        /// <summary>
         /// Default constructor
         /// </summary>
         public Match(IMatchPersistenceService matchPersistenceService,
@@ -101,16 +142,13 @@ namespace Hexagon.Game.Tennis
             _scoreDomainService = new ScoreDomainService(matchPersistenceService, scorePersistenceService);
             _playerDomainService = new PlayerDomainService(playerPersistenceService);
 
+            // Instance of match and players objects
             _match = new MatchEntity();
             Players = new Players();
-        }
 
-        /// <summary>
-        /// To play the match
-        /// </summary>
-        public void Play()
-        {
-            throw new NotImplementedException();
+            // Delegate subscriptions
+            this.Players.PointWin += OnPointWin;
+            this.Players.GamePointWin += OnGamePointWin;
         }
 
         /// <summary>
@@ -123,11 +161,7 @@ namespace Hexagon.Game.Tennis
                 // Start the new match and get the current score of the match
                 _match = _matchDomainService.StartMatch(_match);              
                 _match.Score = _scoreDomainService
-                    .GetMatchScore(_match, Players.Server.Identity);
-
-                // Delegate subscribtion
-                this.Players.PointWin += OnPointWin;
-                this.Players.GamePointWin += OnGamePointWin;
+                    .GetMatchScore(_match, Players.Server.Identity);               
             }
             catch (DomainServiceException domainServiceException)
             {
@@ -183,9 +217,12 @@ namespace Hexagon.Game.Tennis
                     BestOfSets = match.BestOfSets
                 };
 
-                Players = new Players();    
-                Players.Add(new Player(match.Players[0]));           // Add player one 
-                Players.Add(new Player(match.Players[1]));           // Add player two
+                // Remove all the players if any
+                Players.RemoveAll();
+
+                // Add First & Second players
+                Players.FirstPlayer = new Player(match.Players[0]);
+                Players.SecondPlayer = new Player(match.Players[1]);
 
                 // Add new math in the database
                 _matchDomainService.AddMatch(_match);

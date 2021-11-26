@@ -1,0 +1,749 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Hexagon.Game.Tennis</name>
+    </assembly>
+    <members>
+        <member name="T:Hexagon.Game.Tennis.IMatch">
+            <summary>
+            Interface for Match
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.IMatch.ScoreUpdate">
+            <summary>
+            ScoreUpdate action event for monitoring score
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.IMatch.MatchWin">
+            <summary>
+            MatchWin action event for to notify winner of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Id">
+            <summary>
+            Id of a match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Name">
+            <summary>
+            Name of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Court">
+            <summary>
+            Name of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.StartedOn">
+            <summary>
+            Date and time of match when it started
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.CompletedOn">
+            <summary>
+            Date and time of match when it completed
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Status">
+            <summary>
+            Status of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.BestOfSets">
+            <summary>
+            Match best of sets
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.WonBy">
+            <summary>
+            Winner of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Players">
+            <summary>
+            Player List
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.Score">
+            <summary>
+            Score of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.FirstPlayer">
+            <summary>
+            First player of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IMatch.SecondPlayer">
+            <summary>
+            Second player of the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IMatch.NewMatch(Hexagon.Game.Tennis.Entity.MatchEntity)">
+            <summary>
+            Initialize the new match before starting
+            </summary>
+            <param name="match">Match details to start a new match</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IMatch.Start">
+            <summary>
+            To start the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IMatch.Stop">
+            <summary>
+            Stop the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IMatch.GetPlayers">
+            <summary>
+            Get all the players from the database
+            </summary>
+            <returns>Return list of players</returns>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.IPlayer">
+            <summary>
+            Player template 
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.IPlayer.PointWin">
+            <summary>
+            PointWin action event for notifying player point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.IPlayer.GamePointWin">
+            <summary>
+            GamePointWin action event for notifying player game point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.IPlayer.Deuce">
+            <summary>
+            Deuce action event for notifying Deuce 
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IPlayer.Opponent">
+            <summary>
+            Opponent player
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IPlayer.Point">
+            <summary>
+            Player point
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.IPlayer.Identity">
+            <summary>
+            Player identification
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IPlayer.Win">
+            <summary>
+            Method for player win point
+            </summary>       
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IPlayer.Loose">
+            <summary>
+            Method for player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IPlayer.SetLove">
+            <summary>
+            Method to set the Love point for the player
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IPlayer.SetDeuce">
+            <summary>
+            Method to set the Deuce for the player
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.IPlayer.SetMatchPoint">
+            <summary>
+            Method to set the Match point for the player
+            </summary>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Match">
+            <summary>
+            Match class to contains match associated attributes
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Match.ScoreUpdate">
+            <summary>
+            ScoreUpdate action event for monitoring score
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Match.MatchWin">
+            <summary>
+            MatchWin action event for to notify winner of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Players">
+            <summary>
+            Players of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Score">
+            <summary>
+            Score of the match, which contains Set's, Game's and Point's
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Id">
+            <summary>
+            Id of a match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Name">
+            <summary>
+            Name of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Court">
+            <summary>
+            Name of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.StartedOn">
+            <summary>
+            Date and time of match when it started
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.CompletedOn">
+            <summary>
+            Date and time of match when it completed
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.Status">
+            <summary>
+            Status of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.BestOfSets">
+            <summary>
+            Match best of sets
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.WonBy">
+            <summary>
+            Winner of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.FirstPlayer">
+            <summary>
+            First player of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Match.SecondPlayer">
+            <summary>
+            Second player of the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.#ctor(Hexagon.Game.Framework.Service.Persistence.IMatchPersistenceService,Hexagon.Game.Framework.Service.Persistence.IPlayerPersistenceService,Hexagon.Game.Framework.Service.Persistence.IScorePersistenceService)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.Start">
+            <summary>
+            To start the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.Stop">
+            <summary>
+            To stop the match
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.GetPlayers">
+            <summary>
+            Get all the players from the database
+            </summary>
+            <returns>Return list of players</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.NewMatch(Hexagon.Game.Tennis.Entity.MatchEntity)">
+            <summary>
+            Initialize the new match before starting
+            </summary>
+            <param name="match">Match details to start a new match</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.OnPointWin(Hexagon.Game.Tennis.Entity.PlayerEntity,Hexagon.Game.Tennis.Entity.PlayerPoint)">
+            <summary>
+            Player point win
+            </summary>
+            <param name="winPlayer">Winner player</param>
+            <param name="point">Player winner point</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Match.OnGamePointWin(Hexagon.Game.Tennis.Entity.PlayerEntity)">
+            <summary>
+            Player game point win
+            </summary>
+            <param name="winPlayer">Game point winner</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Player">
+            <summary>
+            Player class to export player functionalities
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Player.PointWin">
+            <summary>
+            PointWin action event for notifying player point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Player.GamePointWin">
+            <summary>
+            GamePointWin action event for notifying player game point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Player.Deuce">
+            <summary>
+            Deuce action event for notifying Deuce 
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Player.Opponent">
+            <summary>
+            Opponent player
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Player.Identity">
+            <summary>
+            Player identification
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Player.Point">
+            <summary>
+            Player point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.#ctor(Hexagon.Game.Tennis.Entity.PlayerEntity)">
+            <summary>
+            Player parametarized constructror
+            </summary>
+            <param name="entity">Player entity</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.#ctor(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Player parametarized constructor
+            </summary>
+            <param name="player"></param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.Win">
+            <summary>
+            Method for player win point
+            </summary>        
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.Loose">
+            <summary>
+            Method for player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.Init">
+            <summary>
+            Inititialize default values
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.SetLove">
+            <summary>
+            Method to set the Love point for the player
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.SetDeuce">
+            <summary>
+            Method to set the Deuce for the player
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.SetMatchPoint">
+            <summary>
+            Method to set the Match point for the player
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.OnPointWin(Hexagon.Game.Tennis.Entity.PlayerEntity,Hexagon.Game.Tennis.Entity.PlayerPoint)">
+            <summary>
+            Event action for player point win
+            </summary>
+            <param name="winPlayer">Winner player</param>
+            <param name="point">Winner point</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Player.OnGamePointWin(Hexagon.Game.Tennis.Entity.PlayerEntity)">
+            <summary>
+            Event action for player Game Point
+            </summary>
+            <param name="player">Information of the game point player</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Players">
+            <summary>
+            Class to maintain the list of Players
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Players.PointWin">
+            <summary>
+            PointWin action event for notifying player point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Players.GamePointWin">
+            <summary>
+            GamePointWin action event for notifying player game point win
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Players.Item(System.Guid)">
+            <summary>
+            Indexer to return IPlayer object
+            </summary>
+            <param name="id">Guid of a Player</param>
+            <returns></returns>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Players.FirstPlayer">
+            <summary>
+            To get the first player of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Players.SecondPlayer">
+            <summary>
+            To get the Second player of the match
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Players.Server">
+            <summary>
+            Set the current server
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.AssignPlayer(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Validate and assign the event actions for the player
+            </summary>
+            <param name="player">Player to validate</param>
+            <returns>Returns valid player</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.RemoveAll">
+            <summary>
+            Remove the palyers
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.OnPointWin(Hexagon.Game.Tennis.Entity.PlayerEntity,Hexagon.Game.Tennis.Entity.PlayerPoint)">
+            <summary>
+            Player point win
+            </summary>
+            <param name="winPlayer">Winner player</param>
+            <param name="point">Player winner point</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.OnGamePointWin(Hexagon.Game.Tennis.Entity.PlayerEntity)">
+            <summary>
+            Player game point win
+            </summary>
+            <param name="player">Game point winner</param>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Players.OnDeuce(Hexagon.Game.Tennis.Entity.PlayerEntity)">
+            <summary>
+            Set the deuce for both the players
+            </summary>
+            <param name="winner">Winner player</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Advantage">
+            <summary>
+            Class to maintain the Advantage point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Advantage.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Advantage.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Advantage.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Advantage.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.BasePoint">
+            <summary>
+            Abstract base point class
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Score.BasePoint.PointWin">
+            <summary>
+            PointWin action event for notifying player point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Score.BasePoint.GamePointWin">
+            <summary>
+            GamePointWin action event for notifying player game point win
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.BasePoint.#ctor(Hexagon.Game.Tennis.Entity.PlayerPoint)">
+            <summary>
+            Parameterized constructor
+            </summary>
+            <param name="point">Point</param>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Score.BasePoint.Point">
+            <summary>
+            To maintain the point
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Score.BasePoint.PointWinHandler">
+            <summary>
+            Property to get the handler of point action
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Score.BasePoint.GamePointWinHandler">
+            <summary>
+            Property to get the handler of GamePoint action
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.BasePoint.ExecuteHandlers(Hexagon.Game.Tennis.Player,Hexagon.Game.Tennis.Entity.PlayerPoint)">
+            <summary>
+            Execute point and game win handlers
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <param name="point">Winner point</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Deuce">
+            <summary>
+            Class to maintain the Deuce point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Deuce.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Deuce.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Deuce.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>  
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Deuce.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Fifteen">
+            <summary>
+            Class to maintain the Fifteen point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Fifteen.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Fifteen.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Fifteen.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Fifteen.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Forty">
+            <summary>
+            Class to maintain the Forty point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Forty.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Forty.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Forty.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Forty.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.GamePoint">
+            <summary>
+            Class to maintain the Game point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.GamePoint.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.GamePoint.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.GamePoint.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.GamePoint.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.IPoint">
+            <summary>
+            Interface to maintain the state of player point
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Score.IPoint.PointWin">
+            <summary>
+            PointWin action event for notifying player point win
+            </summary>
+        </member>
+        <member name="E:Hexagon.Game.Tennis.Score.IPoint.GamePointWin">
+            <summary>
+            GamePointWin action event for notifying player game point win
+            </summary>
+        </member>
+        <member name="P:Hexagon.Game.Tennis.Score.IPoint.Point">
+            <summary>
+            To maintain the point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.IPoint.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.IPoint.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point         
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.IPoint.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Love">
+            <summary>
+            Class to maintain the Love state point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Love.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Love.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Love.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Love.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.MatchPoint">
+            <summary>
+            Class to maintain the Match point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.MatchPoint.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.MatchPoint.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.MatchPoint.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.MatchPoint.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+        <member name="T:Hexagon.Game.Tennis.Score.Thirty">
+            <summary>
+            Class to maintain the Thirty point state
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Thirty.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Thirty.Loose">
+            <summary>
+            Execute to maintain the state of player loose point
+            </summary>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Thirty.Win(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Execute to maintain the state of player win point
+            </summary>
+            <param name="opponent">Opponent player</param>
+            <returns>Returns latest state of the point</returns>
+        </member>
+        <member name="M:Hexagon.Game.Tennis.Score.Thirty.Update(Hexagon.Game.Tennis.IPlayer)">
+            <summary>
+            Update points of the player
+            </summary>
+            <param name="player">Player to which point to be updated</param>
+        </member>
+    </members>
+</doc>

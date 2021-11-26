@@ -56,7 +56,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -125,7 +125,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -155,7 +155,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -186,7 +186,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -215,7 +215,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -250,7 +250,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -281,7 +281,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -313,7 +313,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -345,7 +345,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -382,7 +382,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -427,7 +427,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -473,7 +473,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -493,7 +493,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;
@@ -512,7 +512,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
 
             var firstPlayer = match.Players.FirstPlayer;
             var secondPlayer = match.Players.SecondPlayer;

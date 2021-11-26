@@ -1,0 +1,2 @@
+cd /d "C:\Syed\Personal\Preperation\Tennis\Working\Source\Hexagon.Game.Tennis.Persistence.Test" &msbuild "Hexagon.Game.Tennis.Persistence.Test.csproj" /t:sdvViewer /p:configuration="Debug" /p:platform=Any CPU
+exit %errorlevel% 

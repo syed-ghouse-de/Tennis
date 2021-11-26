@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "\\Source",
+    "\\Source\\Hexagon.Game.Framework",
+    "\\Source\\Hexagon.Game.Framework\\Exceptions",
+    "\\Source\\Hexagon.Game.Framework\\Service",
+    "\\Source\\Hexagon.Game.Framework\\Service\\Persistence",
+    "\\Source\\Hexagon.Game.Tennis.Desktop\\Service",
+    "\\Source\\Hexagon.Game.Tennis.Desktop\\ViewModels",
+    "\\Source\\Hexagon.Game.Tennis.Persistence",
+    "\\Source\\Hexagon.Game.Tennis.Persistence\\Service",
+    "\\Source\\Hexagon.Game.Tennis.Test",
+    "\\Source\\Hexagon.Game.Tennis.Test\\Domain"
+  ],
+  "SelectedNode": "\\Source\\Hexagon.Game.Tennis.Persistence\\Service\\MatchPersistenceService.cs",
+  "PreviewInSolutionExplorer": false
+}

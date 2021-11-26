@@ -1,4 +1,6 @@
-﻿using Hexagon.Game.Tennis.Entity;
+﻿using Hexagon.Game.Framework.Service.Persistence;
+using Hexagon.Game.Tennis.Entity;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,44 @@ namespace Hexagon.Game.Tennis.Test
     /// </summary>
     public class PlayerPointTest :  BaseTest
     {
+        // Member variable objects for persistence mock
+        private Mock<IMatchPersistenceService> _matchPersistenceMock;
+        private Mock<IPlayerPersistenceService> _playerPersistenceMock;
+        private Mock<IScorePersistenceService> _scorePersistenceMock;
+        private IMatch _match;
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PlayerPointTest()
+        {
+            // Mock the match, player and score persistence serivices
+            _matchPersistenceMock = new Mock<IMatchPersistenceService>();
+            _playerPersistenceMock = new Mock<IPlayerPersistenceService>();
+            _scorePersistenceMock = new Mock<IScorePersistenceService>();
+
+            // Create an instance of Match object by passing Mock objects
+            _match = new Match(_matchPersistenceMock.Object,
+                _playerPersistenceMock.Object, _scorePersistenceMock.Object);
+        }
+
+        /// <summary>
+        /// Get the instance of Match object
+        /// </summary>
+        /// <returns>Return of type IMatch</returns>
+        private IMatch GetMatch()
+        {
+            // Return the instance of Match object
+            return _match;
+        }
+
         /// <summary>
         /// Test case to calculate the players points
         /// </summary>
         [Fact]
         public void PlayerPoints()
         {
-            Players players = AddPlayers();       
+            Players players = AddPlayers(GetMatch());            
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
@@ -48,7 +81,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerGamePoint()
         {
-            Players players = AddPlayers();
+            Players players = AddPlayers(GetMatch());      
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
@@ -67,7 +100,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerDeucePoint()
         {
-            Players players = AddPlayers();
+            Players players = AddPlayers(GetMatch());    
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
@@ -91,8 +124,8 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerAdvantagePoint()
         {
-            Players players = AddPlayers();
-
+            Players players = AddPlayers(GetMatch());
+            
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
 
@@ -119,7 +152,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerMultipleDeucePointWithGamePoint()
         {
-            Players players = AddPlayers();
+            Players players = AddPlayers(GetMatch());     
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
@@ -167,7 +200,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerCurrentPointForFirstPlayerWinScenario1()
         {
-            Players players = AddPlayers();
+            Players players = AddPlayers(GetMatch());          
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);
@@ -199,7 +232,7 @@ namespace Hexagon.Game.Tennis.Test
         [Fact]
         public void PlayerCurrentPointForFirstPlayerWinScenario2()
         {
-            Players players = AddPlayers();
+            Players players = AddPlayers(GetMatch());
 
             Assert.Equal(PlayerPoint.Love, players.FirstPlayer.Point.Point);
             Assert.Equal(PlayerPoint.Love, players.SecondPlayer.Point.Point);

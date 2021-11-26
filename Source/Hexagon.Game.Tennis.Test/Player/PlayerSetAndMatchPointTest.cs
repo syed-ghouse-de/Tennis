@@ -55,7 +55,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();    
+            AddPlayers(match);
             match.BestOfSets = 3;
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -169,7 +169,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
             match.BestOfSets = 3;
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -251,7 +251,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();            
+            AddPlayers(match);
             match.BestOfSets = 5;
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -397,7 +397,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();          
+            AddPlayers(match);
             match.BestOfSets = 5;
 
             var firstPlayer = match.Players.FirstPlayer;
@@ -575,7 +575,7 @@ namespace Hexagon.Game.Tennis.Test
         {
             // Match and players details
             IMatch match = GetMatch();
-            match.Players = AddPlayers();
+            AddPlayers(match);
             match.BestOfSets = 5;
 
             var firstPlayer = match.Players.FirstPlayer;

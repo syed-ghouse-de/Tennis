@@ -12,16 +12,33 @@ namespace Hexagon.Game.Tennis.Test
         /// Add two players for unit testing
         /// </summary>
         /// <returns></returns>
-        public Players AddPlayers()
-        {
-            Players players = new Players();
+        public Players AddPlayers(IMatch match) 
+        {        
+            // Firt player
+            Player first = new Player
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "John",
+                SurName = "Doe",
+                LastName = "Last",
+                DateOfBirth = new DateTime(1996, 11, 7)
+            };            
 
-            Player first = new Player { Id = Guid.NewGuid(), FirstName = "John", SurName = "Doe", LastName = "Last", DateOfBirth = new DateTime(1996, 11, 7) };
-            players.FirstPlayer = first;
-            Player second = new Player { Id = Guid.NewGuid(), FirstName = "Smith", SurName = "Alex", LastName = "Last", DateOfBirth = new DateTime(1987, 11, 9) };
-            players.SecondPlayer = second;
+            Player second = new Player
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Smith",
+                SurName = "Alex",
+                LastName = "Last",
+                DateOfBirth = new DateTime(1987, 11, 9)
+            };
 
-            return players;
+            // Initialize first & second players
+            match.Players.FirstPlayer = first;
+            match.Players.SecondPlayer = second;            
+            match.Players.Server = first;
+
+            return match.Players;
         }
     }
 }

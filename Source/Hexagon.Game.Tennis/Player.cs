@@ -219,7 +219,8 @@ namespace Hexagon.Game.Tennis
             get
             {
                 Player player = _players[FIRST_PLAYER];
-                player.Opponent = _players[SECOND_PLAYER];
+                if (player != null)
+                    player.Opponent = _players[SECOND_PLAYER];
 
                 return player;
             }
@@ -235,7 +236,9 @@ namespace Hexagon.Game.Tennis
             get
             {
                 Player player = _players[SECOND_PLAYER];
-                player.Opponent = _players[FIRST_PLAYER];
+
+                if (player != null)
+                    player.Opponent = _players[FIRST_PLAYER];
 
                 return player;
             }

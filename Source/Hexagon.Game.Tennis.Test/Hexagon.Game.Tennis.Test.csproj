@@ -71,6 +71,7 @@
     <Compile Include="Domain\MatchDomainServiceTest.cs" />
     <Compile Include="Domain\PlayerDomainServiceTest.cs" />
     <Compile Include="Domain\ScoreDomainServiceTest.cs" />
+    <Compile Include="Match\MatchApiTest.cs" />
     <Compile Include="Player\PlayerGameTest.cs" />
     <Compile Include="Player\PlayerPointTest.cs" />
     <Compile Include="Player\PlayerSetAndMatchPointTest.cs" />

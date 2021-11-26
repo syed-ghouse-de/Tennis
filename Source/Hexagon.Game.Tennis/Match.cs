@@ -203,6 +203,36 @@ namespace Hexagon.Game.Tennis
         }
 
         /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        public void NewMatch(string name)
+        {
+            throw new NotImplementedException();
+        }    
+
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        public void NewMatch(string name, int bestOfSets)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// /// <param name="court">Name of the match court</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        public void NewMatch(string name, string court, int bestOfSets)
+        {
+            throw new NotImplementedException();  
+        }
+
+        /// <summary>
         /// Initialize the new match before starting
         /// </summary>
         /// <param name="match">Match details to start a new match</param>

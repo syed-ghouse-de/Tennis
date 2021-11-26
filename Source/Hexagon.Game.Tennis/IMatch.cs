@@ -89,6 +89,27 @@ namespace Hexagon.Game.Tennis
         void NewMatch(MatchEntity match);
 
         /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        void NewMatch(string name);
+
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        void NewMatch(string name, int bestOfSets);
+
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// /// <param name="court">Name of the match court</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        void NewMatch(string name, string court, int bestOfSets);
+
+        /// <summary>
         /// To start the match
         /// </summary>
         void Start();

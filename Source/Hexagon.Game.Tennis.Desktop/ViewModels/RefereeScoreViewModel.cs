@@ -134,8 +134,8 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
                 // Assigne the list of players to Player 1 and 2
                 if (Players.Any())
                 {
-                    PlayerOne = value.FirstOrDefault();
-                    PlayerTwo = value.FirstOrDefault();
+                    FirstPlayer = value.FirstOrDefault();
+                    SecondPlayer = value.FirstOrDefault();
                 }                    
             }
         }
@@ -144,13 +144,13 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// Selected player one 
         /// </summary>
         private PlayerEntity _playerOne = new PlayerEntity();
-        public PlayerEntity PlayerOne
+        public PlayerEntity FirstPlayer
         {
             get { return _playerOne; }
             set
             {
                 // Set and notify the selced player one
-                SetPropertyAndNotify(ref _playerOne, value, () => PlayerOne);
+                SetPropertyAndNotify(ref _playerOne, value, () => FirstPlayer);
             }
         }
 
@@ -158,13 +158,13 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// Selected player one 
         /// </summary>
         private PlayerEntity _playerTwo = new PlayerEntity();
-        public PlayerEntity PlayerTwo
+        public PlayerEntity SecondPlayer
         {
             get { return _playerTwo; }
             set
             {
                 // Set and notify the selced player one
-                SetPropertyAndNotify(ref _playerTwo, value, () => PlayerTwo);
+                SetPropertyAndNotify(ref _playerTwo, value, () => SecondPlayer);
             }
         }
 
@@ -234,32 +234,11 @@ namespace Hexagon.Game.Tennis.Desktop.ViewModels
         /// <param name="obj">Source object</param>
         private void OnStartMatch(object obj)
         {
-            try
-            {       
-                // Initialize match data
-                MatchEntity match = new MatchEntity();
-                SelectedSet = new KeyValuePair<Guid, string>();
+            // Initialize empty for the SelectedSet
+            SelectedSet = new KeyValuePair<Guid, string>();
 
-                // Add match information
-                match.BestOfSets = Match.BestOfSets;
-                match.Name = Match.Name;
-                match.Court = Match.Court;
-
-                // Initialize match players
-                match.Players.Add(PlayerOne);                               // Player one
-                match.Players.Add(PlayerTwo);                               // Player two
-
-                // Initialize new match data by calling initialize method
-                MatachHandler.Initialize(match);
-                MatachHandler.Match.Players.Server = MatachHandler.Match.Players.FirstPlayer;
-
-                // Start the match
-                MatachHandler.Start();
-            }
-            catch (Exception exception)
-            {
-                Message = exception.Message;
-            }
+            // Start the match
+            MatachHandler.Start(Match, FirstPlayer, SecondPlayer, FirstPlayer);         
         }
     }
 }

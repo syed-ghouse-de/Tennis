@@ -11,16 +11,8 @@ namespace Hexagon.Game.Tennis.Desktop.Model
     /// <summary>
     /// Math model
     /// </summary>
-    public class MatchModel : ObservableModel
+    public class MatchModel : MatchEntity
     {
-        public string Name { get; set; }
-        public string Court { get; set; }
-        public DateTime? StartedOn { get; set; }
-        public DateTime? CompletedOn { get; set; }
-        public Status Status { get; set; }
-        public int BestOfSets { get; set; }
-        public PlayerModel WonBy { get; set; }
-
         /// <summary>
         /// Default constructor
         /// </summary>

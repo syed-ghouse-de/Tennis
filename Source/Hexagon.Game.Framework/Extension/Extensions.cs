@@ -37,7 +37,7 @@ namespace Hexagon.Game.Framework.Extension
         public static string ToDigit(this PlayerPoint point)
         {
             List<string> points = new List<string>()
-                { "0", "15", "30", "40", "A", "40", "G", "M" };
+                { "00", "15", "30", "40", "AD", "40", "GA", "M" };
 
             // Return point in digit
             return points[(int)point];

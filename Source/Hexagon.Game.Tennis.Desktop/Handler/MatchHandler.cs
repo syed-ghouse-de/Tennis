@@ -104,60 +104,66 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <summary>
         /// Start a match
         /// </summary>
-        public void Start()
+        /// <param name="match">Match to start</param>
+        /// <param name="firstPlayer">First player of the match</param>
+        /// <param name="secondPlayer">Second player of the match</param>
+        /// <param name="tossWon">Intial server of the Match</param>
+        public void Start(MatchModel match, PlayerEntity firstPlayer, 
+            PlayerEntity secondPlayer, PlayerEntity tossWon)
         {
             try
             {
-                // Execute the player wins Asynchronously
-                Task.Run(() =>
-                    {
-                        // Start the match
-                        _match.Start();
-                        Random rnd = new Random();
+                // Remove all the players if any
+                _match.Players.RemoveAll();
+                _match.Players.FirstPlayer = new Player(firstPlayer);
+                _match.Players.SecondPlayer = new Player(secondPlayer);
 
-                        // Continue the play till the match is not completed
-                        while (!_match.Status.Equals(Status.Completed))
-                        {
-                            // Get the random number to make the player win
-                            int player = rnd.Next() % 2;                            
+                // Set the intitial server of the match
+                _match.Players.Server = tossWon.Id.Equals(firstPlayer.Id)
+                    ? _match.Players.FirstPlayer
+                    : _match.Players.SecondPlayer;
 
-                            if (player == 1)
-                                _match.Players.FirstPlayer.Win();
-                            else
-                                _match.Players.SecondPlayer.Win();
+                // Start a new match           
+                _match.NewMatch(match.Name, match.Court, match.BestOfSets);          
 
-                            // Sleep for 2 seconds for delay between players wins
-                            Thread.Sleep(2000);
-                        }
-                    }
-                );
+                // Subscribe delegates for both score update and match win
+                _match.ScoreUpdate += OnScoreUpdate;
+                _match.MatchWin += OnMatchWin;
+
+                // Start the match in a thread
+                Task.Run(() => Start());
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 throw exception;
             }
+       
         }
 
         /// <summary>
-        /// Configure math details before starting the match
+        /// Start a match
         /// </summary>
-        /// <param name="match">Match to start</param>
-        public void Initialize(MatchEntity match)
-        {            
-            // Throw exception when no palyers are added
-            if (!match.Players.Any())
-                throw new InvalidOperationException("Playres needs to be initialized before starting the match");
+        private void Start()
+        {
+            // Start the match
+            _match.Start();
+            Random rnd = new Random();
 
-            // Start a new match           
-            _match.NewMatch(match);                                     // Start a new match         
+            // Continue the play till the match is not completed
+            while (!_match.Status.Equals(Status.Completed))
+            {
+                // Get the random number to make the player win
+                int player = rnd.Next() % 2;
 
-            // Subscribe delegates for both score update and match win
-            _match.ScoreUpdate += OnScoreUpdate;
-            _match.MatchWin += OnMatchWin;
+                if (player == 1)
+                    _match.Players.FirstPlayer.Win();
+                else
+                    _match.Players.SecondPlayer.Win();
 
-            var firstPlayer = _match.Players.FirstPlayer;
-            var secondPlayer = _match.Players.SecondPlayer;
-        }
+                // Sleep for 2 seconds for delay between players wins
+                Thread.Sleep(2000);
+            }
+        }   
 
         /// <summary>
         /// Action event for match win

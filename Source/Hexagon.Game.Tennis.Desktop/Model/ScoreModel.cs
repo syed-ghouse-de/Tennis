@@ -18,7 +18,6 @@ namespace Hexagon.Game.Tennis.Desktop.Model
         public Dictionary<Guid, string> Sets { get; set; }
         public Dictionary<Guid, List<GameModel>> Games { get; set; }
 
-
         /// <summary>
         /// Default constructor
         /// </summary>

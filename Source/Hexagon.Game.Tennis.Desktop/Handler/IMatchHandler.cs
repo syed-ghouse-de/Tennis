@@ -26,12 +26,11 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <summary>
         /// Start a match
         /// </summary>
-        void Start();
-
-        /// <summary>
-        /// Configure math details before starting the match
-        /// </summary>
         /// <param name="match">Match to start</param>
-        void Initialize(MatchEntity match);            
+        /// <param name="firstPlayer">First player of the match</param>
+        /// <param name="secondPlayer">Second player of the match</param>
+        /// <param name="tossWon">Intial server of the Match</param>
+        void Start(MatchModel match, PlayerEntity firstPlayer, 
+            PlayerEntity secondPlayer, PlayerEntity tossWon);              
     }
 }

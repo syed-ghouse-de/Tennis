@@ -58,14 +58,14 @@
         <ComboBox ItemsSource="{Binding Players}" 
             DisplayMemberPath="FirstName"
             SelectedValuePath="Id"
-            SelectedItem="{Binding PlayerOne, Mode=TwoWay}" 
+            SelectedItem="{Binding FirstPlayer, Mode=TwoWay}" 
             HorizontalAlignment="Left" Margin="129,116,0,0" VerticalAlignment="Top" Width="199" Height="22"/>
         <Label Content="Player 1 : " HorizontalAlignment="Left" Margin="33,116,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
         <ComboBox 
             ItemsSource="{Binding Players}" 
             DisplayMemberPath="FirstName"
             SelectedValuePath="Id"
-            SelectedItem="{Binding PlayerTwo, Mode=TwoWay}"             
+            SelectedItem="{Binding SecondPlayer, Mode=TwoWay}"             
             HorizontalAlignment="Left" Margin="519,116,0,0" VerticalAlignment="Top" Width="199" Height="22"/>
         <Label Content="Player 2 : " HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
         <Label Content="Games Won : " HorizontalAlignment="Left" Margin="33,142,0,0" VerticalAlignment="Top" Height="26" Width="83"/>

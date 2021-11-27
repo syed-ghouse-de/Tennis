@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace Hexagon.Game.Tennis.Desktop.Views
 {
     /// <summary>
-    /// Interaction logic for RefereeScoreView.xaml
+    /// Interaction logic for MessageViewModel.xaml
     /// </summary>
-    public partial class RefereeScoreView : Window, IView
+    public partial class MessageView : Window, IView
     {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RefereeScoreView()
+        public MessageView()
         {
             InitializeComponent();
         }
@@ -32,6 +32,6 @@ namespace Hexagon.Game.Tennis.Desktop.Views
         /// Initialize default properties specific to view
         /// </summary>
         public void Initialize()
-        { }   
+        { }
     }
 }

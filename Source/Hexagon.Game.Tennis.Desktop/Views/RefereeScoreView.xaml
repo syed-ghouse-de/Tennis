@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         mc:Ignorable="d"
-        Title="Referee Score Board" Height="799.6" Width="768" WindowStartupLocation="CenterScreen">
+        Title="Referee Score Board" Height="799.6" Width="768" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize">
     <Grid Margin="0,10,24.6,0" Height="778" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -24,7 +24,7 @@
                   HorizontalAlignment="Left" Margin="33,204,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.659,0.56" Height="22"/>
         <DataGrid x:Name="grdRefereeScore" CanUserAddRows="False" ItemsSource="{Binding Games}" AutoGenerateColumns="False"
             CanUserDeleteRows="True" CanUserReorderColumns="True" 
-            CanUserSortColumns="True" Margin="33,231,18.8,44.6">
+            CanUserSortColumns="True" Margin="33,231,10,45">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Game" />
                 <DataGridTextColumn Header="Server's Initials" Binding="{Binding Server.FirstName}" />

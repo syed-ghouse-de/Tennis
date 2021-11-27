@@ -31,6 +31,6 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// <param name="secondPlayer">Second player of the match</param>
         /// <param name="tossWon">Intial server of the Match</param>
         void Start(MatchModel match, PlayerEntity firstPlayer, 
-            PlayerEntity secondPlayer, PlayerEntity tossWon);              
+            PlayerEntity secondPlayer, PlayerEntity tossWon);  
     }
 }

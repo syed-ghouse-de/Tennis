@@ -59,6 +59,9 @@ namespace Hexagon.Game.Tennis.Desktop.Service
             builder
                 .RegisterType<RefereeScoreViewModel>()
                 .InstancePerDependency();
+            builder
+                .RegisterType<MessageViewModel>()
+                .InstancePerDependency();
         }
 
         /// <summary>

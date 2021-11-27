@@ -48,6 +48,7 @@
     <Compile Include="GameEntity.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="MatchEntity.cs" />
+    <Compile Include="MessageEntity.cs" />
     <Compile Include="PlayerEntity.cs" />
     <Compile Include="PlayerPointEntity.cs" />
     <Compile Include="PointEntity.cs" />

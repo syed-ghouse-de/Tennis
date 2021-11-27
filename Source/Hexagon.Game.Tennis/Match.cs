@@ -26,7 +26,12 @@ namespace Hexagon.Game.Tennis
         /// <summary>
         /// MatchWin action event for to notify winner of the match
         /// </summary>
-        public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegat for player game point win
+        public event Action<PlayerEntity, ScoreEntity> MatchWin;        // Delegate for player game point win
+
+        /// <summary>
+        /// Error action event for to notify Error
+        /// </summary>
+        public event Action<MessageEntity> Error;                       // Delegate for error message
 
         // Privte memeber variables
         private IMatchDomainService _matchDomainService;                // Score business logic service  
@@ -165,11 +170,13 @@ namespace Hexagon.Game.Tennis
             }
             catch (DomainServiceException domainServiceException)
             {
-                throw domainServiceException;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(domainServiceException.Message));
             }
             catch (Exception exception)
             {
-                throw exception;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(exception.Message));
             } 
         }
 
@@ -186,20 +193,24 @@ namespace Hexagon.Game.Tennis
         /// </summary>
         /// <returns>Return list of players</returns>
         public List<PlayerEntity> GetPlayers()
-        {
+        {                       
             try
-            {
+            {                
                 // Get the list of available players 
-                return _playerDomainService.GetPlayers();
+                return _playerDomainService.GetPlayers();                
             }
             catch (DomainServiceException domainServiceException)
             {
-                throw domainServiceException;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(domainServiceException.Message));
             }
             catch (Exception exception)
             {
-                throw exception;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(exception.Message));
             }
+
+            return new List<PlayerEntity>();
         }
 
         /// <summary>
@@ -246,47 +257,14 @@ namespace Hexagon.Game.Tennis
             }
             catch (DomainServiceException domainServiceException)
             {
-                throw domainServiceException;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(domainServiceException.Message));
             }
             catch (Exception exception)
             {
-                throw exception;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(exception.Message));
             }
-        }
-
-        /// <summary>
-        /// Initialize the new match before starting
-        /// </summary>
-        /// <param name="match">Match details to start a new match</param>
-        public void NewMatch(MatchEntity match)
-        {
-            try
-            {
-                _match = new MatchEntity()
-                {                    
-                    Name = match.Name,
-                    Court = match.Court,
-                    BestOfSets = match.BestOfSets
-                };
-
-                // Remove all the players if any
-                Players.RemoveAll();
-
-                // Add First & Second players
-                Players.FirstPlayer = new Player(match.Players[0]);
-                Players.SecondPlayer = new Player(match.Players[1]);
-
-                // Add new math in the database
-                _matchDomainService.AddMatch(_match);
-            }
-            catch (DomainServiceException domainServiceException)
-            {
-                throw domainServiceException;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }           
         }
 
         /// <summary>
@@ -324,12 +302,14 @@ namespace Hexagon.Game.Tennis
                 ScoreUpdate?.Invoke(winPlayer, _match.Score);
             }
             catch (DomainServiceException domainServiceException)
-            {                
-                throw domainServiceException;
+            {
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(domainServiceException.Message));
             }
             catch (Exception exception)
             {
-                throw exception;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(exception.Message));
             }
         }
     
@@ -363,12 +343,14 @@ namespace Hexagon.Game.Tennis
                 }
             }
             catch (DomainServiceException domainServiceException)
-            {                
-                throw domainServiceException;
+            {
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(domainServiceException.Message));
             }
             catch (Exception exception)
             {
-                throw exception;
+                // Invoke error event
+                Error?.Invoke(new MessageEntity(exception.Message));
             }
         }
     }

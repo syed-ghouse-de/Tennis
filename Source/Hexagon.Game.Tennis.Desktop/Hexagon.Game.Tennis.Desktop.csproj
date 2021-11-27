@@ -105,11 +105,16 @@
     <Compile Include="Handler\MatchHandler.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\MatchModel.cs" />
+    <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="Model\ScoreModel.cs" />
     <Compile Include="Service\ServiceModule.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="Views\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\RefereeScoreViewModel.cs" />
     <Compile Include="ViewModels\SpectatorScoreViewModel.cs" />
     <Compile Include="Views\MainWindowView.xaml.cs">
@@ -125,6 +130,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

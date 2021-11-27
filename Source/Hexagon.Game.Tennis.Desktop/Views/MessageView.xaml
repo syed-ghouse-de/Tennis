@@ -1,0 +1,17 @@
+﻿<Window x:Class="Hexagon.Game.Tennis.Desktop.Views.MessageView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hexagon.Game.Tennis.Desktop.Views"
+        mc:Ignorable="d"
+        Title="Message" Height="164.285" Width="538.642" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="52,33,0,0" TextWrapping="Wrap" Text="{Binding Message.Message}" VerticalAlignment="Top"/>
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="220,87,0,0" VerticalAlignment="Top" Width="75" Command="{Binding OkCommand}"/>
+
+    </Grid>
+</Window>

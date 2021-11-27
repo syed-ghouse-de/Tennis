@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Spectator Score Board" Height="202.075" Width="680.283">
+        Title="Spectator Score Board" Height="202.075" Width="705.061" ResizeMode="NoResize" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

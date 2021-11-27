@@ -21,18 +21,22 @@ namespace Hexagon.Game.Tennis.Desktop.Views
     /// </summary>
     public partial class MainWindow : Window, IView
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             Initialize();
         }
 
+        /// <summary>
+        /// Initialize default properties specific to view
+        /// </summary>
         public void Initialize()
         {
             MainWindowViewModel model = new MainWindowViewModel();
             DataContext = model;
-        }
-
-        public object Context { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        }       
     }
 }

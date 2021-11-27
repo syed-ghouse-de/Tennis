@@ -23,6 +23,11 @@ namespace Hexagon.Game.Tennis
         event Action<PlayerEntity, ScoreEntity> MatchWin;           // Delegat for player game point win
 
         /// <summary>
+        /// Error action event for to notify Error
+        /// </summary>
+        event Action<MessageEntity> Error;                         // Delegate for error message
+
+        /// <summary>
         /// Id of a match
         /// </summary>
         Guid Id { get; }
@@ -81,12 +86,6 @@ namespace Hexagon.Game.Tennis
         /// Second player of the match
         /// </summary>
         IPlayer SecondPlayer { get; set; }
-
-        /// <summary>
-        /// Initialize the new match before starting
-        /// </summary>
-        /// <param name="match">Match details to start a new match</param>
-        void NewMatch(MatchEntity match);
 
         /// <summary>
         /// Initialize new match before starting of the match

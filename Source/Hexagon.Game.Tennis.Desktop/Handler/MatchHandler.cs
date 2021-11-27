@@ -15,6 +15,7 @@ using Hexagon.Game.Framework.Exceptions;
 using Hexagon.Game.Framework.Extension;
 using Hexagon.Game.Tennis.Desktop.Model;
 using Hexagon.Game.Tennis.Entity;
+using Hexagon.Game.Tennis.Desktop.ViewModels;
 
 namespace Hexagon.Game.Tennis.Desktop.Handler
 {
@@ -30,6 +31,7 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
 
         private readonly object _lock;
         private bool _scoreConnected;
+        private bool _stop = false;
 
         // Handler & Match member variables        
         private static IMatchHandler _instance;
@@ -56,6 +58,11 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         {
             _match = match;
 
+            // Subscribe delegates for both score update and match win
+            _match.ScoreUpdate += OnScoreUpdate;
+            _match.MatchWin += OnMatchWin;
+            _match.Error += OnError;
+
             _lock = new object();
             _disposable = new CompositeDisposable();
             _scoreObservable = _scoreSubject.ObserveOn(Scheduler.Default).Publish();
@@ -65,6 +72,23 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         /// 
         /// </summary>
         public IMatch Match { get { return _match; } set { _match = value; } }
+
+        /// <summary>
+        /// Stop the match
+        /// </summary>
+        public bool Stop
+        {
+            get { return _stop; }
+            set
+            {
+                // Lock the object to modify the stop value
+                lock (_lock)
+                {
+                    // Initialize stop value
+                    _stop = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Observable for Score
@@ -124,20 +148,16 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                     : _match.Players.SecondPlayer;
 
                 // Start a new match           
-                _match.NewMatch(match.Name, match.Court, match.BestOfSets);          
+                _match.NewMatch(match.Name, match.Court, match.BestOfSets);
 
-                // Subscribe delegates for both score update and match win
-                _match.ScoreUpdate += OnScoreUpdate;
-                _match.MatchWin += OnMatchWin;
-
-                // Start the match in a thread
+                // Start the match in a thread                
                 Task.Run(() => Start());
             }
             catch(Exception exception)
             {
-                throw exception;
-            }
-       
+                this.Stop = true;                                       // Stop the currently running match                
+                ShowMessage(exception.Message);                         // Show message box    
+            }       
         }
 
         /// <summary>
@@ -146,11 +166,14 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
         private void Start()
         {
             // Start the match
-            _match.Start();
+            _stop = false;            
             Random rnd = new Random();
 
+            // Start the match
+            _match.Start();
+
             // Continue the play till the match is not completed
-            while (!_match.Status.Equals(Status.Completed))
+            while (!_match.Status.Equals(Status.Completed) && !_stop)
             {
                 // Get the random number to make the player win
                 int player = rnd.Next() % 2;
@@ -180,7 +203,11 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 // Notify for all the subscribers            
                 _scoreSubject.OnNext(model);
             }
-            catch(Exception) { }
+            catch(Exception exception)
+            {                
+                this.Stop = true;                                       // Stop the currently running match                
+                ShowMessage(exception.Message);                         // Show message box                
+            }
         }
 
         /// <summary>
@@ -303,7 +330,41 @@ namespace Hexagon.Game.Tennis.Desktop.Handler
                 // Notify for all the subscribers            
                 _scoreSubject.OnNext(model);
             }
-            catch (Exception) { }
+            catch (Exception exception)
+            {
+                this.Stop = true;                                       // Stop the currently running match                
+                ShowMessage(exception.Message);                         // Show message box    
+            }
+        }
+
+        /// <summary>
+        /// Action event for notification of error
+        /// </summary>
+        /// <param name="message">Error/Warning message</param>
+        private void OnError(MessageEntity message)
+        {
+            this.Stop = true;                                       // Stop the currently running match                
+            ShowMessage(message.Message);                           // Show message box    
+        }
+
+        /// <summary>
+        /// Show message box to display error and warning messages
+        /// </summary>
+        /// <param name="message">Message to display</param>
+        private void ShowMessage(string message)
+        {
+            // Display the window in STA thread
+            App.Current.Dispatcher.Invoke(
+                delegate
+                {
+                    // Resolve the view model fro IoC
+                    var view = DependencyInjection.Instance
+                        .Container.Resolve<MessageViewModel>();
+
+                    // Show the model dialog
+                    view.Message.Message = message;
+                    view.View.ShowDialog();
+                });
         }
     }
 }

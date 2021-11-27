@@ -21,16 +21,25 @@ namespace Hexagon.Game.Tennis.Desktop.Views
     /// </summary>
     public partial class SpectatorScoreView : Window, IView
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public SpectatorScoreView()
         {
             InitializeComponent();                       
         }
 
+        /// <summary>
+        /// Initialize default properties specific to view
+        /// </summary>
         public void Initialize()
         {
             GenerateGridColumns();
         }
 
+        /// <summary>
+        /// Generate grid columns
+        /// </summary>
         private void GenerateGridColumns()
         {
             AddGridColumn("Name", "FirstName");
@@ -41,6 +50,11 @@ namespace Hexagon.Game.Tennis.Desktop.Views
             AddGridColumn("Point", "Point");
         }
 
+        /// <summary>
+        /// Add grid columns
+        /// </summary>
+        /// <param name="header">Header of the column</param>
+        /// <param name="binding">Name of the column to bind</param>
         private void AddGridColumn(string header, string binding)
         {
             DataGridTextColumn column = new DataGridTextColumn();

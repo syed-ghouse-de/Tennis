@@ -107,7 +107,7 @@ namespace Hexagon.Game.Tennis
         /// <param name="name">Name of the match</param>
         /// /// <param name="court">Name of the match court</param>
         /// <param name="bestOfSets">Match best of sets</param>
-        void NewMatch(string name, string court, int bestOfSets);
+        void NewMatch(string name, string court, int? bestOfSets);
 
         /// <summary>
         /// To start the match

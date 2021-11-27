@@ -208,22 +208,38 @@ namespace Hexagon.Game.Tennis
         /// <param name="name">Name of the match</param>
         public void NewMatch(string name)
         {
-            try
-            {                
-                // Check the assignment of the match player, if not throw an exception
-                if (this.FirstPlayer == null || this.SecondPlayer == null)
-                    throw new InvalidOperationException("Two players are requried to play match!");
+            // Call new match by passing null for court and bestofsets
+            NewMatch(name, null, null);
+        }
 
-                // Check for the players existence in the database, if not throw an exception
-                var players = _playerDomainService.GetPlayers();
-                if (!players.Where(p => p.Id.Equals(this.FirstPlayer.Identity.Id)).Any() ||
-                    !players.Where(p => p.Id.Equals(this.SecondPlayer.Identity.Id)).Any())
-                {
-                    throw new InvalidOperationException("Invalid player(s), not found in the respository!");
-                }
-                
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        public void NewMatch(string name, int bestOfSets)
+        {
+            // Call new match by passing null for court
+            NewMatch(name, null, bestOfSets);
+        }
+
+        /// <summary>
+        /// Initialize new match before starting of the match
+        /// </summary>
+        /// <param name="name">Name of the match</param>
+        /// /// <param name="court">Name of the match court</param>
+        /// <param name="bestOfSets">Match best of sets</param>
+        public void NewMatch(string name, string court, int? bestOfSets)
+        {
+            try
+            {
+                // Validate players before starting a new match
+                ValidatePlayers();
+
                 // Initialize match entity with name
                 _match = new MatchEntity() { Name = name };
+                if (court != null) { _match.Court = court; }
+                if (bestOfSets != null) { _match.BestOfSets = (int)bestOfSets; }
 
                 // Add new math in the database
                 _matchDomainService.AddMatch(_match);
@@ -236,27 +252,6 @@ namespace Hexagon.Game.Tennis
             {
                 throw exception;
             }
-        }    
-
-        /// <summary>
-        /// Initialize new match before starting of the match
-        /// </summary>
-        /// <param name="name">Name of the match</param>
-        /// <param name="bestOfSets">Match best of sets</param>
-        public void NewMatch(string name, int bestOfSets)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Initialize new match before starting of the match
-        /// </summary>
-        /// <param name="name">Name of the match</param>
-        /// /// <param name="court">Name of the match court</param>
-        /// <param name="bestOfSets">Match best of sets</param>
-        public void NewMatch(string name, string court, int bestOfSets)
-        {
-            throw new NotImplementedException();  
         }
 
         /// <summary>
@@ -292,6 +287,24 @@ namespace Hexagon.Game.Tennis
             {
                 throw exception;
             }           
+        }
+
+        /// <summary>
+        /// Validate players before starting a new match
+        /// </summary>
+        private void ValidatePlayers()
+        {
+            // Check the assignment of the match player, if not throw an exception
+            if (this.FirstPlayer == null || this.SecondPlayer == null)
+                throw new InvalidOperationException("Two players are requried to play match!");
+
+            // Check for the players existence in the database, if not throw an exception
+            var players = _playerDomainService.GetPlayers();
+            if (!players.Where(p => p.Id.Equals(this.FirstPlayer.Identity.Id)).Any() ||
+                !players.Where(p => p.Id.Equals(this.SecondPlayer.Identity.Id)).Any())
+            {
+                throw new InvalidOperationException("Invalid player(s), not found in the respository!");
+            }
         }
 
         /// <summary>

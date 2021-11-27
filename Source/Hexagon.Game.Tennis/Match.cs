@@ -208,7 +208,34 @@ namespace Hexagon.Game.Tennis
         /// <param name="name">Name of the match</param>
         public void NewMatch(string name)
         {
-            throw new NotImplementedException();
+            try
+            {                
+                // Check the assignment of the match player, if not throw an exception
+                if (this.FirstPlayer == null || this.SecondPlayer == null)
+                    throw new InvalidOperationException("Two players are requried to play match!");
+
+                // Check for the players existence in the database, if not throw an exception
+                var players = _playerDomainService.GetPlayers();
+                if (!players.Where(p => p.Id.Equals(this.FirstPlayer.Identity.Id)).Any() ||
+                    !players.Where(p => p.Id.Equals(this.SecondPlayer.Identity.Id)).Any())
+                {
+                    throw new InvalidOperationException("Invalid player(s), not found in the respository!");
+                }
+                
+                // Initialize match entity with name
+                _match = new MatchEntity() { Name = name };
+
+                // Add new math in the database
+                _matchDomainService.AddMatch(_match);
+            }
+            catch (DomainServiceException domainServiceException)
+            {
+                throw domainServiceException;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
         }    
 
         /// <summary>

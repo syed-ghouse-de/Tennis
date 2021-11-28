@@ -170,13 +170,11 @@ namespace Hexagon.Game.Tennis
             }
             catch (DomainServiceException domainServiceException)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(domainServiceException.Message));
+                throw new MatchFrameworkException(domainServiceException.Message);
             }
             catch (Exception exception)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(exception.Message));
+                throw new MatchFrameworkException(exception.Message);
             } 
         }
 
@@ -201,16 +199,12 @@ namespace Hexagon.Game.Tennis
             }
             catch (DomainServiceException domainServiceException)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(domainServiceException.Message));
+                throw new MatchFrameworkException(domainServiceException.Message);
             }
             catch (Exception exception)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(exception.Message));
+                throw new MatchFrameworkException(exception.Message);
             }
-
-            return new List<PlayerEntity>();
         }
 
         /// <summary>
@@ -257,13 +251,11 @@ namespace Hexagon.Game.Tennis
             }
             catch (DomainServiceException domainServiceException)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(domainServiceException.Message));
+                throw new MatchFrameworkException(domainServiceException.Message);
             }
             catch (Exception exception)
             {
-                // Invoke error event
-                Error?.Invoke(new MessageEntity(exception.Message));
+                throw new MatchFrameworkException(exception.Message);
             }
         }
 
@@ -274,14 +266,14 @@ namespace Hexagon.Game.Tennis
         {
             // Check the assignment of the match player, if not throw an exception
             if (this.FirstPlayer == null || this.SecondPlayer == null)
-                throw new InvalidOperationException("Two players are requried to play match!");
+                throw new MatchFrameworkException("Two players are requried to play match!");
 
             // Check for the players existence in the database, if not throw an exception
             var players = _playerDomainService.GetPlayers();
             if (!players.Where(p => p.Id.Equals(this.FirstPlayer.Identity.Id)).Any() ||
                 !players.Where(p => p.Id.Equals(this.SecondPlayer.Identity.Id)).Any())
             {
-                throw new InvalidOperationException("Invalid player(s), not found in the respository!");
+                throw new MatchFrameworkException("Invalid player(s), not found in the respository!");
             }
         }
 

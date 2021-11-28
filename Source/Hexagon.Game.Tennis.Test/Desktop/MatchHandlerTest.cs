@@ -81,7 +81,7 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("0", model.Players[0].Sets[0]);
             Assert.Equal("0", model.Players[1].Sets[0]);
             Assert.Equal("40", model.Players[0].Point);                     // Forty
-            Assert.Equal("0", model.Players[1].Point);                      // Love
+            Assert.Equal("00", model.Players[1].Point);                      // Love
 
             // Player referee score board
             var server = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
@@ -90,7 +90,7 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("S: 15 30 40", server.Point);
             var receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Receiver).FirstOrDefault();            
-            Assert.Equal("R: 0 0 0", receiver.Point);
+            Assert.Equal("R: 00 00 00", receiver.Point);
 
             // Second player win
             secondPlayer.Win();
@@ -105,12 +105,12 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("S: 15 30 40 40", server.Point);
             receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Receiver).FirstOrDefault();           
-            Assert.Equal("R: 0 0 0 15", receiver.Point);
+            Assert.Equal("R: 00 00 00 15", receiver.Point);
 
             // First player win
             firstPlayer.Win();
             model = _matchHandler.GetScore(match.Score);
-            Assert.Equal("G", model.Players[0].Point);                          // GamePoin
+            Assert.Equal("GA", model.Players[0].Point);                          // GamePoin
             Assert.Equal("15", model.Players[1].Point);                         // Fifteen
 
             // Total games won by players
@@ -123,10 +123,10 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             server = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Server).FirstOrDefault();
             Assert.Equal(firstPlayer.Identity.FirstName, server.FirstName);
-            Assert.Equal("S: 15 30 40 40 G", server.Point);
+            Assert.Equal("S: 15 30 40 40 GA", server.Point);
             receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Receiver).FirstOrDefault();            
-            Assert.Equal("R: 0 0 0 15 15", receiver.Point);
+            Assert.Equal("R: 00 00 00 15 15", receiver.Point);
         }
 
         /// <summary>
@@ -162,17 +162,17 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("0", model.Players[1].GamesWon.Where(
                 g => g.Key.Equals(match.Score.Sets[0].Id)).Select(s => s.Value).FirstOrDefault().ToString());
             Assert.Equal("0", model.Players[1].Sets[0]);
-            Assert.Equal("0", model.Players[0].Point);                     // Love
+            Assert.Equal("00", model.Players[0].Point);                     // Love
             Assert.Equal("15", model.Players[1].Point);                    // Fifteen
 
             // Players referee score board
             var server = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Server).FirstOrDefault();
             Assert.Equal(firstPlayer.Identity.FirstName, server.FirstName);
-            Assert.Equal("S: 15 30 40 40 G", server.Point);
+            Assert.Equal("S: 15 30 40 40 GA", server.Point);
             var receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Receiver).FirstOrDefault();            
-            Assert.Equal("R: 0 0 0 15 15", receiver.Point);
+            Assert.Equal("R: 00 00 00 15 15", receiver.Point);
            
             // After win, players referee score board
             model = _matchHandler.GetScore(match.Score);
@@ -182,7 +182,7 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("S: 15", server.Point);
             receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[1].Receiver).FirstOrDefault();            
-            Assert.Equal("R: 0", receiver.Point);
+            Assert.Equal("R: 00", receiver.Point);
         }
 
         /// <summary>
@@ -227,16 +227,16 @@ namespace Hexagon.Game.Tennis.Test.Desktop
             Assert.Equal("1", model.Players[1].GamesWon.Where(
                 g => g.Key.Equals(match.Score.Sets[0].Id)).Select(s => s.Value).FirstOrDefault().ToString());
             Assert.Equal("40", model.Players[0].Point);                     
-            Assert.Equal("G", model.Players[1].Point);                   
+            Assert.Equal("GA", model.Players[1].Point);                   
 
             // Score boad of the players
             var server = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Server).FirstOrDefault();
             Assert.Equal(secondPlayer.Identity.FirstName, server.FirstName);
-            Assert.Equal("S: 0 15 15 15 30 40 40 40 A 40 40 40 A G", server.Point);
+            Assert.Equal("S: 00 15 15 15 30 40 40 40 AD 40 40 40 AD GA", server.Point);
             var receiver = model.Games.Where(k => k.Key.Equals(match.Score.Sets[0].Id))
                 .Select(s => s.Value[0].Receiver).FirstOrDefault();           
-            Assert.Equal("R: 15 15 30 40 40 40 A 40 40 40 A 40 40 40", receiver.Point);
+            Assert.Equal("R: 15 15 30 40 40 40 AD 40 40 40 AD 40 40 40", receiver.Point);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using Hexagon.Game.Framework.Service.Persistence;
+﻿using Hexagon.Game.Framework.Exceptions;
+using Hexagon.Game.Framework.Service.Persistence;
 using Hexagon.Game.Tennis.Entity;
 using Moq;
 using System;
@@ -404,7 +405,7 @@ namespace Hexagon.Game.Tennis.Test
             match.Players.SecondPlayer = new Player(third);
 
             // Exception expected when start a match with invalid player
-            Exception exception = Assert.Throws<InvalidOperationException>(
+            Exception exception = Assert.Throws<MatchFrameworkException>(
                 () => match.NewMatch("First Match"));
             Assert.NotNull(exception);
         }
@@ -449,7 +450,7 @@ namespace Hexagon.Game.Tennis.Test
             Assert.Null(match.Players.SecondPlayer);
 
             // Exception expected when start a match without players
-            Exception exception = Assert.Throws<InvalidOperationException>(() => match.NewMatch("First Match"));
+            Exception exception = Assert.Throws<MatchFrameworkException>(() => match.NewMatch("First Match"));
             Assert.NotNull(exception);
         }
     }
